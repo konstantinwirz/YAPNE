@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 
-public class TestNet {
+public class NetTest {
 
     private Net net = null;
 

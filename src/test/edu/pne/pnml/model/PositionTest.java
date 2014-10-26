@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 /**
  * Created by konstantin on 23/10/14.
  */
-public class TestPosition {
+public class PositionTest {
 
     @Test
     public void testConstructorWithoutArguments() {

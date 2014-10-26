@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * Created by konstantin on 24/10/14.
  */
-public class TestTransition {
+public class TransitionTest {
 
 
     @Test

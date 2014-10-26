@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * Created by konstantin on 24/10/14.
  */
-public class TestPlace {
+public class PlaceTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void testNegativeMarking() {
