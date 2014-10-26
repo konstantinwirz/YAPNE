@@ -5,28 +5,8 @@ package edu.pne.pnml.model;
  */
 public class Transition extends Element {
 
-    private String name;
-    private Position position;
-
     public Transition(String id) {
         super(id);
-        setName("");
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
     }
 
     public String toXML() {

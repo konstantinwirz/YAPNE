@@ -8,12 +8,6 @@ public class Arc extends Element {
     private Element source = null;
     private Element target = null;
 
-    private void validateArg(final Element element) {
-        if ( !(element instanceof Place || element instanceof Transition) ) {
-            throw new IllegalArgumentException("item is not a instance of Place or Transition");
-        }
-    }
-
     public Arc(final String id) {
         super(id);
     }
@@ -39,5 +33,37 @@ public class Arc extends Element {
     public String toXML() {
         return String.format("<arc id=\"%s\" source=\"%s\" target=\"%s\"> </ arc>", getId(),
                 getSource()!=null?getSource().getId():"", getTarget()!=null?getTarget().getId():"");
+    }
+
+    private void validateArg(final Element element) {
+        if ( !(element instanceof Place || element instanceof Transition) ) {
+            throw new IllegalArgumentException("item is not a instance of Place or Transition");
+        }
+    }
+
+    @Override
+    public String getName() {
+        throwNotSupportedPropertyException("name");
+        return null;
+    }
+
+    @Override
+    public void setName(final String name) {
+        throwNotSupportedPropertyException("name");
+    }
+
+    @Override
+    public Position getPosition() {
+        throwNotSupportedPropertyException("position");
+        return null;
+    }
+
+    @Override
+    public void setPosition(final Position position) {
+        throwNotSupportedPropertyException("position");
+    }
+
+    private void throwNotSupportedPropertyException(final String property) {
+        throw new UnsupportedOperationException("arc does not support '" + property + "' property");
     }
 }

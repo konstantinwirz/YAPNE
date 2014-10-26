@@ -8,6 +8,6 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses(value = {TestPosition.class, TestArc.class, TestTransition.class, TestPlace.class, TestNet.class})
+@Suite.SuiteClasses(value = {PositionTest.class, ArcTest.class, TransitionTest.class, PlaceTest.class, NetTest.class})
 public class TestSuite {
 }
