@@ -1,5 +1,7 @@
 package edu.pne.pnml.model;
 
+import java.util.Objects;
+
 /**
  * Created by konstantin on 23/10/14.
  */
@@ -43,7 +45,23 @@ public class Position {
     }
 
     public String toString() {
-        return toXML();
+        return String.format("Position(x: %d, y: %d)", getX(), getY());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this)
+            return true;
+
+        if (other instanceof Position)
+            return getX() == ((Position)other).getX() && getY() == ((Position)other).getY();
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (x + 1) * 17 + (y + 1) * 31;
     }
 
 }

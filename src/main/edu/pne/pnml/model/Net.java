@@ -74,7 +74,7 @@ public class Net {
     public Element getElementById(final String id) {
         Element element = null;
         for (Element el : elements) {
-            if (el.getId() == id) {
+            if (id.equals(el.getId())) {
                 element = el;
                 break;
             }
@@ -88,5 +88,19 @@ public class Net {
         if (toRemove != null) {
             elements.remove(toRemove);
         }
+    }
+
+    public String toXML() {
+        String elementsXML = "";
+        for (Element element : elements) {
+            elementsXML += element.toXML() + "\n";
+        }
+
+        return "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n" +
+                             "<pnml>\n" +
+                             "<net>\n" +
+                             elementsXML +
+                             "</net>\n" +
+                             "</pnml>";
     }
 }

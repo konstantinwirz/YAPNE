@@ -24,13 +24,16 @@ public class Place extends Element {
     public String toXML() {
         return String.format("<place id=\"%s\">\n" +
                              "<name>\n" +
-                             "<value>%s</ value>\n" +
-                            "</name> <initialMarking>\n" +
+                             "<value>%s</value>\n" +
+                            "</name>\n" +
+                            "<initialMarking>\n" +
                             "<token>\n" +
-                            "<value>%d</ value>\n" +
+                            "<value>%d</value>\n" +
                             "</token>\n" +
-                            "</ initialMarking> <graphics>\n" +
-                            "%s </ graphics>\n" +
+                            "</initialMarking>\n" +
+                            "<graphics>\n" +
+                            "%s\n" +
+                            "</graphics>\n" +
                             "</place>", getId(), getName(), getMarking(), getPosition().toXML());
     }
 

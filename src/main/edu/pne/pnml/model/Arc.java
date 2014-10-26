@@ -31,7 +31,7 @@ public class Arc extends Element {
     }
 
     public String toXML() {
-        return String.format("<arc id=\"%s\" source=\"%s\" target=\"%s\"> </ arc>", getId(),
+        return String.format("<arc id=\"%s\" source=\"%s\" target=\"%s\"> </arc>", getId(),
                 getSource()!=null?getSource().getId():"", getTarget()!=null?getTarget().getId():"");
     }
 

@@ -24,13 +24,16 @@ public class PlaceTest {
         place.setPosition(new Position(400, 250));
         assertEquals(place.toXML(), "<place id=\"place1\">\n" +
                                     "<name>\n" +
-                                    "<value>p1</ value>\n" +
-                                    "</name> <initialMarking>\n" +
+                                    "<value>p1</value>\n" +
+                                    "</name>\n" +
+                                    "<initialMarking>\n" +
                                     "<token>\n" +
-                                    "<value>0</ value>\n" +
+                                    "<value>0</value>\n" +
                                     "</token>\n" +
-                                    "</ initialMarking> <graphics>\n" +
-                                    "<position x=\"400\" y=\"250\" /> </ graphics>\n" +
+                                    "</initialMarking>\n" + "" +
+                                    "<graphics>\n" +
+                                    "<position x=\"400\" y=\"250\" />\n" +
+                                    "</graphics>\n" +
                                     "</place>");
     }
 }

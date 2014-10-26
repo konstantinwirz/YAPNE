@@ -35,5 +35,24 @@ public abstract class Element {
         this.position = position;
     }
 
+    @Override
+    public boolean equals(final Object other) {
+        if (this == other)
+            return true;
+
+        if (other instanceof Element)
+            return this.id.equals(((Element)other).getId()) &&
+                    this.name.equals(((Element)other).getName()) &&
+                    this.position.equals(((Element)other).getPosition());
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode() + name.hashCode() + position.hashCode();
+
+    }
+
     public abstract String toXML();
 }

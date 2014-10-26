@@ -23,6 +23,6 @@ public class ArcTest {
         Arc arc = new Arc("arc1");
         arc.setSource(new Transition("transition1"));
         arc.setTarget(new Place("place1"));
-        assertEquals(arc.toXML(), "<arc id=\"arc1\" source=\"transition1\" target=\"place1\"> </ arc>");
+        assertEquals(arc.toXML(), "<arc id=\"arc1\" source=\"transition1\" target=\"place1\"> </arc>");
     }
 }

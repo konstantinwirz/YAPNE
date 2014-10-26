@@ -117,4 +117,44 @@ public class NetTest {
 
         net.addElement(transition);
     }
+
+    @Test
+    public void testToXML() {
+        assertEquals(net.toXML(), "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n" +
+                "<pnml>\n" +
+                "<net>\n" +
+                "<transition id=\"transition1\">\n" +
+                "<name>\n" +
+                "<value>a</value>\n" +
+                "</name>\n" +
+                "<graphics>\n" +
+                "<position x=\"200\" y=\"100\" />\n" +
+                "</graphics>\n" +
+                "</transition>\n" +
+                "<transition id=\"transition2\">\n" +
+                "<name>\n" +
+                "<value>b</value>\n" +
+                "</name>\n" +
+                "<graphics>\n" +
+                "<position x=\"200\" y=\"300\" />\n" +
+                "</graphics>\n" +
+                "</transition>\n" +
+                "<place id=\"place1\">\n" +
+                "<name>\n" +
+                "<value>p1</value>\n" +
+                "</name>\n" +
+                "<initialMarking>\n" +
+                "<token>\n" +
+                "<value>0</value>\n" +
+                "</token>\n" +
+                "</initialMarking>\n" +
+                "<graphics>\n" +
+                "<position x=\"400\" y=\"250\" />\n" +
+                "</graphics>\n" +
+                "</place>\n" +
+                "<arc id=\"arc1\" source=\"transition1\" target=\"place1\"> </arc>\n" +
+                "<arc id=\"arc2\" source=\"place1\" target=\"transition2\"> </arc>\n" +
+                "</net>\n" +
+                "</pnml>" );
+    }
 }

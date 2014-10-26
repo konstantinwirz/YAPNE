@@ -18,9 +18,11 @@ public class TransitionTest {
 
         assertEquals(transition.toXML(), "<transition id=\"transition1\">\n" +
                                          "<name>\n" +
-                                         "<value>a</ value>\n" +
-                                         "</name> <graphics>\n" +
-                                         "<position x=\"200\" y=\"100\" /> </ graphics>\n" +
-                                         "</ transition>" );
+                                         "<value>a</value>\n" +
+                                         "</name>\n" +
+                                         "<graphics>\n" +
+                                         "<position x=\"200\" y=\"100\" />\n" +
+                                         "</graphics>\n" +
+                                         "</transition>" );
     }
 }
