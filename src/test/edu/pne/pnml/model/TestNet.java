@@ -1,9 +1,8 @@
-package edu.pne.model;
+package edu.pne.pnml.model;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.nio.channels.IllegalChannelGroupException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;

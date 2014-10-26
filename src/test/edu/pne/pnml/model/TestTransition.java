@@ -1,4 +1,4 @@
-package edu.pne.model;
+package edu.pne.pnml.model;
 
 import static org.junit.Assert.*;
 import org.junit.Test;

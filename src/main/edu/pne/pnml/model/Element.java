@@ -1,4 +1,4 @@
-package edu.pne.model;
+package edu.pne.pnml.model;
 
 /**
  * Created by konstantin on 24/10/14.

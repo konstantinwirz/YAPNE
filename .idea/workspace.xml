@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/model/Arc.java" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Arc.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/model/Element.java" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Element.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/model/Net.java" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Net.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/model/Place.java" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Place.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/model/Position.java" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Position.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/model/Transition.java" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Transition.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/edu/pne/model/TestArc.java" afterPath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestArc.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/edu/pne/model/TestNet.java" afterPath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestNet.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/edu/pne/model/TestPlace.java" afterPath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestPlace.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/edu/pne/model/TestPosition.java" afterPath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestPosition.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/edu/pne/model/TestSuite.java" afterPath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestSuite.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/edu/pne/model/TestTransition.java" afterPath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestTransition.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -62,7 +77,7 @@
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="TestPlace.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestPlace.java">
+        <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestPlace.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
               <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
@@ -73,40 +88,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Net.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/edu/pne/model/Net.java">
+      <file leaf-file-name="Net.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Net.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="164" max-vertical-offset="1515">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.29549903" vertical-offset="119" max-vertical-offset="1470">
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#298#299#0" expanded="true" />
-                <element signature="e#349#350#0" expanded="true" />
-                <element signature="e#1874#1875#0" expanded="true" />
-                <element signature="e#1905#1906#0" expanded="true" />
-                <element signature="e#1932#1933#0" expanded="true" />
-                <element signature="e#1964#1965#0" expanded="true" />
-                <element signature="e#2009#2010#0" expanded="true" />
-                <element signature="e#2058#2059#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestNet.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestNet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1379" max-vertical-offset="1890">
-              <caret line="109" column="36" selection-start-line="109" selection-start-column="36" selection-end-line="109" selection-end-column="36" />
-              <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#192#193#0" expanded="true" />
+                <element signature="e#243#244#0" expanded="true" />
+                <element signature="e#1768#1769#0" expanded="true" />
+                <element signature="e#1799#1800#0" expanded="true" />
+                <element signature="e#1826#1827#0" expanded="true" />
+                <element signature="e#1858#1859#0" expanded="true" />
+                <element signature="e#1903#1904#0" expanded="true" />
+                <element signature="e#1952#1953#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Arc.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/edu/pne/model/Arc.java">
+        <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Arc.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="645">
               <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
@@ -116,7 +118,7 @@
         </entry>
       </file>
       <file leaf-file-name="TestArc.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestArc.java">
+        <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestArc.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
               <caret line="25" column="97" selection-start-line="25" selection-start-column="97" selection-end-line="25" selection-end-column="97" />
@@ -127,10 +129,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestSuite.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestSuite.java">
+      <file leaf-file-name="TestSuite.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestSuite.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3816047" vertical-offset="0" max-vertical-offset="511">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
               <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -145,6 +147,9 @@
     <FindUsagesManager>
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
@@ -167,6 +172,7 @@
         <option value="$PROJECT_DIR$/src/main/edu/pne/model/Net.java" />
         <option value="$PROJECT_DIR$/src/test/edu/pne/model/TestNet.java" />
         <option value="$PROJECT_DIR$/src/test/edu/pne/model/TestSuite.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestNet.java" />
       </list>
     </option>
   </component>
@@ -213,7 +219,7 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -308,6 +314,10 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="pnml" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -334,7 +344,29 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
+              <option name="myItemId" value="pnml" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PetriNetEditor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PetriNetEditor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pne" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -377,14 +409,17 @@
     <key name="CreateTestDialog.RecentsKey">
       <recent name="edu.pne.model" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="edu.pne" />
+    </key>
   </component>
   <component name="RunManager" selected="JUnit.TestSuite">
     <configuration default="false" name="TestSuite" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PetriNetEditor" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="edu.pne.model" />
-      <option name="MAIN_CLASS_NAME" value="edu.pne.model.TestSuite" />
+      <option name="PACKAGE_NAME" value="edu.pne.pnml.model" />
+      <option name="MAIN_CLASS_NAME" value="edu.pne.pnml.model.TestSuite" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
@@ -411,8 +446,8 @@
       <module name="PetriNetEditor" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="edu.pne.model" />
-      <option name="MAIN_CLASS_NAME" value="edu.pne.model.TestArc" />
+      <option name="PACKAGE_NAME" value="edu.pne.pnml.model" />
+      <option name="MAIN_CLASS_NAME" value="edu.pne.pnml.model.TestArc" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
@@ -429,12 +464,12 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="TestArc (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="TestArc" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PetriNetEditor" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="edu.pne.model" />
-      <option name="MAIN_CLASS_NAME" value="edu.pne.model.TestArc" />
+      <option name="PACKAGE_NAME" value="edu.pne.pnml.model" />
+      <option name="MAIN_CLASS_NAME" value="edu.pne.pnml.model.TestArc" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
@@ -455,8 +490,8 @@
       <module name="PetriNetEditor" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="edu.pne.model" />
-      <option name="MAIN_CLASS_NAME" value="edu.pne.model.TestNet" />
+      <option name="PACKAGE_NAME" value="edu.pne.pnml.model" />
+      <option name="MAIN_CLASS_NAME" value="edu.pne.pnml.model.TestNet" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
@@ -477,8 +512,8 @@
       <module name="PetriNetEditor" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="edu.pne.model" />
-      <option name="MAIN_CLASS_NAME" value="edu.pne.model.TestNet" />
+      <option name="PACKAGE_NAME" value="edu.pne.pnml.model" />
+      <option name="MAIN_CLASS_NAME" value="edu.pne.pnml.model.TestNet" />
       <option name="METHOD_NAME" value="testAddElementWithExistingId" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" />
@@ -583,7 +618,7 @@
       <item index="0" class="java.lang.String" itemvalue="Application.Main" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.TestSuite" />
       <item index="2" class="java.lang.String" itemvalue="JUnit.TestArc" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.TestArc (1)" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.TestArc" />
       <item index="4" class="java.lang.String" itemvalue="JUnit.TestNet" />
       <item index="5" class="java.lang.String" itemvalue="JUnit.TestNet.testAddElementWithExistingId" />
     </list>
@@ -592,7 +627,7 @@
         <item index="0" class="java.lang.String" itemvalue="JUnit.TestSuite" />
         <item index="1" class="java.lang.String" itemvalue="JUnit.TestNet.testAddElementWithExistingId" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.TestNet" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.TestArc (1)" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.TestArc" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.TestArc" />
       </list>
     </recent_temporary>
@@ -671,7 +706,7 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestPlace.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestPlace.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
@@ -681,7 +716,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestPosition.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestPosition.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="645">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
@@ -689,7 +724,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestSuite.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestSuite.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="285">
           <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
@@ -699,7 +734,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestTransition.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestTransition.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="480">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
@@ -707,7 +742,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/model/Element.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Element.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="285">
           <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
@@ -715,7 +750,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestPlace.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestPlace.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
           <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
@@ -725,15 +760,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/model/Place.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Place.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="525">
           <caret line="5" column="33" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
           <folding>
-            <element signature="e#710#711#0" expanded="true" />
-            <element signature="e#741#742#0" expanded="true" />
-            <element signature="e#791#792#0" expanded="true" />
-            <element signature="e#831#832#0" expanded="true" />
+            <element signature="e#715#716#0" expanded="true" />
+            <element signature="e#746#747#0" expanded="true" />
+            <element signature="e#796#797#0" expanded="true" />
+            <element signature="e#836#837#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -745,22 +780,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/model/Position.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Position.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="195">
           <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
           <folding>
-            <element signature="e#217#218#0" expanded="true" />
-            <element signature="e#242#243#0" expanded="true" />
-            <element signature="e#713#714#0" expanded="true" />
-            <element signature="e#799#800#0" expanded="true" />
-            <element signature="e#831#832#0" expanded="true" />
-            <element signature="e#861#862#0" expanded="true" />
+            <element signature="e#222#223#0" expanded="true" />
+            <element signature="e#247#248#0" expanded="true" />
+            <element signature="e#718#719#0" expanded="true" />
+            <element signature="e#804#805#0" expanded="true" />
+            <element signature="e#836#837#0" expanded="true" />
+            <element signature="e#866#867#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestPosition.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestPosition.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="300">
           <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
@@ -811,7 +846,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/model/Transition.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Transition.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7991803" vertical-offset="0" max-vertical-offset="570">
           <caret line="34" column="51" selection-start-line="34" selection-start-column="51" selection-end-line="34" selection-end-column="51" />
@@ -819,35 +854,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/model/Position.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Position.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1065574" vertical-offset="0" max-vertical-offset="675">
           <caret line="44" column="25" selection-start-line="44" selection-start-column="25" selection-end-line="44" selection-end-column="25" />
           <folding>
-            <element signature="e#217#218#0" expanded="true" />
-            <element signature="e#242#243#0" expanded="true" />
-            <element signature="e#713#714#0" expanded="true" />
-            <element signature="e#799#800#0" expanded="true" />
-            <element signature="e#831#832#0" expanded="true" />
-            <element signature="e#861#862#0" expanded="true" />
+            <element signature="e#222#223#0" expanded="true" />
+            <element signature="e#247#248#0" expanded="true" />
+            <element signature="e#718#719#0" expanded="true" />
+            <element signature="e#804#805#0" expanded="true" />
+            <element signature="e#836#837#0" expanded="true" />
+            <element signature="e#866#867#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/model/Place.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Place.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.55772996" vertical-offset="0" max-vertical-offset="810">
           <caret line="27" column="33" selection-start-line="27" selection-start-column="33" selection-end-line="27" selection-end-column="33" />
           <folding>
-            <element signature="e#710#711#0" expanded="true" />
-            <element signature="e#741#742#0" expanded="true" />
-            <element signature="e#791#792#0" expanded="true" />
-            <element signature="e#831#832#0" expanded="true" />
+            <element signature="e#715#716#0" expanded="true" />
+            <element signature="e#746#747#0" expanded="true" />
+            <element signature="e#796#797#0" expanded="true" />
+            <element signature="e#836#837#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestPosition.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestPosition.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.09001957" vertical-offset="74" max-vertical-offset="600">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
@@ -855,7 +890,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestTransition.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestTransition.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.46966732" vertical-offset="0" max-vertical-offset="511">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
@@ -871,7 +906,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestArc.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestArc.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
           <caret line="25" column="97" selection-start-line="25" selection-start-column="97" selection-end-line="25" selection-end-column="97" />
@@ -881,7 +916,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestPlace.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestPlace.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
@@ -891,7 +926,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/model/Element.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Element.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14677104" vertical-offset="0" max-vertical-offset="511">
           <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="21" />
@@ -899,7 +934,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/model/Arc.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Arc.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="645">
           <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
@@ -907,40 +942,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/model/Net.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestSuite.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="164" max-vertical-offset="1515">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#298#299#0" expanded="true" />
-            <element signature="e#349#350#0" expanded="true" />
-            <element signature="e#1874#1875#0" expanded="true" />
-            <element signature="e#1905#1906#0" expanded="true" />
-            <element signature="e#1932#1933#0" expanded="true" />
-            <element signature="e#1964#1965#0" expanded="true" />
-            <element signature="e#2009#2010#0" expanded="true" />
-            <element signature="e#2058#2059#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestNet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1379" max-vertical-offset="1890">
-          <caret line="109" column="36" selection-start-line="109" selection-start-column="36" selection-end-line="109" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/model/TestSuite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3816047" vertical-offset="0" max-vertical-offset="511">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
           <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestNet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.228963" vertical-offset="0" max-vertical-offset="1875">
+          <caret line="110" column="39" selection-start-line="110" selection-start-column="39" selection-end-line="110" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Net.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29549903" vertical-offset="119" max-vertical-offset="1470">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <element signature="e#192#193#0" expanded="true" />
+            <element signature="e#243#244#0" expanded="true" />
+            <element signature="e#1768#1769#0" expanded="true" />
+            <element signature="e#1799#1800#0" expanded="true" />
+            <element signature="e#1826#1827#0" expanded="true" />
+            <element signature="e#1858#1859#0" expanded="true" />
+            <element signature="e#1903#1904#0" expanded="true" />
+            <element signature="e#1952#1953#0" expanded="true" />
           </folding>
         </state>
       </provider>

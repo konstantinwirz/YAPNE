@@ -1,8 +1,5 @@
-package edu.pne.model;
+package edu.pne.pnml.model;
 
-
-import com.sun.javaws.exceptions.InvalidArgumentException;
-import com.sun.tools.corba.se.idl.InvalidArgument;
 
 import java.util.ArrayList;
 

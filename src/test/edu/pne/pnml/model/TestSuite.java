@@ -1,4 +1,4 @@
-package edu.pne.model;
+package edu.pne.pnml.model;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
