@@ -15,7 +15,7 @@ public abstract class Element {
         position = new Position(0, 0);
     }
 
-    String getId() {
+    public String getId() {
         return id;
     }
 

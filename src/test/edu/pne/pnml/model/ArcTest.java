@@ -1,6 +1,9 @@
 package edu.pne.pnml.model;
 
 import org.junit.Test;
+
+import java.nio.channels.IllegalChannelGroupException;
+
 import static org.junit.Assert.*;
 
 
@@ -17,6 +20,16 @@ public class ArcTest {
         Arc arc = new Arc("arc");
         arc.setTarget(arc);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetSourceAndTargetOfSameType() {
+        Place source = new Place("place1");
+        Place target = new Place("place2");
+        Arc arc = new Arc("arc");
+        arc.setSource(source);
+        arc.setTarget(target);
+    }
+
 
     @Test
     public void testToXML() {

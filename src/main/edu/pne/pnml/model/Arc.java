@@ -17,7 +17,8 @@ public class Arc extends Element {
     }
 
     public void setSource(Element source) {
-        validateArg(source);
+        validateElement(source);
+        validateSource(source);
         this.source = source;
     }
 
@@ -26,7 +27,8 @@ public class Arc extends Element {
     }
 
     public void setTarget(Element target) {
-        validateArg(target);
+        validateElement(target);
+        validateTarger(target);
         this.target = target;
     }
 
@@ -35,10 +37,20 @@ public class Arc extends Element {
                 getSource()!=null?getSource().getId():"", getTarget()!=null?getTarget().getId():"");
     }
 
-    private void validateArg(final Element element) {
+    private void validateElement(final Element element) {
         if ( !(element instanceof Place || element instanceof Transition) ) {
-            throw new IllegalArgumentException("item is not a instance of Place or Transition");
+            throw new IllegalArgumentException("item is not an instance of Place or Transition");
         }
+    }
+
+    private void validateSource(final Element source) {
+        if (this.target != null && target.getClass().equals(source.getClass()))
+            throw new IllegalArgumentException("source cannot be of same type as target");
+    }
+
+    private void validateTarger(final Element target) {
+        if (this.source != null && source.getClass().equals(target.getClass()))
+            throw new IllegalArgumentException("target cannot be of same type as source");
     }
 
     @Override
