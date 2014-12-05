@@ -10,8 +10,6 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
     protected BuilderValue<String> label_ = new BuilderValue<String>();
     protected BuilderValue<Double> size_ = new BuilderValue<Double>();
     protected BuilderValue<Double> strokeWidth_ = new BuilderValue<Double>();
-    protected BuilderValue<Color> fillColor_ = new BuilderValue<Color>();
-    protected BuilderValue<Color> strokeColor_ = new BuilderValue<Color>();
     protected BuilderValue<Double> centerX_ = new BuilderValue<Double>();
     protected BuilderValue<Double> centerY_ = new BuilderValue<Double>();
 
@@ -27,16 +25,6 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
 
     public T strokeWidth(double width) {
         strokeWidth_.setValue(width);
-        return (T)this;
-    }
-
-    public T fillColor(Color color) {
-        fillColor_.setValue(color);
-        return (T)this;
-    }
-
-    public T strokeColor(Color color) {
-        strokeColor_.setValue(color);
         return (T)this;
     }
 
@@ -59,12 +47,6 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
 
         if (strokeWidth_.isSet())
             node.setStrokeWidth(strokeWidth_.getValue());
-
-        if (fillColor_.isSet())
-            node.setFillColor(fillColor_.getValue());
-
-        if (strokeColor_.isSet())
-            node.setStrokeColor(strokeColor_.getValue());
 
         if (centerX_.isSet())
             node.setCenterX(centerX_.getValue());

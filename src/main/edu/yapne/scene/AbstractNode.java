@@ -33,8 +33,6 @@ abstract public class AbstractNode  extends BorderPane {
 
     private DoubleProperty size = new SimpleDoubleProperty(DEFAULT_SIZE);
     private StringProperty label = new SimpleStringProperty();
-    private ObjectProperty<Color> fillColor = new SimpleObjectProperty<Color>(DEFAULT_FILL_COLOR);
-    private ObjectProperty<Color> strokeColor = new SimpleObjectProperty<Color>(DEFAULT_STROKE_COLOR);
     private DoubleProperty strokeWidth = new SimpleDoubleProperty(DEFAULT_STROKE_WIDTH);
     private DoubleProperty centerX = new SimpleDoubleProperty(0.0);
     private DoubleProperty centerY = new SimpleDoubleProperty(0.0);
@@ -45,6 +43,14 @@ abstract public class AbstractNode  extends BorderPane {
     public AbstractNode() {
         setupUi();
         registerListeners();
+    }
+
+    public static Color getDefaultFillColor() {
+        return DEFAULT_FILL_COLOR;
+    }
+
+    public static Color getDefaultStrokeColor() {
+        return DEFAULT_STROKE_COLOR;
     }
 
     private void setupUi() {
@@ -76,13 +82,6 @@ abstract public class AbstractNode  extends BorderPane {
             }
         });
 
-        fillColor.addListener(new ChangeListener<Color>() {
-            @Override
-            public void changed(ObservableValue<? extends Color> observableValue, Color oldValue, Color newValue) {
-                onFillColorChanged(newValue);
-            }
-        });
-
         strokeWidth.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number olValue, Number newValue) {
@@ -91,15 +90,6 @@ abstract public class AbstractNode  extends BorderPane {
                     throw new IllegalArgumentException("invalid stroke width passed");
 
                 onStrokeWidthChanged(value);
-            }
-        });
-
-        strokeColor.addListener(new ChangeListener<Color>() {
-            @Override
-            public void changed(ObservableValue<? extends Color> observableValue, Color oldValue, Color newValue) {
-                labelText.setStroke(newValue);
-                labelText.setFill(newValue);
-                onStrokeColorChanged(newValue);
             }
         });
 
@@ -152,9 +142,6 @@ abstract public class AbstractNode  extends BorderPane {
 
     protected void onSizeChanged(double newSize) {}
     protected void onStrokeWidthChanged(double newWidth) {}
-    protected void onFillColorChanged(Color newColor) {}
-    protected void onStrokeColorChanged(Color newColor) {}
-
 
     public final String getLabel() {
         return label.get();
@@ -208,30 +195,6 @@ abstract public class AbstractNode  extends BorderPane {
 
     public static double getMaximumStrokeWidth() {
         return MAXIMUM_STROKE_WIDTH;
-    }
-
-    public final Color getFillColor() {
-        return this.fillColor.get();
-    }
-
-    public final void setFillColor(Color color) {
-        this.fillColor.set(color);
-    }
-
-    public final ObjectProperty<Color> fillColorProperty() {
-        return this.fillColor;
-    }
-
-    public final Color getStrokeColor() {
-        return strokeColor.get();
-    }
-
-    public final ObjectProperty<Color> strokeColorProperty() {
-        return strokeColor;
-    }
-
-    public final void setStrokeColor(Color strokeColor) {
-        this.strokeColor.set(strokeColor);
     }
 
     public double getCenterX() {

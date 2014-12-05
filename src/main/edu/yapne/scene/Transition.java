@@ -2,7 +2,6 @@ package edu.yapne.scene;
 
 
 import javafx.geometry.Pos;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.RectangleBuilder;
 
@@ -21,9 +20,9 @@ public class Transition extends  AbstractNode {
     private void setupUi() {
         rectangle = RectangleBuilder.create()
                 .width(getSize())
+                .stroke(getDefaultStrokeColor())
+                .fill(getDefaultFillColor())
                 .height(getSize())
-                .fill(getFillColor())
-                .stroke(Color.BLACK)
                 .strokeWidth(getStrokeWidth())
                 .build();
 
@@ -38,17 +37,8 @@ public class Transition extends  AbstractNode {
     }
 
     @Override
-    protected final void onFillColorChanged(Color newColor) {
-        rectangle.setFill(newColor);
-    }
-
-    @Override
     protected final void onStrokeWidthChanged(double newWidth) {
         rectangle.setStrokeWidth(newWidth);
     }
 
-    @Override
-    protected final void onStrokeColorChanged(Color newColor) {
-        rectangle.setStroke(newColor);
-    }
 }

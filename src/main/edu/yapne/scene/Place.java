@@ -34,9 +34,9 @@ public class Place extends AbstractNode {
         stack = StackPaneBuilder.create()
                 .build();
         circle = CircleBuilder.create()
-                .fill(getFillColor())
-                .stroke(getStrokeColor())
                 .strokeWidth(getStrokeWidth())
+                .fill(getDefaultFillColor())
+                .stroke(getDefaultStrokeColor())
                 .radius(getSize() / 2)
                 .build();
         stack.getChildren().add(circle);
@@ -76,25 +76,6 @@ public class Place extends AbstractNode {
     }
 
     @Override
-    protected void onFillColorChanged(Color newColor) {
-        circle.setFill(newColor);
-    }
-
-    @Override
-    protected void onStrokeColorChanged(Color newColor) {
-        circle.setStroke(newColor);
-        if (markingText != null) {
-            markingText.setStroke(newColor);
-            markingText.setFill(newColor);
-        }
-
-        if (markingCircle != null) {
-            markingCircle.setStroke(newColor);
-            markingCircle.setFill(newColor);
-        }
-    }
-
-    @Override
     protected void onStrokeWidthChanged(double newWidth) {
         circle.setStrokeWidth(newWidth);
     }
@@ -110,17 +91,15 @@ public class Place extends AbstractNode {
 
         if (newMarking == 1) {
             markingCircle = CircleBuilder.create()
-                    .fill(getStrokeColor())
-                    .stroke(getStrokeColor())
                     .radius(getSize() / 10)
+                    .strokeWidth(getStrokeWidth())
                     .build();
             stack.getChildren().add(markingCircle);
         } else if (newMarking > 1) {
             markingText = TextBuilder.create().
-                    text(String.valueOf(newMarking)).
-                    stroke(getStrokeColor()).
-                    fill(getStrokeColor()).
-                    build();
+                    text(String.valueOf(newMarking))
+                    .strokeWidth(getStrokeWidth())
+                    .build();
             stack.getChildren().add(markingText);
         }
     }
