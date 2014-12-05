@@ -1,7 +1,11 @@
 package edu.yapne.scene;
 
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.RectangleBuilder;
 
@@ -9,12 +13,15 @@ import javafx.scene.shape.RectangleBuilder;
 /**
  * Created by konstantin on 09/11/14.
  */
-public class Transition extends  AbstractNode {
+public final class Transition extends  AbstractNode {
 
     private Rectangle rectangle;
+    private SimpleBooleanProperty enabled = new SimpleBooleanProperty(false);
+    private Color DEFAULT_ENABLED_STROKE_COLOR = Color.GREEN;
 
     public Transition() {
         setupUi();
+        registerListeners();
     }
 
     private void setupUi() {
@@ -30,6 +37,15 @@ public class Transition extends  AbstractNode {
         setAlignment(rectangle, Pos.CENTER);
     }
 
+    private void registerListeners() {
+        enabled.addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+                onSetEnabled(newValue.booleanValue());
+            }
+        });
+    }
+
     @Override
     protected final void onSizeChanged(double newSize) {
         rectangle.setWidth(newSize);
@@ -41,4 +57,19 @@ public class Transition extends  AbstractNode {
         rectangle.setStrokeWidth(newWidth);
     }
 
+    private void onSetEnabled(boolean tf) {
+        rectangle.setStroke(tf?DEFAULT_ENABLED_STROKE_COLOR:getDefaultStrokeColor());
+    }
+
+    public SimpleBooleanProperty isEnabledProperty() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean tf) {
+        enabled.set(tf);
+    }
+
+    public boolean isEnabled() {
+        return enabled.get();
+    }
 }

@@ -38,6 +38,7 @@ public class Net extends Group {
                         .centerX(transition.getPosition().getX())
                         .centerY(transition.getPosition().getY())
                         .label(transition.getName())
+                        .enabled(transition.isEnabled())
                         .build();
             }
             if (node != null)

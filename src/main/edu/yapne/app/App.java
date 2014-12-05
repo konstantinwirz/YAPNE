@@ -18,7 +18,8 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception{
         //Parent root = FXMLLoader.load(getClass().getResource("main_window.fxml"));
 
-        final String source = new String(Files.readAllBytes(FileSystems.getDefault().getPath("/Users/konstantin/Development/pnml/Beispiel2.pnml")));
+        final String source =
+                new String(Files.readAllBytes(FileSystems.getDefault().getPath("/Users/konstantin/Development/pnml/Kaffee.pnml")));
         PnmlParser parser = new PnmlParser();
         final Net root = Net.createFromModel(parser.parse(source));
         //root.getChildren().clear();
@@ -51,7 +52,7 @@ public class App extends Application {
         */
 
         primaryStage.setTitle("PetriNetEditor");
-        primaryStage.setScene(new Scene(root, 500, 400));
+        primaryStage.setScene(new Scene(root, 1100, 600));
         primaryStage.show();
     }
 
