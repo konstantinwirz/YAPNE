@@ -1,22 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/io/Parser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/edu/pne/pnml/io/ParserTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Arc.java" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Arc.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/ArcTest.java" afterPath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/ArcTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Element.java" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Element.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Net.java" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Net.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/NetTest.java" afterPath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/NetTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Place.java" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Place.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/PlaceTest.java" afterPath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/PlaceTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Position.java" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Position.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Transition.java" afterPath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Transition.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TransitionTest.java" afterPath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TransitionTest.java" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="add AbstractNode, Place and Transition classes">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNet.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetArc.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetArcTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetElement.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetNode.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetNodePositionTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetNodeTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetPlace.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetPlaceTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetTransition.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetTransitionTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/edu/yapne/model/TestSuite.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Arc.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Element.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Net.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Place.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Position.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Transition.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/ArcTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/PlaceTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/PositionTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestSuite.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TransitionTest.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/app/App.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/app/App.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/app/AppController.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/app/AppController.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/app/main_window.fxml" afterPath="$PROJECT_DIR$/src/main/edu/yapne/app/main_window.fxml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/pnml/io/Parser.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/io/PnmlParser.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/scene/AbstractNode.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/scene/AbstractNode.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/scene/AbstractNodeBuilder.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/scene/AbstractNodeBuilder.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/scene/Arc.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/scene/Arc.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/scene/ArcBuilder.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/scene/ArcBuilder.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/scene/Net.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/scene/Net.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/scene/Place.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/scene/Place.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/scene/PlaceBuilder.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/scene/PlaceBuilder.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/scene/Transition.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/scene/Transition.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/scene/TransitionBuilder.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/scene/TransitionBuilder.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/edu/pne/utils/BuilderValue.java" afterPath="$PROJECT_DIR$/src/main/edu/yapne/utils/BuilderValue.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/edu/pne/TestSuite.java" afterPath="$PROJECT_DIR$/src/test/edu/yapne/TestSuite.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/edu/pne/pnml/io/ParserTest.java" afterPath="$PROJECT_DIR$/src/test/edu/yapne/io/PnmlParserTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/edu/pne/pnml/io/TestSuite.java" afterPath="$PROJECT_DIR$/src/test/edu/yapne/io/TestSuite.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/edu/pne/pnml/model/NetTest.java" afterPath="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/edu/pne/utils/BuilderValueTest.java" afterPath="$PROJECT_DIR$/src/test/edu/yapne/utils/BuilderValueTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/edu/pne/utils/TestSuite.java" afterPath="$PROJECT_DIR$/src/test/edu/yapne/utils/TestSuite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/konstantin.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/konstantin.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
+    <list id="82aab896-c425-4f20-a9a4-8d11f296ba53" name="Rejected commit: Default" comment="add AbstractNode, Place and Transition classes" />
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,8 +103,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties converted="true" />
     <breakpoint_rules converted="true" />
+    <ui_properties converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -74,11 +112,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PlaceTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/PlaceTest.java">
+      <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/app/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="142" max-vertical-offset="675">
-              <caret line="35" column="36" selection-start-line="35" selection-start-column="36" selection-end-line="35" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="139" max-vertical-offset="975">
+              <caret line="50" column="10" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -86,31 +124,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Net.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Net.java">
+      <file leaf-file-name="TestSuite.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/TestSuite.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1049" max-vertical-offset="1560">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Place.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Place.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="74" max-vertical-offset="630">
-              <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NetTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/NetTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1882" max-vertical-offset="2475">
-              <caret line="157" column="24" selection-start-line="157" selection-start-column="24" selection-end-line="157" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
+              <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -118,69 +136,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ParserTest.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/io/ParserTest.java">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.5204918" vertical-offset="0" max-vertical-offset="1455">
-              <caret line="84" column="26" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="26" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Element.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Element.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="810">
-              <caret line="40" column="24" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.37815127" vertical-offset="0" max-vertical-offset="476">
+              <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Transition.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Transition.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
-              <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ArcTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/ArcTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="7" max-vertical-offset="495">
-              <caret line="25" column="96" selection-start-line="25" selection-start-column="96" selection-end-line="25" selection-end-column="96" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Arc.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Arc.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="299" max-vertical-offset="975">
-              <caret line="33" column="76" selection-start-line="33" selection-start-column="76" selection-end-line="33" selection-end-column="76" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Position.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Position.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="342" max-vertical-offset="945">
-              <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
-              <folding>
-                <element signature="e#863#864#0" expanded="true" />
-                <element signature="e#941#942#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -196,39 +157,59 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
-    <option name="changedFiles">
+    <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/sample/Main.java" />
-        <option value="$PROJECT_DIR$/src/sample/sample.fxml" />
-        <option value="$PROJECT_DIR$/src/sample/Controller.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/app/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/app/Controller.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/model/Position.java" />
-        <option value="$PROJECT_DIR$/src/test/edu/pne/model/TestPosition.java" />
-        <option value="$PROJECT_DIR$/src/test/edu/pne/model/TestTransition.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/model/Transition.java" />
-        <option value="$PROJECT_DIR$/src/test/edu/pne/model/TestPlace.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/model/Place.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/model/Item.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/model/Arc.java" />
-        <option value="$PROJECT_DIR$/src/test/edu/pne/model/TestArc.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/model/Element.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/model/Net.java" />
-        <option value="$PROJECT_DIR$/src/test/edu/pne/model/TestNet.java" />
-        <option value="$PROJECT_DIR$/src/test/edu/pne/model/TestSuite.java" />
-        <option value="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestNet.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/pne/utils/BuilderValueTest.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/pne/utils/BuilderValue.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/pne/scene/AbstractNodeBuilder.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/pne/scene/PlaceBuilder.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/pne/scene/TransitionBuilder.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/pne/scene/ArcBuilder.java" />
         <option value="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Element.java" />
-        <option value="$PROJECT_DIR$/src/test/edu/pne/pnml/io/ParserTest.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/pnml/io/Parser.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Position.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Net.java" />
-        <option value="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TransitionTest.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Transition.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Arc.java" />
-        <option value="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Place.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/pne/scene/Net.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/pne/scene/Place.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/pne/app/App.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/pne/scene/Arc.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/pne/scene/Transition.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/pne/scene/AbstractNode.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestSuite.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/pne/pnml/io/TestSuite.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/pne/utils/TestSuite.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/pne/TestSuite.java" />
         <option value="$PROJECT_DIR$/src/test/edu/pne/pnml/model/ArcTest.java" />
-        <option value="$PROJECT_DIR$/src/test/edu/pne/pnml/model/PlaceTest.java" />
-        <option value="$PROJECT_DIR$/src/test/edu/pne/pnml/model/NetTest.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/pne/pnml/model/Arc.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/pnml/io/ParserTest.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/pnml/model/Net.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/pnml/model/PetriNetElement.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/pnml/model/NetTest.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetPosition.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetPositionTest.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNodePlaceTest.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNodePlace.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/pnml/model/Place.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetNodePosition.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetPlace.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetArcTest.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/pnml/model/Transition.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/pnml/model/TransitionTest.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetTransition.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetNodePositionTest.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetPlaceTest.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetTransitionTest.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetArc.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetElement.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetNode.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetNodeTest.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/model/TestSuite.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/model/PetriNet.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetTest.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/io/Parser.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/io/PnmlParserTest.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/io/PnmlParser.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/scene/Net.java" />
+        <option value="$PROJECT_DIR$/src/test/edu/yapne/TestSuite.java" />
+        <option value="$PROJECT_DIR$/src/main/edu/yapne/app/App.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -246,30 +227,15 @@
             <id />
           </State>
           <State>
-            <id>Code style issues</id>
+            <id>Manifest</id>
           </State>
           <State>
-            <id>Data flow issues</id>
-          </State>
-          <State>
-            <id>JUnit issues</id>
-          </State>
-          <State>
-            <id>Java language level migration aids</id>
-          </State>
-          <State>
-            <id>Naming conventions</id>
-          </State>
-          <State>
-            <id>Numeric issues</id>
-          </State>
-          <State>
-            <id>Probable bugs</id>
+            <id>Spelling</id>
           </State>
         </expanded-state>
         <selected-state>
           <State>
-            <id>Abstraction issues</id>
+            <id>SpellCheckingInspection</id>
           </State>
         </selected-state>
       </profile-state>
@@ -303,7 +269,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -311,10 +276,6 @@
               <option name="myItemId" value="PetriNetEditor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -344,11 +305,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="pnml" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
+              <option name="myItemId" value="yapne" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -370,7 +327,55 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="pnml" />
+              <option name="myItemId" value="yapne" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PetriNetEditor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PetriNetEditor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yapne" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PetriNetEditor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PetriNetEditor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yapne" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -396,73 +401,18 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="pne" />
+              <option name="myItemId" value="yapne" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="pnml" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PetriNetEditor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PetriNetEditor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pne" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pnml" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="io" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PetriNetEditor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PetriNetEditor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pne" />
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -477,14 +427,14 @@
     <property name="dynamic.classpath" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="LayoutCode.rearrangeEntries" value="false" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="options.lastSelected" value="preferences.keymap" />
+    <property name="options.lastSelected" value="org.intellij.spellChecker.options.SpellCheckerConfigurable" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
@@ -492,26 +442,31 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
+    <property name="OverrideImplement.overriding.sorted" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="TestS&#9;FILE&#9;file:///Users/konstantin/Development/PetriNetEditor/src/test/edu/yapne/model/TestSuite.java&#10;petrine&#9;FILE&#9;file:///Users/konstantin/Development/PetriNetEditor/src/test/edu/yapne/model/PetriNetNodeTest.java&#10;petrnet&#9;FILE&#9;file:///Users/konstantin/Development/PetriNetEditor/src/main/edu/yapne/model/PetriNetNodePosition.java&#10;Petrinete&#9;FILE&#9;file:///Users/konstantin/Development/PetriNetEditor/src/main/edu/yapne/pnml/model/PetriNetElement.java&#10;NetTe&#9;FILE&#9;file:///Users/konstantin/Development/PetriNetEditor/src/test/edu/yapne/pnml/model/NetTest.java&#10;removeE&#9;PSI&#9;JAVA://edu.yapne.pnml.model.Net#removeElementById&#10;Net&#9;PSI&#9;JAVA://edu.yapne.pnml.model.Net" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="edu.yapne.model" />
+      <recent name="edu.pne.utils" />
       <recent name="edu.pne.pnml.io" />
       <recent name="edu.pne.model" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="edu.yapne" />
       <recent name="edu.pne" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ParserTest (2)">
+  <component name="RunManager" selected="JUnit.TestSuite">
     <configuration default="false" name="TestSuite" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PetriNetEditor" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="edu.pne.pnml.model" />
-      <option name="MAIN_CLASS_NAME" value="edu.pne.pnml.model.TestSuite" />
+      <option name="PACKAGE_NAME" value="edu.yapne.model" />
+      <option name="MAIN_CLASS_NAME" value="edu.yapne.model.TestSuite" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
@@ -534,13 +489,13 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="NetTest.testAddElementWithExistingId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="PetriNetTest.testRemoveElementById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PetriNetEditor" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="edu.pne.pnml.model" />
-      <option name="MAIN_CLASS_NAME" value="edu.pne.pnml.model.NetTest" />
-      <option name="METHOD_NAME" value="testAddElementWithExistingId" />
+      <option name="PACKAGE_NAME" value="edu.yapne.model" />
+      <option name="MAIN_CLASS_NAME" value="edu.yapne.model.PetriNetTest" />
+      <option name="METHOD_NAME" value="testRemoveElementById" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" />
       <option name="PARAMETERS" />
@@ -552,16 +507,22 @@
       </option>
       <envs />
       <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="ParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="PetriNetNodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PetriNetEditor" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="edu.pne.pnml.io" />
-      <option name="MAIN_CLASS_NAME" value="edu.pne.pnml.io.ParserTest" />
+      <option name="PACKAGE_NAME" value="edu.yapne.model" />
+      <option name="MAIN_CLASS_NAME" value="edu.yapne.model.PetriNetNodeTest" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
@@ -584,12 +545,12 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="ParserTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="PnmlParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PetriNetEditor" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="edu.pne.pnml.io" />
-      <option name="MAIN_CLASS_NAME" value="edu.pne.pnml.io.ParserTest" />
+      <option name="PACKAGE_NAME" value="edu.yapne.io" />
+      <option name="MAIN_CLASS_NAME" value="edu.yapne.io.PnmlParserTest" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
@@ -602,22 +563,16 @@
       </option>
       <envs />
       <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="ParserTest (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="TestSuite (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PetriNetEditor" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="edu.pne.pnml.io" />
-      <option name="MAIN_CLASS_NAME" value="edu.pne.pnml.io.ParserTest" />
+      <option name="PACKAGE_NAME" value="edu.yapne" />
+      <option name="MAIN_CLASS_NAME" value="edu.yapne.TestSuite" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
@@ -640,6 +595,10 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -697,7 +656,7 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="MAIN_CLASS_NAME" value="edu.pne.app.Main" />
+      <option name="MAIN_CLASS_NAME" value="edu.yapne.app.App" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
@@ -721,18 +680,18 @@
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Application.Main" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.TestSuite" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.NetTest.testAddElementWithExistingId" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.ParserTest" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.ParserTest (1)" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.ParserTest (2)" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.PetriNetTest.testRemoveElementById" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.PetriNetNodeTest" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.PnmlParserTest" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.TestSuite (1)" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.ParserTest (2)" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.TestSuite" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.ParserTest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.ParserTest (1)" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.NetTest.testAddElementWithExistingId" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.TestSuite" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.TestSuite (1)" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.PnmlParserTest" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.PetriNetNodeTest" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.PetriNetTest.testRemoveElementById" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -755,34 +714,67 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39925373" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329602" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48756218" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329602" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32916668" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24930556" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329602" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329602" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24930556" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3420398" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298611" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="109" y="213" width="1240" height="673" />
+      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329602" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329602" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298611" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="109" y="213" width="1240" height="673" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329602" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24930556" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3420398" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329602" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329602" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.48756218" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32916668" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -799,288 +791,323 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
+    <MESSAGE value="add AbstractNode, Place and Transition classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="add AbstractNode, Place and Transition classes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="33" />
     </breakpoint-manager>
+    <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/PlaceTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/app/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1005">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/PositionTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/scene/ArcBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="645">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
+        <state vertical-scroll-proportion="0.2935421" vertical-offset="15" max-vertical-offset="645">
+          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestSuite.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/scene/PlaceBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="285">
-          <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.55772996" vertical-offset="0" max-vertical-offset="511">
+          <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TransitionTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/scene/TransitionBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="480">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.3816047" vertical-offset="0" max-vertical-offset="511">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Element.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/scene/AbstractNodeBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="285">
-          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-          <folding />
+        <state vertical-scroll-proportion="1.0880626" vertical-offset="509" max-vertical-offset="1215">
+          <caret line="73" column="25" selection-start-line="73" selection-start-column="25" selection-end-line="73" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/PlaceTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/utils/BuilderValue.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.3816047" vertical-offset="0" max-vertical-offset="511">
+          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Place.java">
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/src.zip!/java/nio/file/Files.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="525">
-          <caret line="5" column="33" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
-          <folding />
+        <state vertical-scroll-proportion="0.33268103" vertical-offset="43660" max-vertical-offset="46620">
+          <caret line="2980" column="0" selection-start-line="2980" selection-start-column="0" selection-end-line="2980" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/app/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/scene/Place.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
-          <caret line="0" column="8" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="1665">
+          <caret line="43" column="38" selection-start-line="43" selection-start-column="38" selection-end-line="43" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Position.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/scene/Arc.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="195">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding>
-            <element signature="e#863#864#0" expanded="true" />
-            <element signature="e#941#942#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="94" max-vertical-offset="1665">
+          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/PositionTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/scene/Transition.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="300">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="88" max-vertical-offset="810">
+          <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/app/Controller.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/utils/TestSuite.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
-          <caret line="0" column="8" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.32289627" vertical-offset="0" max-vertical-offset="511">
+          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/app/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/scene/AbstractNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="435">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.48195878" vertical-offset="1411" max-vertical-offset="2850">
+          <caret line="145" column="52" selection-start-line="145" selection-start-column="52" selection-end-line="145" selection-end-column="52" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/app/Controller.java">
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/src.zip!/java/util/List.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="150">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.53816044" vertical-offset="7060" max-vertical-offset="8745">
+          <caret line="512" column="8" selection-start-line="512" selection-start-column="8" selection-end-line="512" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/src.zip!/java/lang/Object.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.11/junit-4.11.jar!/org/junit/internal/ComparisonCriteria.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33268103" vertical-offset="2980" max-vertical-offset="7965">
-          <caret line="235" column="18" selection-start-line="214" selection-start-column="4" selection-end-line="237" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/app/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="511">
-          <caret line="0" column="8" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/app/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="511">
-          <caret line="0" column="8" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/PositionTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09001957" vertical-offset="74" max-vertical-offset="600">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/src.zip!/java/lang/Class.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6262231" vertical-offset="36925" max-vertical-offset="47310">
-          <caret line="2569" column="0" selection-start-line="2569" selection-start-column="0" selection-end-line="2569" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.12345679" vertical-offset="90" max-vertical-offset="975">
+          <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.11/junit-4.11.jar!/org/junit/Assert.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35095137" vertical-offset="1124" max-vertical-offset="2265">
-          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.36419752" vertical-offset="2148" max-vertical-offset="4560">
+          <caret line="177" column="46" selection-start-line="177" selection-start-column="46" selection-end-line="177" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/io/Parser.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetPlace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.5283757" vertical-offset="569" max-vertical-offset="5220">
-          <caret line="90" column="42" selection-start-line="90" selection-start-column="42" selection-end-line="90" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.7358121" vertical-offset="119" max-vertical-offset="630">
+          <caret line="37" column="81" selection-start-line="37" selection-start-column="81" selection-end-line="37" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetTransition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.86202365" vertical-offset="289" max-vertical-offset="1065">
+          <caret line="63" column="5" selection-start-line="63" selection-start-column="5" selection-end-line="63" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetPlaceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35479632" vertical-offset="0" max-vertical-offset="761">
+          <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetTransitionTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22339028" vertical-offset="40" max-vertical-offset="1005">
+          <caret line="18" column="48" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.11/junit-4.11.jar!/org/junit/runners/model/FrameworkMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.52" vertical-offset="7" max-vertical-offset="1545">
+          <caret line="27" column="18" selection-start-line="27" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetArcTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
+          <caret line="27" column="30" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.11/junit-4.11.jar!/org/junit/runners/BlockJUnit4ClassRunner.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.063025214" vertical-offset="195" max-vertical-offset="2970">
+          <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2454" max-vertical-offset="2970">
+          <caret line="139" column="16" selection-start-line="139" selection-start-column="16" selection-end-line="139" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetNodeTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="1320">
+          <caret line="79" column="43" selection-start-line="79" selection-start-column="43" selection-end-line="79" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetNodePositionTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="660">
+          <caret line="35" column="9" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/model/TestSuite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
+          <caret line="11" column="88" selection-start-line="11" selection-start-column="88" selection-end-line="11" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.11/junit-4.11.jar!/org/junit/internal/runners/model/ReflectiveCallable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33147633" vertical-offset="31" max-vertical-offset="390">
+          <caret line="13" column="18" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.11/junit-4.11.jar!/org/junit/runners/ParentRunner.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.17976032" vertical-offset="1575" max-vertical-offset="3300">
+          <caret line="134" column="9" selection-start-line="134" selection-start-column="9" selection-end-line="134" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.45898438" vertical-offset="415" max-vertical-offset="990">
+          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/io/PnmlParserTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.5568862" vertical-offset="24" max-vertical-offset="1440">
+          <caret line="89" column="33" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/model/PetriNetTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8982036" vertical-offset="1635" max-vertical-offset="2715">
+          <caret line="139" column="27" selection-start-line="139" selection-start-column="27" selection-end-line="139" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/scene/Net.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33932135" vertical-offset="85" max-vertical-offset="1125">
+          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/utils/BuilderValueTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4491018" vertical-offset="0" max-vertical-offset="501">
+          <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/io/TestSuite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26946107" vertical-offset="0" max-vertical-offset="501">
+          <caret line="10" column="31" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/jre/lib/rt.jar!/sun/reflect/NativeMethodAccessorImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7478992" vertical-offset="4" max-vertical-offset="480">
+          <caret line="36" column="33" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/model/PetriNet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44111776" vertical-offset="964" max-vertical-offset="1935">
+          <caret line="83" column="7" selection-start-line="83" selection-start-column="7" selection-end-line="83" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TestSuite.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/model/PetriNetArc.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32289627" vertical-offset="0" max-vertical-offset="511">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.5808383" vertical-offset="399" max-vertical-offset="900">
+          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/io/PnmlParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36327344" vertical-offset="628" max-vertical-offset="5220">
+          <caret line="54" column="16" selection-start-line="54" selection-start-column="16" selection-end-line="54" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/TransitionTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/edu/yapne/app/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
-          <caret line="21" column="44" selection-start-line="21" selection-start-column="44" selection-end-line="21" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Arc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="299" max-vertical-offset="975">
-          <caret line="33" column="76" selection-start-line="33" selection-start-column="76" selection-end-line="33" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Element.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="810">
-          <caret line="40" column="24" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Net.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1049" max-vertical-offset="1560">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Place.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="74" max-vertical-offset="630">
-          <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Position.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="342" max-vertical-offset="945">
-          <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
-          <folding>
-            <element signature="e#863#864#0" expanded="true" />
-            <element signature="e#941#942#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/edu/pne/pnml/model/Transition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
-          <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/ArcTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="7" max-vertical-offset="495">
-          <caret line="25" column="96" selection-start-line="25" selection-start-column="96" selection-end-line="25" selection-end-column="96" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="199" max-vertical-offset="975">
+          <caret line="50" column="10" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/PlaceTest.java">
+    <entry file="file://$PROJECT_DIR$/src/test/edu/yapne/TestSuite.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="142" max-vertical-offset="675">
-          <caret line="35" column="36" selection-start-line="35" selection-start-column="36" selection-end-line="35" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
+          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/model/NetTest.java">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1882" max-vertical-offset="2475">
-          <caret line="157" column="24" selection-start-line="157" selection-start-column="24" selection-end-line="157" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/edu/pne/pnml/io/ParserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.5204918" vertical-offset="0" max-vertical-offset="1455">
-          <caret line="84" column="26" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.37815127" vertical-offset="0" max-vertical-offset="476">
+          <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1131,6 +1158,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -1151,4 +1179,3 @@
     </states>
   </component>
 </project>
-
