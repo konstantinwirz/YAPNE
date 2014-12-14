@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+
+
+<fx:root type="javafx.scene.layout.HBox" xmlns:fx="http://javafx.com/fxml">
+	<TextField fx:id="textField" />
+</fx:root>
+

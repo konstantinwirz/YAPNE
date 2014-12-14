@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.canvas.Canvas?>
+
+<BorderPane prefHeight="600.0" prefWidth="700.0"
+	xmlns="http://javafx.com/javafx/2" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.kwirz.yapne.app.AppController">
+	<fx:define>
+		<Double fx:id="TOOLBAR_ICON_HEIGHT" fx:value="20.0" />
+		<Double fx:id="TOOLBAR_ICON_WIDTH" fx:value="20.0" />
+	</fx:define>
+	<top>
+		<ToolBar>
+			<items>
+
+				<Button onAction="#newDocument">
+					<graphic>
+						<ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
+							<image>
+								<Image url="images/new.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+
+				<!-- Spacer -->
+				<Region prefWidth="10" />
+
+				<Button onAction="#openDocument">
+					<graphic>
+						<ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
+							<image>
+								<Image url="images/open.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+
+				<Button>
+					<graphic>
+						<ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
+							<image>
+								<Image url="images/save.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+
+				<!-- Spacer -->
+				<Region prefWidth="20" />
+
+				<fx:define>
+					<ToggleGroup fx:id="petriNetActionsToogleGroup" />
+				</fx:define>
+
+				<ToggleButton selected="true" toggleGroup="$petriNetActionsToogleGroup"
+				              onAction="#activateManipulationMode">
+					<graphic>
+						<ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
+							<image>
+								<Image url="images/hand.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</ToggleButton>
+
+				<ToggleButton toggleGroup="$petriNetActionsToogleGroup"
+				              onAction="#activatePlaceCreationMode" >
+					<graphic>
+						<ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
+							<image>
+								<Image url="images/place.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</ToggleButton>
+
+				<ToggleButton toggleGroup="$petriNetActionsToogleGroup"
+				              onAction="#activateTransitionCreationMode" >
+					<graphic>
+						<ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
+							<image>
+								<Image url="images/transition.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</ToggleButton>
+
+				<ToggleButton toggleGroup="$petriNetActionsToogleGroup"
+				              onAction="#activateArcCreationMode" >
+					<graphic>
+						<ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
+							<image>
+								<Image url="images/arc.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</ToggleButton>
+
+				<!-- Spacer -->
+				<Region HBox.hgrow="ALWAYS" />
+
+				<Button onAction="#settings">
+					<graphic>
+						<ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
+							<image>
+								<Image url="images/settings.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+
+				<Button onAction="#about">
+					<graphic>
+						<ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
+							<image>
+								<Image url="images/info.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</Button>
+
+
+			</items>
+		</ToolBar>
+	</top>
+
+	<center>
+	   <ScrollPane BorderPane.alignment="CENTER">
+	   <content>
+	   <Pane fx:id="canvas">
+	   </Pane>
+	   </content>
+	   </ScrollPane>
+	</center>
+
+
+</BorderPane>

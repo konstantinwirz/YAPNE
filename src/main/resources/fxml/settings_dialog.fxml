@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.Text?>
+<?import com.sun.javafx.scene.control.skin.InputField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<?import de.kwirz.yapne.app.IntegerField?>
+
+<fx:root type="javafx.scene.layout.GridPane" xmlns:fx="http://javafx.com/fxml/1"
+          alignment="center" vgap="10" hgap="10" prefWidth="210" prefHeight="150"
+          minHeight="140" minWidth="200" >
+    <padding>
+        <Insets top="25" bottom="5" right="25" left="25" />
+    </padding>
+	<Text text="Element size: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <IntegerField fx:id="nodeSizeInputField"  value="14" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Text text="Stroke width: " GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <IntegerField fx:id="strokeWidthInputField" value="2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <HBox alignment="BOTTOM_RIGHT" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <Button text="Close" onAction="#handleCloseButtonAction" />
+    </HBox>
+</fx:root>
+
