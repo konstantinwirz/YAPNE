@@ -1,5 +1,6 @@
 package de.kwirz.yapne.app;
 
+import java.awt.font.NumericShaper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -52,6 +53,7 @@ public class IntegerField extends HBox implements Initializable {
 			public void changed(ObservableValue<? extends String> observable,
 					String oldValue, String newValue) {
 				textField.setText(newValue.matches("\\d*")?newValue:oldValue);
+				setValue(Integer.valueOf(textField.getText()));
 			}
 		});	
 		
