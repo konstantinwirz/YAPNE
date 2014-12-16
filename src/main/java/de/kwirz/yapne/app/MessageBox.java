@@ -18,7 +18,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-
+/**
+ * 
+ * Zeigt Meldungen
+ *
+ */
 public class MessageBox extends GridPane implements Initializable {
 	
 	@FXML
@@ -58,6 +62,18 @@ public class MessageBox extends GridPane implements Initializable {
 	
 	public static void about(String message, Stage stage) {
 		show(MessageType.ABOUT, message, stage);
+	}
+	
+	public static void info(String message, Stage stage) {
+		show(MessageType.INFO, message, stage);
+	}
+	
+	public static void error(String message, Stage stage) {
+		show(MessageType.ERROR, message, stage);
+	}
+	
+	public static void warning(String message, Stage stage) {
+		show(MessageType.WARNING, message, stage);
 	}
 	
 	public MessageBox(MessageType messageType, String message) {
