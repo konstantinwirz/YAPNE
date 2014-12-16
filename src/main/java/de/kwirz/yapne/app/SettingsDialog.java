@@ -11,7 +11,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-
+/**
+ * Einstellungsdialog 
+ * 
+ *
+ */
 public class SettingsDialog extends GridPane implements Initializable {
 	
 	private Settings settings = new Settings();
@@ -34,33 +38,29 @@ public class SettingsDialog extends GridPane implements Initializable {
     	try {
 			loader.load();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.err.println("couldn't load FXML file");
 			e.printStackTrace();
 		}
 	}
 	
 	@Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-		/*
-		
 		nodeSizeInputField.setValue(Integer.valueOf(settings.getValue("node_size",
 				String.valueOf(DEFAULT_NODE_SIZE))));
 		strokeWidthInputField.setValue(Integer.valueOf(settings.getValue("stroke_width",
 				String.valueOf(DEFAULT_STROKE_WIDTH))));
-		*/
-		
     }
 	
 	@FXML
 	public void handleCloseButtonAction() {
+		Stage stage = (Stage) nodeSizeInputField.getScene().getWindow();
+		
 		try {
-			settings.setValue("stroke_width", String.valueOf(strokeWidthInputField.getValue()));
-			settings.setValue("node_size", String.valueOf(nodeSizeInputField.getValue()));
+			settings.setValue("stroke_width", strokeWidthInputField.getValue());
+			settings.setValue("node_size", nodeSizeInputField.getValue());
 		} catch (Exception e) {
-			
-			;
+			MessageBox.error(String.format("couldn't store setttings: %s", e.getMessage()), stage);
 		} finally {
-			Stage stage = (Stage) nodeSizeInputField.getScene().getWindow();
 			stage.close();
 		}
 	}
