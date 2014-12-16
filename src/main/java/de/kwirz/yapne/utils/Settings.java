@@ -6,10 +6,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-
+/**
+ * Persistente Einstellungen.
+ *
+ */
 public class Settings {
+	
+	private static final Logger logger = Logger.getLogger(Settings.class.getName());
+	
 
 	private static final String FILE_NAME = System.getProperty("user.home") + "/.yapne.conf";
 	private Properties properties = new Properties();
@@ -20,8 +28,7 @@ public class Settings {
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
-				System.err.println("couldn't create file: " + FILE_NAME);
-				e.printStackTrace();
+				logger.log(Level.SEVERE, "couldn't create file: " + FILE_NAME, e);
 			}
 		}
 	}
@@ -30,16 +37,16 @@ public class Settings {
 		try {
 			properties.load(new FileInputStream(FILE_NAME));
 		} catch (IOException e) {
-			System.err.println("couldn't read settings from: " + FILE_NAME);
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "couldn't read settings from: " + FILE_NAME, e);
 		}
 	}
 	
 	public void save() throws IOException {
 		try {
 			properties.store(new FileOutputStream(FILE_NAME), "YAPNE Settings");
+			logger.info("save settings to '" + FILE_NAME + "'");
 		} catch (IOException e) {
-			System.err.println("couldn't write settings file");
+			logger.log(Level.SEVERE, "couldn't write settings file: " + FILE_NAME, e);
 			throw e;
 		}
 	}
@@ -52,9 +59,16 @@ public class Settings {
 		return getAllKeys().contains(key);
 	}
 	
-	public void setValue(String key, String value) throws Exception {
-		properties.setProperty(key, value);
+	public <T> void setValue(String key, T value) throws Exception {
+		String valueAsString = "";
+		if (value instanceof Object)
+			valueAsString = value.toString();
+		else
+			valueAsString = String.valueOf(value);
+
+		properties.setProperty(key, valueAsString);
 		save();
+		logger.info(String.format("set '%s' to '%s'", key, valueAsString));
 	}
 	
 	public String getValue(String key) throws IllegalArgumentException {
@@ -73,11 +87,4 @@ public class Settings {
 		return String.format("Settings { file: '%s', keys: %d }", FILE_NAME, getAllKeys().size());
 	}
 	
-	public static void main(String[] args) throws Exception {
-		Settings settings = new Settings();
-		
-		for (String key : settings.getAllKeys()) {
-			System.out.println(key + " = " + settings.getValue(key));
-		}
-	}
 }
