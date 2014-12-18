@@ -2,13 +2,9 @@
 
 <?import java.lang.*?>
 <?import javafx.scene.image.*?>
-<?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.canvas.Canvas?>
+
 
 <BorderPane prefHeight="600.0" prefWidth="700.0"
 	xmlns="http://javafx.com/javafx/2" xmlns:fx="http://javafx.com/fxml/1"
