@@ -59,7 +59,7 @@ public class Settings {
 		return getAllKeys().contains(key);
 	}
 	
-	public <T> void setValue(String key, T value) throws Exception {
+	public <T> void setValue(String key, T value) throws IOException {
 		String valueAsString = "";
 		if (value instanceof Object)
 			valueAsString = value.toString();
