@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="yapne">
+    <output-path>$PROJECT_DIR$/out/artifacts/yapne</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="de.kwirz.yapne.app.App" />
+        <option name="description" value="" />
+        <option name="htmlParamFile" value="" />
+        <option name="paramFile" value="" />
+        <option name="title" value="" />
+        <option name="vendor" value="" />
+      </options>
+    </properties>
+    <root id="root" />
+  </artifact>
+</component>
