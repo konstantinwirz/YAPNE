@@ -1,5 +1,6 @@
 package de.kwirz.yapne.app;
 
+import de.kwirz.yapne.utils.Settings;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,13 +16,27 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import de.kwirz.yapne.app.MessageBox.MessageType;
+import de.kwirz.yapne.io.PnmlParser;
+import de.kwirz.yapne.scene.Net;
 
 
 public class AppController implements Initializable {
+	
+	private static final Logger logger = Logger.getLogger(AppController.class.getName());
+	
+	private boolean isDirty = false;
+	private String currentFileName = "";
+    private Settings settings = new Settings();
+
 
     @FXML
     private Pane canvas;
@@ -30,7 +45,7 @@ public class AppController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-    	
+    	logger.info("initilaized controller");
     }
     
     public void setPrimaryStage(Stage stage) {
@@ -42,27 +57,54 @@ public class AppController implements Initializable {
         Platform.exit();
     }
 
-    
-
     @FXML
     public void newDocument() {
-        System.out.println("CLICKED");
+    	isDirty = false;
+    	currentFileName = "";
+    	canvas.getChildren().clear();
     }
     
     @FXML
     public void openDocument() {
+        final String initialDirectory = settings.getValue("last_directory", System.getProperty("user.home"));
+
     	final FileChooser fileChooser = FileChooserBuilder.create()
     			.title("Open PNML File")
     			.extensionFilters(new FileChooser.ExtensionFilter("PNML files (*.pnml)", "*.pnml"))
+                .initialDirectory(new File(initialDirectory))
     			.build();
     	
     	final File file = fileChooser.showOpenDialog(primaryStage);
-    	System.out.println(file);
+
+        if (file == null) // no selection
+            return;
+
+        // Store directory
+        try {
+            settings.setValue("last_directory", file.getParent());
+        } catch (IOException e) {
+            MessageBox.error("couldn't store settings", primaryStage);
+        }
+
+        String source = null;
+		try {
+			source = new String(Files.readAllBytes(Paths.get(file.getPath())));
+		} catch (IOException e) {
+			MessageBox.error("couldn't read file " + file.getPath(), primaryStage);
+			return;
+		}
+		
+		assert source != null;
+		
+        PnmlParser parser = new PnmlParser();
+        final Net root = Net.createFromModel(parser.parse(source));
+        canvas.getChildren().add(root);
+    	currentFileName = file.getPath();
+    	isDirty = false;
     }
     
     @FXML
     public void saveDocument() {
-    	
     }
     
     @FXML
