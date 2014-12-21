@@ -22,6 +22,11 @@ public class PetriNetNodePresentationBuilder<T extends PetriNetNodePresentationB
         return (T)this;
     }
 
+    public T strokeWidth(double width) {
+        strokeWidth_.setValue(width);
+        return (T)this;
+    }
+
     protected void prepare(PetriNetNodePresentation node) {
         if (size_.isSet())
             node.setSize(size_.getValue());

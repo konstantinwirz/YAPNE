@@ -18,8 +18,6 @@ import javafx.stage.Stage;
  */
 public class SettingsDialog extends GridPane implements Initializable {
 	
-	private Settings settings = new Settings();
-	
 	private static int DEFAULT_STROKE_WIDTH = 1;
 	private static int DEFAULT_NODE_SIZE = 14;
 	
@@ -45,6 +43,7 @@ public class SettingsDialog extends GridPane implements Initializable {
 	
 	@Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+		Settings settings = Settings.getInstance();
 		nodeSizeInputField.setValue(Integer.valueOf(settings.getValue("node_size",
 				String.valueOf(DEFAULT_NODE_SIZE))));
 		strokeWidthInputField.setValue(Integer.valueOf(settings.getValue("stroke_width",
@@ -56,10 +55,11 @@ public class SettingsDialog extends GridPane implements Initializable {
 		Stage stage = (Stage) nodeSizeInputField.getScene().getWindow();
 		
 		try {
+			Settings settings = Settings.getInstance();
 			settings.setValue("stroke_width", strokeWidthInputField.getValue());
 			settings.setValue("node_size", nodeSizeInputField.getValue());
 		} catch (Exception e) {
-			MessageBox.error(String.format("couldn't store setttings: %s", e.getMessage()), stage);
+			MessageBox.error(String.format("couldn't store settings: %s", e.getMessage()), stage);
 		} finally {
 			stage.close();
 		}

@@ -29,7 +29,6 @@ public class AppController implements Initializable {
 	
 	private boolean isDirty = false;
 	private String currentFileName = "";
-    private Settings settings = new Settings();
     private AppMode mode = AppMode.EDITING;
 
     @FXML
@@ -60,6 +59,7 @@ public class AppController implements Initializable {
     
     @FXML
     public void openDocument() {
+        Settings settings = Settings.getInstance();
         final String initialDirectory = settings.getValue("last_directory", System.getProperty("user.home"));
 
     	final FileChooser fileChooser = FileChooserBuilder.create()

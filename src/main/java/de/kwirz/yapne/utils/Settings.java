@@ -17,24 +17,27 @@ import java.util.logging.Logger;
 public class Settings {
 	
 	private static final Logger logger = Logger.getLogger(Settings.class.getName());
-	
 
 	private static final String FILE_NAME = System.getProperty("user.home") + "/.yapne.conf";
+
 	private Properties properties = new Properties();
-	
-	static { // erstellt Einstellungsdatei falls die noch nicht exisitiert
-		final File file = new File(FILE_NAME);
-		if (!file.exists()) {
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				logger.log(Level.SEVERE, "couldn't create file: " + FILE_NAME, e);
-			}
-		}
+
+
+	private static class SettingsHolder {
+		public static Settings settings = new Settings();
+	}
+
+	public static Settings getInstance() {
+		return SettingsHolder.settings;
 	}
 	
-	public Settings() {
+	private Settings() {
 		try {
+			final File file = new File(FILE_NAME);
+
+			if (!file.exists())
+				file.createNewFile();
+
 			properties.load(new FileInputStream(FILE_NAME));
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "couldn't read settings from: " + FILE_NAME, e);
@@ -79,8 +82,8 @@ public class Settings {
 		return value; 
 	}
 	
-	public String getValue(String key, String defaultValue) {
-		return properties.getProperty(key, defaultValue);
+	public <T> String getValue(String key, T defaultValue) {
+		return properties.getProperty(key, String.valueOf(defaultValue));
 	}
 		
 	public String toString() {

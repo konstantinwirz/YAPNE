@@ -91,10 +91,14 @@ public abstract class PetriNetNodePresentation extends BorderPane
         size.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                if (newValue.doubleValue() > getMaximumSize() || newValue.doubleValue() < getMinimumSize())
-                    throw new IllegalArgumentException("invalid size passed");
+                double size = newValue.doubleValue();
 
-                onSizeChanged(newValue.doubleValue());
+                if (size > MAXIMUM_SIZE)
+                    size = MAXIMUM_SIZE;
+                else if (size < MINIMUM_SIZE)
+                    size = MINIMUM_SIZE;
+
+                onSizeChanged(size);
             }
         });
 
@@ -290,4 +294,13 @@ public abstract class PetriNetNodePresentation extends BorderPane
         setCenterX(model.getPosition().getX());
         setCenterY(model.getPosition().getY());
     }
+
+    public static double getDefaultStrokeWidth() {
+        return DEFAULT_STROKE_WIDTH;
+    }
+
+    public static double getDefaultSize() {
+        return DEFAULT_SIZE;
+    }
+    
 }

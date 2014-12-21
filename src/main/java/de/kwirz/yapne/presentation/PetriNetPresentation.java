@@ -2,6 +2,7 @@ package de.kwirz.yapne.presentation;
 
 import java.util.HashMap;
 import de.kwirz.yapne.model.*;
+import de.kwirz.yapne.utils.Settings;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
@@ -26,6 +27,13 @@ public class PetriNetPresentation extends Pane {
         // Hilfsabbildung
         HashMap<String, Node> nodes = new HashMap<>();
 
+        Settings settings = Settings.getInstance();
+        double strokeWidth =
+                Double.valueOf(settings.getValue("stroke_width", PetriNetNodePresentation.getDefaultStrokeWidth()));
+        double nodeSize =
+                Double.valueOf(settings.getValue("node_size", PetriNetNodePresentation.getDefaultSize()));
+
+
         // at first create places and transitions then create arcs
         for (final String id : model.getIds()) {
             PetriNetElement element = model.getElementById(id);
@@ -36,9 +44,15 @@ public class PetriNetPresentation extends Pane {
             if (element instanceof PetriNetPlace) {
                 presentation = PetriNetPlacePresentationBuilder.create()
                         .model((PetriNetPlace) element)
+                        .size(nodeSize)
+                        .strokeWidth(strokeWidth)
                         .build();
             } else if (element instanceof PetriNetTransition) {
-                presentation = new PetriNetTransitionPresentation((PetriNetTransition) element);
+                presentation = PetriNetTransitionPresentationBuilder.create()
+                        .model((PetriNetTransition) element)
+                        .size(nodeSize)
+                        .strokeWidth(strokeWidth)
+                        .build();
             }
             if (presentation != null)
                 nodes.put(element.getId(), (Node) presentation);
