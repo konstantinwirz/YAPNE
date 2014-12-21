@@ -1,6 +1,11 @@
-package de.kwirz.yapne.scene;
+package de.kwirz.yapne.presentation;
 
-import javafx.beans.property.*;
+import de.kwirz.yapne.model.PetriNetElement;
+import de.kwirz.yapne.model.PetriNetNode;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -8,10 +13,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -27,11 +30,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
-
 /**
- * Created by konstantin on 09/11/14.
+ * Created by konstantin on 20/12/14.
  */
-abstract public class AbstractNode  extends BorderPane {
+public abstract class PetriNetNodePresentation extends BorderPane
+        implements PetriNetElementPresentation {
 
     private static double MAXIMUM_SIZE = 150.0;
     private static double MINIMUM_SIZE = 20.0;
@@ -53,7 +56,7 @@ abstract public class AbstractNode  extends BorderPane {
     private Text labelText;
     private static int counter = 0;
 
-    public AbstractNode() {
+    public PetriNetNodePresentation() {
         setupUi();
         registerListeners();
     }
@@ -125,14 +128,6 @@ abstract public class AbstractNode  extends BorderPane {
                     throw new NullPointerException("center node can not be null");
 
                 onCenterYChanged(newValue.doubleValue());
-            }
-        });
-
-        setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                setCenterX(mouseEvent.getSceneX());
-                setCenterY(mouseEvent.getSceneY());
             }
         });
 
@@ -282,5 +277,17 @@ abstract public class AbstractNode  extends BorderPane {
 
     public void setCenterY(double centerY) {
         this.centerY.set(centerY);
+    }
+
+    @Override
+    public void syncFromModel() {
+        assert getModel() != null;
+        assert getModel() instanceof PetriNetNode;
+
+        PetriNetNode model = (PetriNetNode) getModel();
+
+        setLabel(model.getName());
+        setCenterX(model.getPosition().getX());
+        setCenterY(model.getPosition().getY());
     }
 }

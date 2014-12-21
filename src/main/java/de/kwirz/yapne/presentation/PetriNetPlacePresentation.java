@@ -1,6 +1,9 @@
-package de.kwirz.yapne.scene;
+package de.kwirz.yapne.presentation;
 
-import javafx.beans.property.*;
+import de.kwirz.yapne.model.PetriNetElement;
+import de.kwirz.yapne.model.PetriNetPlace;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -11,12 +14,12 @@ import javafx.scene.shape.CircleBuilder;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBuilder;
 
-
 /**
- * Created by konstantin on 09/11/14.
+ * Created by konstantin on 20/12/14.
  */
-public class Place extends AbstractNode {
+public class PetriNetPlacePresentation extends PetriNetNodePresentation {
 
+    private PetriNetPlace model;
     private StackPane stack = null;
     private Circle markingCircle = null;
     private Text markingText = null;
@@ -24,7 +27,7 @@ public class Place extends AbstractNode {
 
     private IntegerProperty marking = new SimpleIntegerProperty(0);
 
-    public Place() {
+    public PetriNetPlacePresentation() {
         setupUi();
         registerListeners();
     }
@@ -103,4 +106,25 @@ public class Place extends AbstractNode {
         }
     }
 
+    @Override
+    public void setModel(PetriNetElement element) {
+        model = (PetriNetPlace) element;
+        syncFromModel();
+    }
+
+    @Override
+    public PetriNetElement getModel() {
+        return model;
+    }
+
+    @Override
+    public void syncToModel() {
+
+    }
+
+    @Override
+    public void syncFromModel() {
+        super.syncFromModel();
+        setMarking(model.getMarking());
+    }
 }

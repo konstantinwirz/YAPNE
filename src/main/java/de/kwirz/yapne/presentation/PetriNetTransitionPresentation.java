@@ -1,27 +1,28 @@
-package de.kwirz.yapne.scene;
+package de.kwirz.yapne.presentation;
 
-
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import de.kwirz.yapne.model.PetriNetElement;
+import de.kwirz.yapne.model.PetriNetTransition;
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.RectangleBuilder;
 
-
 /**
- * Created by konstantin on 09/11/14.
+ * Created by konstantin on 20/12/14.
  */
-public final class Transition extends  AbstractNode {
+public class PetriNetTransitionPresentation extends PetriNetNodePresentation {
 
+    private PetriNetTransition model;
     private Rectangle rectangle;
-    private SimpleBooleanProperty enabled = new SimpleBooleanProperty(false);
     private Color DEFAULT_ENABLED_STROKE_COLOR = Color.GREEN;
 
-    public Transition() {
+    public PetriNetTransitionPresentation() {
         setupUi();
-        registerListeners();
+    }
+
+    public PetriNetTransitionPresentation(PetriNetTransition model) {
+        this();
+        setModel(model);
     }
 
     private void setupUi() {
@@ -37,15 +38,6 @@ public final class Transition extends  AbstractNode {
         setAlignment(rectangle, Pos.CENTER);
     }
 
-    private void registerListeners() {
-        enabled.addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-                onSetEnabled(newValue.booleanValue());
-            }
-        });
-    }
-
     @Override
     protected final void onSizeChanged(double newSize) {
         rectangle.setWidth(newSize);
@@ -57,19 +49,28 @@ public final class Transition extends  AbstractNode {
         rectangle.setStrokeWidth(newWidth);
     }
 
-    private void onSetEnabled(boolean tf) {
+    private void setEnabled(boolean tf) {
         rectangle.setStroke(tf?DEFAULT_ENABLED_STROKE_COLOR:getDefaultStrokeColor());
     }
 
-    public SimpleBooleanProperty isEnabledProperty() {
-        return enabled;
+    @Override
+    public void setModel(PetriNetElement element) {
+        model = (PetriNetTransition) element;
+        syncFromModel();
     }
 
-    public void setEnabled(boolean tf) {
-        enabled.set(tf);
+    @Override
+    public PetriNetElement getModel() {
+        return model;
     }
 
-    public boolean isEnabled() {
-        return enabled.get();
+    @Override
+    public void syncToModel() {
+    }
+
+    @Override
+    public void syncFromModel() {
+        super.syncFromModel();
+        setEnabled(model.isEnabled());
     }
 }

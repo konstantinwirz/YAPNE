@@ -1,32 +1,26 @@
 package de.kwirz.yapne.app;
 
+import de.kwirz.yapne.model.*;
+import de.kwirz.yapne.presentation.PetriNetPresentation;
 import de.kwirz.yapne.utils.Settings;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooserBuilder;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Logger;
 
-import de.kwirz.yapne.app.MessageBox.MessageType;
 import de.kwirz.yapne.io.PnmlParser;
-import de.kwirz.yapne.scene.Net;
 
 
 public class AppController implements Initializable {
@@ -36,16 +30,16 @@ public class AppController implements Initializable {
 	private boolean isDirty = false;
 	private String currentFileName = "";
     private Settings settings = new Settings();
-
+    private AppMode mode = AppMode.EDITING;
 
     @FXML
-    private Pane canvas;
+    private PetriNetPresentation canvas;
     
     private Stage primaryStage;
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-    	logger.info("initilaized controller");
+    	logger.info("initialized controller");
     }
     
     public void setPrimaryStage(Stage stage) {
@@ -97,36 +91,88 @@ public class AppController implements Initializable {
 		assert source != null;
 		
         PnmlParser parser = new PnmlParser();
-        final Net root = Net.createFromModel(parser.parse(source));
-        canvas.getChildren().add(root);
+        canvas.setModel(parser.parse(source));
+
+        /*
+        for (Node node : canvas.getChildren()) {
+            node.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    handleMouseEvent(mouseEvent);
+                }
+            });
+            node.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    handleMouseEvent(mouseEvent);
+                }
+            });
+        }
+        */
     	currentFileName = file.getPath();
     	isDirty = false;
     }
-    
+
     @FXML
     public void saveDocument() {
+
     }
     
     @FXML
-    public void activateManipulationMode() {
-    	
+    public void activateEditingMode() {
+    	onModeChanged(AppMode.EDITING);
     }
     
     @FXML
     public void activatePlaceCreationMode() {
-    	
+    	onModeChanged(AppMode.PLACE_CREATION);
     }
     
     @FXML
     public void activateTransitionCreationMode() {
-    	
+        onModeChanged(AppMode.TRANSITION_CREATION);
     }
     
     @FXML
     public void activateArcCreationMode() {
-    	
+    	onModeChanged(AppMode.ARC_CREATION);
     }
-    
+
+    private void onModeChanged(AppMode mode) {
+        this.mode = mode;
+    }
+
+    /*
+    private void handleMouseEvent(MouseEvent event) {
+        switch (mode) {
+            case EDITING:
+                if (event.getEventType().equals(MouseEvent.MOUSE_DRAGGED))
+                    moveNode((Node) event.getSource(), event.getSceneX(), event.getSceneY());
+                else if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED))
+                    selectNode((Node) event.getSource());
+                break;
+            default:
+        }
+
+        //System.out.println("EVENT: " + event.getEventType());
+    }
+
+    private void moveNode(Node node, double x, double y) {
+        if (node instanceof AbstractNode) {
+            ((AbstractNode) node).setCenterX(x);
+            ((AbstractNode) node).setCenterY(y);
+        }
+    }
+
+    private void selectNode(Node node) {
+        if (node instanceof AbstractNode) {
+            ((AbstractNode) node).setStrokeWidth(5);
+        } else if (node instanceof Arc) {
+            ((Arc) node).setStrokeWidth(5);
+        }
+    }
+    */
+
     @FXML
     public void about() {
     	MessageBox.about("YAPNE v1.0", primaryStage);

@@ -1,5 +1,7 @@
-package de.kwirz.yapne.scene;
+package de.kwirz.yapne.presentation;
 
+import de.kwirz.yapne.model.PetriNetArc;
+import de.kwirz.yapne.model.PetriNetElement;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.shape.LineTo;
@@ -7,16 +9,18 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 
 /**
- * Created by konstantin on 19/11/14.
+ * Created by konstantin on 20/12/14.
  */
-public class Arc extends Path {
+public class PetriNetArcPresentation extends Path implements PetriNetElementPresentation {
 
     private final double MINIMUM_LENGTH = 80;
-    private AbstractNode source = null;
-    private AbstractNode target = null;
+    private PetriNetNodePresentation source = null;
+    private PetriNetNodePresentation target = null;
     private ChangeListener<Number> changeListener = null;
+    private PetriNetArc model = null;
 
-    public Arc() {
+
+    public PetriNetArcPresentation() {
         changeListener = new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -24,13 +28,6 @@ public class Arc extends Path {
             }
         };
     }
-
-    @Override
-    public void finalize() throws Throwable {
-        clear();
-        super.finalize();
-    }
-
 
     /**
      * Setzt source und target auf Null
@@ -40,11 +37,11 @@ public class Arc extends Path {
         setTarget(null);
     }
 
-    public AbstractNode getSource() {
+    public PetriNetNodePresentation getSource() {
         return source;
     }
 
-    public void setSource(AbstractNode source) {
+    public void setSource(PetriNetNodePresentation source) {
         if (this.source != null) {
             this.source.centerXProperty().addListener(changeListener);
             this.source.centerYProperty().addListener(changeListener);
@@ -55,11 +52,11 @@ public class Arc extends Path {
         source.centerYProperty().addListener(changeListener);
     }
 
-    public AbstractNode getTarget() {
+    public PetriNetNodePresentation getTarget() {
         return target;
     }
 
-    public void setTarget(AbstractNode target) {
+    public void setTarget(PetriNetNodePresentation target) {
         if (this.target != null) {
             this.target.centerXProperty().removeListener(changeListener);
             this.target.centerYProperty().removeListener(changeListener);
@@ -113,4 +110,25 @@ public class Arc extends Path {
         y = y2 - barb * Math.sin( rho );
         getElements().add(new LineTo(x, y));
     }
+
+    @Override
+    public void setModel(PetriNetElement element) {
+        this.model = (PetriNetArc) element;
+    }
+
+    @Override
+    public PetriNetElement getModel() {
+        return model;
+    }
+
+    @Override
+    public void syncToModel() {
+
+    }
+
+    @Override
+    public void syncFromModel() {
+
+    }
+
 }
