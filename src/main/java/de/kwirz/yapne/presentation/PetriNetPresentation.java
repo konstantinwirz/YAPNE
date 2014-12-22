@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import de.kwirz.yapne.model.*;
 import de.kwirz.yapne.utils.Settings;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.DropShadowBuilder;
@@ -245,6 +246,25 @@ public class PetriNetPresentation extends Pane {
     public void unselectElement(PetriNetElementPresentation element) {
         if (element != null)
             ((Node) selectedElement).setEffect(null);
+    }
+
+    public void removeSelectedElement() {
+        if (selectedElement == null) {
+            logger.log(Level.WARNING, "no element selected");
+            return;
+        }
+
+        assert selectedElement != null;
+
+        getModel().removeElementById(selectedElement.getModel().getId());
+        initializeFromModel();
+        selectedElement = null;
+    }
+
+    public void moveNode(PetriNetNodePresentation presentation, Point2D point) {
+        presentation.setCenterX(point.getX());
+        presentation.setCenterY(point.getY());
+        presentation.syncToModel();
     }
 
 }

@@ -10,7 +10,10 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooserBuilder;
@@ -42,13 +45,6 @@ public class AppController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        canvas.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                handleMouseEvent(mouseEvent);
-            }
-        });
-
         canvas.setOnMouseClickedForEachElement(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -153,41 +149,40 @@ public class AppController implements Initializable {
         this.mode = mode;
     }
 
+    @FXML
     private void handleMouseEvent(MouseEvent event) {
         switch (mode) {
             case EDITING:
-                if (event.getEventType().equals(MouseEvent.MOUSE_DRAGGED))
-                    moveNode((Node) event.getSource(), event.getSceneX(), event.getSceneY());
-                else if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+                if (event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
+                    Object node = event.getSource();
+                    if (node instanceof PetriNetNodePresentation) {
+                        canvas.moveNode((PetriNetNodePresentation) node,
+                                new Point2D(event.getSceneX(), event.getSceneY()));
+                    }
+                } else if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
                     Object node = event.getSource();
                     if (node instanceof PetriNetElementPresentation)
                         canvas.selectElement((PetriNetElementPresentation) node);
-
                 }
                 break;
             case PLACE_CREATION:
                 if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED))
-                    canvas.createPlace(event.getX(), event.getY());
+                    canvas.createPlace(event.getSceneX(), event.getSceneY());
                 break;
             case TRANSITION_CREATION:
                 if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED))
-                    canvas.createTransition(event.getX(), event.getY());
+                    canvas.createTransition(event.getSceneX(), event.getSceneY());
             default:
         }
     }
 
-    private void moveNode(Node node, double x, double y) {
-        if (node instanceof PetriNetNodePresentation) {
-            ((PetriNetNodePresentation) node).setCenterX(x);
-            ((PetriNetNodePresentation) node).setCenterY(y);
-        }
-    }
-
-    private void selectNode(Node node) {
-        if (node instanceof PetriNetNodePresentation) {
-            ((PetriNetNodePresentation) node).setStrokeWidth(5);
-        } else if (node instanceof PetriNetArcPresentation) {
-            ((PetriNetArcPresentation) node).setStrokeWidth(5);
+    @FXML
+    public void handleKeyEvent(KeyEvent event) {
+        if (mode.equals(AppMode.EDITING) &&
+                event.getEventType().equals(KeyEvent.KEY_PRESSED) &&
+                (event.getCode().equals(KeyCode.BACK_SPACE)
+                        || event.getCode().equals(KeyCode.DELETE))) {
+            canvas.removeSelectedElement();
         }
     }
 

@@ -10,7 +10,9 @@
 
 <BorderPane prefHeight="600.0" prefWidth="700.0"
             xmlns="http://javafx.com/javafx/2" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="de.kwirz.yapne.app.AppController">
+            fx:controller="de.kwirz.yapne.app.AppController"
+            onKeyPressed="#handleKeyEvent"
+            onMouseClicked="#handleMouseEvent" >
     <fx:define>
         <Double fx:id="TOOLBAR_ICON_HEIGHT" fx:value="20.0"/>
         <Double fx:id="TOOLBAR_ICON_WIDTH" fx:value="20.0"/>
@@ -134,7 +136,7 @@
     <center>
         <ScrollPane BorderPane.alignment="CENTER" fitToWidth="true" fitToHeight="true" >
             <content>
-                <PetriNetPresentation fx:id="canvas"/>
+                <PetriNetPresentation fx:id="canvas" />
             </content>
         </ScrollPane>
     </center>
