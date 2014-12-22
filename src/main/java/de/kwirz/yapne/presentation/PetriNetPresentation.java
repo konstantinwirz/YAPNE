@@ -11,9 +11,11 @@ import de.kwirz.yapne.model.*;
 import de.kwirz.yapne.utils.Settings;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.DropShadowBuilder;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-
+import javafx.scene.paint.Color;
 
 
 /**
@@ -30,6 +32,8 @@ public class PetriNetPresentation extends Pane {
 
     private EventHandler<? super MouseEvent> mouseClickedEventHandler;
     private EventHandler<? super MouseEvent> mouseDraggedEventHandler;
+
+    private PetriNetElementPresentation selectedElement;
 
 
     public PetriNetPresentation() {
@@ -97,13 +101,17 @@ public class PetriNetPresentation extends Pane {
                                                         .source(source)
                                                         .target(target)
                                                         .model((PetriNetArc) element)
+                                                        .strokeWidth(strokeWidth)
                                                         .build();
                 ++arcCounter;
                 nodes.put(element.getId(), (Node) presentation);
+                ((Node) presentation).setScaleZ(100);
             }
         }
 
         getChildren().addAll(nodes.values());
+        setOnMouseDraggedForEachElement(mouseDraggedEventHandler);
+        setOnMouseClickedForEachElement(mouseClickedEventHandler);
     }
 
     private double getStrokeWidthFromSettings() {
@@ -218,5 +226,25 @@ public class PetriNetPresentation extends Pane {
         return node;
     }
 
+    public void selectElement(PetriNetElementPresentation element) {
+        if (selectedElement != null)
+            unselectElement(selectedElement);
+
+        assert element != null;
+
+        DropShadow shadow = DropShadowBuilder.create()
+                .offsetX(3)
+                .offsetY(3)
+                .radius(5)
+                .color(Color.color(0.4, 0.5, 0.6))
+                .build();
+        ((Node) element).setEffect(shadow);
+        selectedElement = element;
+    }
+
+    public void unselectElement(PetriNetElementPresentation element) {
+        if (element != null)
+            ((Node) selectedElement).setEffect(null);
+    }
 
 }

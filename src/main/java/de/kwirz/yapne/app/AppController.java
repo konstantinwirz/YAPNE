@@ -1,6 +1,8 @@
 package de.kwirz.yapne.app;
 
+import de.kwirz.yapne.model.PetriNet;
 import de.kwirz.yapne.presentation.PetriNetArcPresentation;
+import de.kwirz.yapne.presentation.PetriNetElementPresentation;
 import de.kwirz.yapne.presentation.PetriNetNodePresentation;
 import de.kwirz.yapne.presentation.PetriNetPresentation;
 import de.kwirz.yapne.utils.Settings;
@@ -156,8 +158,12 @@ public class AppController implements Initializable {
             case EDITING:
                 if (event.getEventType().equals(MouseEvent.MOUSE_DRAGGED))
                     moveNode((Node) event.getSource(), event.getSceneX(), event.getSceneY());
-                else if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED))
-                    ;//selectNode((Node) event.getSource());
+                else if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+                    Object node = event.getSource();
+                    if (node instanceof PetriNetElementPresentation)
+                        canvas.selectElement((PetriNetElementPresentation) node);
+
+                }
                 break;
             case PLACE_CREATION:
                 if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED))

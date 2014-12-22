@@ -11,6 +11,7 @@ public class PetriNetArcPresentationBuilder {
     BuilderValue<PetriNetNodePresentation> source_ = new BuilderValue<>();
     BuilderValue<PetriNetNodePresentation> target_ = new BuilderValue<>();
     BuilderValue<PetriNetArc> model_ = new BuilderValue<>();
+    BuilderValue<Double> width_ = new BuilderValue<>();
 
     public static PetriNetArcPresentationBuilder create() {
         return new PetriNetArcPresentationBuilder();
@@ -31,6 +32,11 @@ public class PetriNetArcPresentationBuilder {
         return this;
     }
 
+    public PetriNetArcPresentationBuilder strokeWidth(double width) {
+        width_.setValue(width);
+        return this;
+    }
+
     public PetriNetArcPresentation build() {
         PetriNetArcPresentation presentation = new PetriNetArcPresentation();
 
@@ -42,6 +48,9 @@ public class PetriNetArcPresentationBuilder {
 
         if (model_.isSet())
             presentation.setModel(model_.getValue());
+
+        if (width_.isSet())
+            presentation.setStrokeWidth(width_.getValue());
 
         return presentation;
     }
