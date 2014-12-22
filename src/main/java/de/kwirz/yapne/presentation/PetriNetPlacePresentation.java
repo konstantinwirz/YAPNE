@@ -121,7 +121,8 @@ public class PetriNetPlacePresentation extends PetriNetNodePresentation {
 
     @Override
     public void syncToModel() {
-
+        super.syncToModel();
+        model.setMarking(getMarking());
     }
 
     @Override

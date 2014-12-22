@@ -284,6 +284,17 @@ public abstract class PetriNetNodePresentation extends BorderPane
     }
 
     @Override
+    public void syncToModel() {
+        assert getModel() != null;
+        assert getModel() instanceof  PetriNetNode;
+
+        PetriNetNode model = (PetriNetNode) getModel();
+
+        model.setName(getLabel());
+        model.setPosition(new PetriNetNode.Position((int) getCenterX(), (int) getCenterY()));
+    }
+
+    @Override
     public void syncFromModel() {
         assert getModel() != null;
         assert getModel() instanceof PetriNetNode;

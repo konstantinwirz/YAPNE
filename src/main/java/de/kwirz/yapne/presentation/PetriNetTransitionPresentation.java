@@ -66,6 +66,7 @@ public class PetriNetTransitionPresentation extends PetriNetNodePresentation {
 
     @Override
     public void syncToModel() {
+        super.syncToModel();
     }
 
     @Override
