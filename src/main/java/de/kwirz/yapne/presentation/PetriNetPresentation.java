@@ -1,9 +1,17 @@
 package de.kwirz.yapne.presentation;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import de.kwirz.yapne.model.*;
 import de.kwirz.yapne.utils.Settings;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 
@@ -12,8 +20,21 @@ import javafx.scene.layout.Pane;
  * Created by konstantin on 20/12/14.
  */
 public class PetriNetPresentation extends Pane {
+    private static final Logger logger = Logger.getLogger(PetriNetPresentation.class.getName());
 
     private PetriNet model;
+
+    private static int placeCounter = 0;
+    private static int transitionCounter = 0;
+    private static int arcCounter = 0;
+
+    private EventHandler<? super MouseEvent> mouseClickedEventHandler;
+    private EventHandler<? super MouseEvent> mouseDraggedEventHandler;
+
+
+    public PetriNetPresentation() {
+        model = new PetriNet();
+    }
 
     public void setModel(PetriNet model) {
         this.model = model;
@@ -24,15 +45,14 @@ public class PetriNetPresentation extends Pane {
         if (model == null)
             return;
 
+        getChildren().clear(); // remove elements from old model
+
         // Hilfsabbildung
         HashMap<String, Node> nodes = new HashMap<>();
 
         Settings settings = Settings.getInstance();
-        double strokeWidth =
-                Double.valueOf(settings.getValue("stroke_width", PetriNetNodePresentation.getDefaultStrokeWidth()));
-        double nodeSize =
-                Double.valueOf(settings.getValue("node_size", PetriNetNodePresentation.getDefaultSize()));
-
+        double strokeWidth = getStrokeWidthFromSettings();
+        double nodeSize = getNodeSizeFormSettings();
 
         // at first create places and transitions then create arcs
         for (final String id : model.getIds()) {
@@ -47,12 +67,14 @@ public class PetriNetPresentation extends Pane {
                         .size(nodeSize)
                         .strokeWidth(strokeWidth)
                         .build();
+                ++placeCounter;
             } else if (element instanceof PetriNetTransition) {
                 presentation = PetriNetTransitionPresentationBuilder.create()
                         .model((PetriNetTransition) element)
                         .size(nodeSize)
                         .strokeWidth(strokeWidth)
                         .build();
+                ++transitionCounter;
             }
             if (presentation != null)
                 nodes.put(element.getId(), (Node) presentation);
@@ -76,6 +98,7 @@ public class PetriNetPresentation extends Pane {
                                                         .target(target)
                                                         .model((PetriNetArc) element)
                                                         .build();
+                ++arcCounter;
                 nodes.put(element.getId(), (Node) presentation);
             }
         }
@@ -83,8 +106,43 @@ public class PetriNetPresentation extends Pane {
         getChildren().addAll(nodes.values());
     }
 
+    private double getStrokeWidthFromSettings() {
+        return Double.valueOf(Settings.getInstance()
+                .getValue("stroke_width", PetriNetNodePresentation.getDefaultStrokeWidth()));
+    }
+
+    private double getNodeSizeFormSettings() {
+        return Double.valueOf(Settings.getInstance()
+                .getValue("node_size", PetriNetNodePresentation.getDefaultSize()));
+    }
+
     public PetriNet getModel() {
         return model;
+    }
+
+    public List<PetriNetElementPresentation> getElements() {
+        List<PetriNetElementPresentation> elements = new ArrayList<>();
+
+        for (Node node : getChildren()) {
+            PetriNetElementPresentation presentation = (PetriNetElementPresentation) node;
+            elements.add(presentation);
+        }
+
+        return elements;
+    }
+
+    public void setOnMouseClickedForEachElement(EventHandler<? super MouseEvent> handler) {
+        for (Node node : getChildren()) {
+            node.setOnMouseClicked(handler);
+        }
+        mouseClickedEventHandler = handler;
+    }
+
+    public void setOnMouseDraggedForEachElement(EventHandler<? super MouseEvent> handler) {
+        for (Node node : getChildren()) {
+            node.setOnMouseDragged(handler);
+        }
+        mouseDraggedEventHandler = handler;
     }
 
     public void syncToModel() {
@@ -95,7 +153,70 @@ public class PetriNetPresentation extends Pane {
 
     public void syncFromModel() {
 
-
-
     }
+
+    public void createPlace(double x, double y) {
+        PetriNetPlace placeModel =
+                createNodeHelper(x, y, "place", ++placeCounter, PetriNetPlace.class);
+
+        PetriNetPlacePresentation presentation =
+                createPresentationHelper(placeModel, PetriNetPlacePresentation.class);
+    }
+
+    public void createTransition(double x, double y) {
+        PetriNetTransition transitionModel =
+                createNodeHelper(x, y, "transition", ++transitionCounter, PetriNetTransition.class);
+
+        PetriNetTransitionPresentation presentation =
+                createPresentationHelper(transitionModel, PetriNetTransitionPresentation.class);
+    }
+
+    private <T extends PetriNetNodePresentation> T createPresentationHelper(PetriNetNode nodeModel,
+                                                                      Class<T> class_) {
+        T presentation = null;
+
+        try {
+            presentation = class_.newInstance();
+            presentation.setStrokeWidth(getStrokeWidthFromSettings());
+            presentation.setSize(getNodeSizeFormSettings());
+            presentation.setModel(nodeModel);
+
+            presentation.syncFromModel();
+            presentation.setOnMouseClicked(mouseClickedEventHandler);
+            presentation.setOnMouseDragged(mouseDraggedEventHandler);
+
+            model.addElement(nodeModel);
+            getChildren().add(presentation);
+
+        } catch (InstantiationException | IllegalAccessException e) {
+            logger.log(Level.SEVERE,
+                    String.format("couldn't create an instance of class '%s'", class_));
+        }
+
+        return presentation;
+    }
+
+    private <T extends PetriNetNode> T createNodeHelper(double x, double y, String name, int counter,
+                                                        Class<T> class_) {
+        String id;
+        do {
+            id = String.format("%s%d", name, counter);
+        } while (model.hasElementById(id));
+
+        T node = null;
+
+        try {
+            node = class_.getConstructor(String.class).newInstance(id);
+            node.setName(id);
+            node.setPosition(new PetriNetNode.Position((int)x, (int)y));
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                NoSuchMethodException e) {
+            logger.log(Level.SEVERE,
+                    String.format("couldn't create an instance of class '%s'", class_));
+        }
+
+        return node;
+    }
+
+
 }

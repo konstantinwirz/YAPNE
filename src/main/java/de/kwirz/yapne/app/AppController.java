@@ -1,9 +1,11 @@
 package de.kwirz.yapne.app;
 
-import de.kwirz.yapne.model.*;
+import de.kwirz.yapne.presentation.PetriNetArcPresentation;
+import de.kwirz.yapne.presentation.PetriNetNodePresentation;
 import de.kwirz.yapne.presentation.PetriNetPresentation;
 import de.kwirz.yapne.utils.Settings;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -38,6 +40,27 @@ public class AppController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        canvas.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                handleMouseEvent(mouseEvent);
+            }
+        });
+
+        canvas.setOnMouseClickedForEachElement(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                handleMouseEvent(mouseEvent);
+            }
+        });
+
+        canvas.setOnMouseDraggedForEachElement(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                handleMouseEvent(mouseEvent);
+            }
+        });
+
     	logger.info("initialized controller");
     }
     
@@ -93,22 +116,8 @@ public class AppController implements Initializable {
         PnmlParser parser = new PnmlParser();
         canvas.setModel(parser.parse(source));
 
-        /*
-        for (Node node : canvas.getChildren()) {
-            node.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    handleMouseEvent(mouseEvent);
-                }
-            });
-            node.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    handleMouseEvent(mouseEvent);
-                }
-            });
-        }
-        */
+
+
     	currentFileName = file.getPath();
     	isDirty = false;
     }
@@ -142,36 +151,39 @@ public class AppController implements Initializable {
         this.mode = mode;
     }
 
-    /*
     private void handleMouseEvent(MouseEvent event) {
         switch (mode) {
             case EDITING:
                 if (event.getEventType().equals(MouseEvent.MOUSE_DRAGGED))
                     moveNode((Node) event.getSource(), event.getSceneX(), event.getSceneY());
                 else if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED))
-                    selectNode((Node) event.getSource());
+                    ;//selectNode((Node) event.getSource());
                 break;
+            case PLACE_CREATION:
+                if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED))
+                    canvas.createPlace(event.getX(), event.getY());
+                break;
+            case TRANSITION_CREATION:
+                if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED))
+                    canvas.createTransition(event.getX(), event.getY());
             default:
         }
-
-        //System.out.println("EVENT: " + event.getEventType());
     }
 
     private void moveNode(Node node, double x, double y) {
-        if (node instanceof AbstractNode) {
-            ((AbstractNode) node).setCenterX(x);
-            ((AbstractNode) node).setCenterY(y);
+        if (node instanceof PetriNetNodePresentation) {
+            ((PetriNetNodePresentation) node).setCenterX(x);
+            ((PetriNetNodePresentation) node).setCenterY(y);
         }
     }
 
     private void selectNode(Node node) {
-        if (node instanceof AbstractNode) {
-            ((AbstractNode) node).setStrokeWidth(5);
-        } else if (node instanceof Arc) {
-            ((Arc) node).setStrokeWidth(5);
+        if (node instanceof PetriNetNodePresentation) {
+            ((PetriNetNodePresentation) node).setStrokeWidth(5);
+        } else if (node instanceof PetriNetArcPresentation) {
+            ((PetriNetArcPresentation) node).setStrokeWidth(5);
         }
     }
-    */
 
     @FXML
     public void about() {
