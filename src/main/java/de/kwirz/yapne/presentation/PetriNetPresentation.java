@@ -189,6 +189,7 @@ public class PetriNetPresentation extends Pane {
                 .source(source)
                 .target(target)
                 .model(arcModel)
+                .strokeWidth(getStrokeWidthFromSettings())
                 .build();
 
         presentation.setOnMouseClicked(mouseClickedEventHandler);
@@ -289,4 +290,7 @@ public class PetriNetPresentation extends Pane {
         return selectedElement;
     }
 
+    public void refresh() {
+        initializeFromModel();
+    }
 }

@@ -1,36 +1,26 @@
 package de.kwirz.yapne.app;
 
-import de.kwirz.yapne.model.PetriNet;
-import de.kwirz.yapne.presentation.PetriNetElementPresentation;
-import de.kwirz.yapne.presentation.PetriNetNodePresentation;
-import de.kwirz.yapne.presentation.PetriNetPresentation;
-import de.kwirz.yapne.utils.Settings;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.application.*;
+import javafx.event.*;
+import javafx.fxml.*;
 import javafx.geometry.Point2D;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooserBuilder;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.scene.input.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.*;
+import javafx.stage.*;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
+import de.kwirz.yapne.model.PetriNet;
+import de.kwirz.yapne.presentation.*;
+import de.kwirz.yapne.utils.Settings;
 import de.kwirz.yapne.io.PnmlParser;
 
 
@@ -41,6 +31,11 @@ public class AppController implements Initializable {
 	private boolean isDirty = false;
 	private String currentFileName = "";
     private AppMode mode = AppMode.EDITING;
+
+    @FXML
+    private Text statusBar;
+
+    private static final int STATUS_BAR_MESSAGE_DURATION = 5000; // ms
 
     @FXML
     private PetriNetPresentation canvas;
@@ -62,6 +57,8 @@ public class AppController implements Initializable {
                 handleMouseEvent(mouseEvent);
             }
         });
+
+        showStatusMessage("Bereit");
 
     	logger.info("initialized controller");
     }
@@ -203,7 +200,6 @@ public class AppController implements Initializable {
                     canvas.moveNode((PetriNetNodePresentation) source,
                             new Point2D(event.getSceneX(), event.getSceneY()));
                 } else if ( eventType == MouseEvent.MOUSE_CLICKED && source instanceof PetriNetElementPresentation) {
-                    System.out.println(event);
                     canvas.selectElement((PetriNetElementPresentation) source);
                 } else if ( eventType == MouseEvent.MOUSE_CLICKED && target instanceof  PetriNetPresentation ) {
                     canvas.unselectElement(canvas.getSelectedElement());
@@ -227,27 +223,32 @@ public class AppController implements Initializable {
                 break;
 
             case ARC_CREATION:
-                if ( eventType == MouseEvent.MOUSE_CLICKED ) {
-                    if ( canvas.getSelectedElement() == null) {
-                        if ( source instanceof PetriNetNodePresentation )
-                            canvas.selectElement((PetriNetElementPresentation) source);
+                try {
+                    if (eventType == MouseEvent.MOUSE_CLICKED) {
+                        if (canvas.getSelectedElement() == null) {
+                            if (source instanceof PetriNetNodePresentation)
+                                canvas.selectElement((PetriNetElementPresentation) source);
 
-                    } else { // element is selected
-                        if ( source instanceof PetriNetPresentation &&
-                             target instanceof PetriNetPresentation) {
-                            canvas.unselectElement(canvas.getSelectedElement());
-                        } else if ( source instanceof PetriNetNodePresentation &&
-                                !canvas.getSelectedElement().getClass().equals(source.getClass()) ) {
-                            canvas.createArc( (PetriNetNodePresentation) canvas.getSelectedElement(),
-                                    (PetriNetNodePresentation) source);
-                            canvas.unselectElement(canvas.getSelectedElement());
+                        } else { // element is selected
+                            if (source instanceof PetriNetPresentation &&
+                                    target instanceof PetriNetPresentation) {
+                                canvas.unselectElement(canvas.getSelectedElement());
+                            } else if (source instanceof PetriNetNodePresentation &&
+                                    !canvas.getSelectedElement().getClass().equals(source.getClass())) {
+                                canvas.createArc((PetriNetNodePresentation) canvas.getSelectedElement(),
+                                        (PetriNetNodePresentation) source);
+                                canvas.unselectElement(canvas.getSelectedElement());
+                            }
                         }
                     }
+                } catch (IllegalArgumentException e) {
+                    showStatusMessage(e.getMessage(), 10000);
                 }
 
                 break;
 
             default:
+                throw new RuntimeException("this place will be never reached");
         }
     }
 
@@ -268,6 +269,27 @@ public class AppController implements Initializable {
     
     @FXML
     public void settings() {
-    	Dialogs.show(new SettingsDialog(), primaryStage);
+    	Dialogs.showAndWait(new SettingsDialog(), primaryStage);
+        canvas.refresh();
     }
+
+    private void showStatusMessage(String message) {
+        showStatusMessage(message, STATUS_BAR_MESSAGE_DURATION);
+    }
+
+    private void showStatusMessage(String message, int duration) {
+        if (duration <= 0)
+            throw new IllegalArgumentException("duration must be greater than 0");
+
+        Timer timer = new Timer();
+        statusBar.setText(message);
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                statusBar.setText("");
+            }
+        }, duration);
+    }
+
 }

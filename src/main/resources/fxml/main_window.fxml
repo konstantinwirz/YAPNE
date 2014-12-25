@@ -8,6 +8,7 @@
 <?import de.kwirz.yapne.presentation.PetriNetPresentation?>
 
 
+<?import javafx.scene.text.Text?>
 <BorderPane prefHeight="600.0" prefWidth="700.0"
             xmlns="http://javafx.com/javafx/2" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="de.kwirz.yapne.app.AppController"
@@ -128,6 +129,12 @@
             </content>
         </ScrollPane>
     </center>
+
+
+    <bottom>
+        <Text fx:id="statusBar" />
+    </bottom>
+
 
 
 </BorderPane>
