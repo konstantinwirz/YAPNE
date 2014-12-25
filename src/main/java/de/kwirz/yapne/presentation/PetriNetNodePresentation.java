@@ -21,6 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -175,9 +176,10 @@ public abstract class PetriNetNodePresentation extends BorderPane
                     }
                 });
 
-                HBox box = new HBox();
+                VBox box = new VBox();
+                box.setSpacing(10);
                 box.setPadding(new Insets(10, 10, 10, 10));
-                box.getChildren().addAll(field);
+                box.getChildren().addAll(TextBuilder.create().text("Name:").build(), field);
 
                 dialog.setScene(new Scene(box));
 
