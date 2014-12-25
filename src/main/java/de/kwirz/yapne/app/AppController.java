@@ -149,7 +149,7 @@ public class AppController implements Initializable {
         assert file != null;
 
         try {
-            if (!file.toPath().getFileName().endsWith(".pnml")) {
+            if (!file.toPath().getFileName().toString().endsWith(".pnml")) {
                 file = new File(file.toPath().toString() + ".pnml");
             }
 
