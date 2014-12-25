@@ -4,10 +4,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 
 
 public class IntegerField extends TextField {
@@ -31,7 +28,7 @@ public class IntegerField extends TextField {
 								String oldValue, String newValue) {
 				if (newValue.isEmpty())
 					return;
-				
+
 				setText(newValue.matches("\\d*") ? newValue : oldValue);
 				setValue(Integer.valueOf(getText()));
 			}
