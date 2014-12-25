@@ -116,6 +116,12 @@ public abstract class PetriNetNode extends PetriNetElement {
     }
 
     public void addInputArc(PetriNetArc arc) {
+        for (PetriNetArc inputArc : inputArcs ) {
+            if ( inputArc.getSource() != null && arc.getSource() == inputArc.getSource()) {
+                throw new IllegalArgumentException("Knoten sind bereits verbunden");
+            }
+        }
+
         addArc(arc, ArcType.INPUT_ARC);
     }
 
@@ -149,6 +155,13 @@ public abstract class PetriNetNode extends PetriNetElement {
     }
 
     public void addOutputArc(PetriNetArc arc) {
+        for (PetriNetArc outputArc : outputArcs) {
+            if (arc.getTarget() != null && outputArc.getTarget() != null &&
+                    arc.getTarget() == outputArc.getTarget()) {
+                throw new IllegalArgumentException("Zwischen Knoten besteht bereits eine Verbindung");
+            }
+        }
+
         addArc(arc, ArcType.OUTPUT_ARC);
     }
 

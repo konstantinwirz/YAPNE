@@ -1,7 +1,5 @@
 package de.kwirz.yapne.model;
 
-import de.kwirz.yapne.model.PetriNetArc;
-import de.kwirz.yapne.model.PetriNetNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,15 +7,27 @@ import static org.junit.Assert.*;
 
 public class PetriNetNodeTest {
 
-    private class FakePetriNode extends PetriNetNode {
+    private class FakePetriNode1 extends PetriNetNode {
 
-        public FakePetriNode(String id) {
+        public FakePetriNode1(String id) {
             super(id);
         }
 
         @Override
         public String toXml() {
-            return null;
+            return "";
+        }
+    }
+
+    private class FakePetriNode2 extends PetriNetNode {
+
+        public FakePetriNode2(String id) {
+            super(id);
+        }
+
+        @Override
+        public String toXml() {
+            return "";
         }
     }
 
@@ -26,8 +36,8 @@ public class PetriNetNodeTest {
 
     @Before
     public void setUp() {
-        node1 = new FakePetriNode("node1");
-        node2 = new FakePetriNode("node2");
+        node1 = new FakePetriNode1("node1");
+        node2 = new FakePetriNode2("node2");
     }
 
     @Test(expected = NullPointerException.class)
@@ -80,6 +90,18 @@ public class PetriNetNodeTest {
         assertEquals(node1, arc.getTarget());
         node1.removeInputArc(arc);
         assertEquals(null, arc.getTarget());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMultipleArcsBetweenSameNodes() {
+        PetriNetArc arc1 = new PetriNetArc("arc1");
+        PetriNetArc arc2 = new PetriNetArc("arc2");
+
+        node1.addOutputArc(arc1);
+        node2.addInputArc(arc1);
+
+        node1.addOutputArc(arc2);
+        node2.addInputArc(arc2);
     }
 
 }
