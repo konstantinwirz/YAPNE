@@ -180,6 +180,22 @@ public class PetriNetPresentation extends Pane {
                 createPresentationHelper(transitionModel, PetriNetTransitionPresentation.class);
     }
 
+    public void createArc(PetriNetNodePresentation source, PetriNetNodePresentation target) {
+        PetriNetArc arcModel = new PetriNetArc(String.format("arc%d", ++arcCounter));
+        arcModel.setSource((PetriNetNode) source.getModel());
+        arcModel.setTarget((PetriNetNode) target.getModel());
+
+        PetriNetArcPresentation presentation = PetriNetArcPresentationBuilder.create()
+                .source(source)
+                .target(target)
+                .model(arcModel)
+                .build();
+
+        presentation.setOnMouseClicked(mouseClickedEventHandler);
+        model.addElement(arcModel);
+        getChildren().add(presentation);
+    }
+
     private <T extends PetriNetNodePresentation> T createPresentationHelper(PetriNetNode nodeModel,
                                                                       Class<T> class_) {
         T presentation = null;
@@ -244,8 +260,10 @@ public class PetriNetPresentation extends Pane {
     }
 
     public void unselectElement(PetriNetElementPresentation element) {
-        if (element != null)
+        if (element != null) {
             ((Node) selectedElement).setEffect(null);
+            selectedElement = null;
+        }
     }
 
     public void removeSelectedElement() {
@@ -265,6 +283,10 @@ public class PetriNetPresentation extends Pane {
         presentation.setCenterX(point.getX());
         presentation.setCenterY(point.getY());
         presentation.syncToModel();
+    }
+
+    public PetriNetElementPresentation getSelectedElement() {
+        return selectedElement;
     }
 
 }
