@@ -1,20 +1,35 @@
 package de.kwirz.yapne.presentation;
 
+import de.kwirz.yapne.app.Dialogs;
+import de.kwirz.yapne.app.IntegerField;
 import de.kwirz.yapne.model.PetriNetElement;
 import de.kwirz.yapne.model.PetriNetPlace;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.StackPaneBuilder;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.CircleBuilder;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBuilder;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
 /**
  * Created by konstantin on 20/12/14.
@@ -28,6 +43,62 @@ public class PetriNetPlacePresentation extends PetriNetNodePresentation {
     private Circle circle = null;
 
     private IntegerProperty marking = new SimpleIntegerProperty(0);
+
+    /**
+     * Bei einem Mausklick auf den Kreis soll sich ein Dialog zur Eingabe von Markierung
+     * öffnen, da in der Mitte sich entweder ein Circle oder Text befinden (abhängig von
+     * Markierung) wird dieser Handler auch für diese Knoten gesetzt.
+     */
+    private EventHandler<MouseEvent> inputMarkingOnMouseClick = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            if (event.getClickCount() < 2)
+                return;
+
+            final Node source = (Node) event.getSource();
+            final Scene sourceScene = source.getScene();
+            final Window sourceWindow = sourceScene.getWindow();
+
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initOwner(sourceWindow);
+            dialog.initStyle(StageStyle.UNDECORATED);
+
+            final Point2D coord = source.localToScene(0.0, 0.0);
+
+            dialog.setX(sourceWindow.getX() + coord.getX());
+            dialog.setY(sourceWindow.getY() + coord.getY());
+
+            final IntegerField field = new IntegerField();
+            field.setValue(marking.getValue());
+
+            field.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    marking.setValue(field.getValue());
+                    dialog.close();
+                }
+            });
+
+            field.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    if (keyEvent.getCode() == KeyCode.ESCAPE)
+                        dialog.close();
+                }
+            });
+
+            VBox box = new VBox();
+            box.setSpacing(10);
+            box.setPadding(new Insets(10, 10, 10, 10));
+            box.getChildren().addAll(TextBuilder.create().text("Marking:").build(), field);
+
+            dialog.setScene(new Scene(box));
+
+            dialog.show();
+        }
+    };
+
 
     public PetriNetPlacePresentation() {
         setupUi();
@@ -57,6 +128,8 @@ public class PetriNetPlacePresentation extends PetriNetNodePresentation {
                 onMarkingValueChanged(newValue.intValue());
             }
         });
+
+        circle.setOnMouseClicked(inputMarkingOnMouseClick);
     }
 
     @Override
@@ -99,12 +172,14 @@ public class PetriNetPlacePresentation extends PetriNetNodePresentation {
                     .strokeWidth(getStrokeWidth())
                     .build();
             stack.getChildren().add(markingCircle);
+            markingCircle.setOnMouseClicked(inputMarkingOnMouseClick);
         } else if (newMarking > 1) {
             markingText = TextBuilder.create().
                     text(String.valueOf(newMarking))
                     .strokeWidth(getStrokeWidth())
                     .build();
             stack.getChildren().add(markingText);
+            markingText.setOnMouseClicked(inputMarkingOnMouseClick);
         }
     }
 
