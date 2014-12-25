@@ -9,7 +9,7 @@
 <?import javafx.scene.control.Button?>
 
 
-<fx:root xmlns:fx="http://javafx.com/fxml/1" type="GridPane"
+<fx:root xmlns:fx="http://javafx.com/fxml/1" type="javafx.scene.layout.GridPane"
          alignment="center" vgap="50" hgap="15" prefWidth="210" prefHeight="150"
          minHeight="140" minWidth="200" >
 	<padding>
