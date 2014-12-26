@@ -27,6 +27,9 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
                 update();
             }
         };
+
+        setPickOnBounds(true);
+        setSmooth(true);
     }
 
     /**
