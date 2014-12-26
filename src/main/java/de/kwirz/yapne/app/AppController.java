@@ -292,4 +292,7 @@ public class AppController implements Initializable {
         }, duration);
     }
 
+    public void saveAsDocument() {
+        System.out.println("Save As");
+    }
 }

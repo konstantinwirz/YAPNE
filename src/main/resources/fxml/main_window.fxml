@@ -18,123 +18,154 @@
         <Double fx:id="TOOLBAR_ICON_WIDTH" fx:value="20.0"/>
     </fx:define>
     <top>
-        <ToolBar>
-            <items>
+        <VBox>
 
-                <Button onAction="#newDocument">
-                    <graphic>
-                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
-                            <image>
-                                <Image url="images/new.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
+            <MenuBar>
+                <Menu text="File">
+                    <MenuItem text="New" accelerator="Ctrl+N" onAction="#newDocument" />
+                    <MenuItem text="Open..." accelerator="Ctrl+O" onAction="#openDocument" />
+                    <SeparatorMenuItem />
+                    <MenuItem text="Save" accelerator="Ctrl+S" onAction="#saveDocument" />
+                    <MenuItem text="Save As..." onAction="#saveAsDocument" />
+                    <SeparatorMenuItem />
+                    <MenuItem text="Settings..." onAction="#settings" />
+                    <SeparatorMenuItem />
+                    <MenuItem text="Quit" onAction="#quit" accelerator="Ctrl+Q" />
+                </Menu>
+                <Menu text="Actions">
+                </Menu>
 
-                <!-- Spacer -->
-                <Region prefWidth="10"/>
+                <Menu text="Help">
+                    <MenuItem text="About..." onAction="#about" />
+                </Menu>
 
-                <Button onAction="#openDocument">
-                    <graphic>
-                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
-                            <image>
-                                <Image url="images/open.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
+            </MenuBar>
 
-                <Button onAction="#saveDocument">
-                    <graphic>
-                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
-                            <image>
-                                <Image url="images/save.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
+            <ToolBar>
+                <items>
 
-                <!-- Spacer -->
-                <Region prefWidth="20"/>
+                    <Button onAction="#newDocument">
+                        <graphic>
+                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                       fitWidth="$TOOLBAR_ICON_WIDTH">
+                                <image>
+                                    <Image url="images/new.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
 
-                <fx:define>
-                    <ToggleGroup fx:id="petriNetActionsToogleGroup" />
-                </fx:define>
+                    <!-- Spacer -->
+                    <Region prefWidth="10"/>
 
-                <ToggleButton toggleGroup="$petriNetActionsToogleGroup"
-                              onAction="#handleModeChange" id="place_mode_tb">
-                    <graphic>
-                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
-                            <image>
-                                <Image url="images/place.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </ToggleButton>
+                    <Button onAction="#openDocument">
+                        <graphic>
+                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                       fitWidth="$TOOLBAR_ICON_WIDTH">
+                                <image>
+                                    <Image url="images/open.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
 
-                <ToggleButton toggleGroup="$petriNetActionsToogleGroup"
-                              onAction="#handleModeChange" id="transition_mode_tb">
-                    <graphic>
-                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
-                            <image>
-                                <Image url="images/transition.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </ToggleButton>
+                    <Button onAction="#saveDocument">
+                        <graphic>
+                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                       fitWidth="$TOOLBAR_ICON_WIDTH">
+                                <image>
+                                    <Image url="images/save.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
 
-                <ToggleButton toggleGroup="$petriNetActionsToogleGroup"
-                              onAction="#handleModeChange" id="arc_mode_tb">
-                    <graphic>
-                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
-                            <image>
-                                <Image url="images/arc.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </ToggleButton>
+                    <!-- Spacer -->
+                    <Region prefWidth="20"/>
 
-                <!-- Spacer -->
-                <Region HBox.hgrow="ALWAYS"/>
+                    <fx:define>
+                        <ToggleGroup fx:id="petriNetActionsToogleGroup"/>
+                    </fx:define>
 
-                <Button onAction="#settings">
-                    <graphic>
-                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
-                            <image>
-                                <Image url="images/settings.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
+                    <ToggleButton toggleGroup="$petriNetActionsToogleGroup"
+                                  onAction="#handleModeChange" id="place_mode_tb">
+                        <graphic>
+                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                       fitWidth="$TOOLBAR_ICON_WIDTH">
+                                <image>
+                                    <Image url="images/place.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </ToggleButton>
 
-                <Button onAction="#about">
-                    <graphic>
-                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT" fitWidth="$TOOLBAR_ICON_WIDTH">
-                            <image>
-                                <Image url="images/info.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
+                    <ToggleButton toggleGroup="$petriNetActionsToogleGroup"
+                                  onAction="#handleModeChange" id="transition_mode_tb">
+                        <graphic>
+                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                       fitWidth="$TOOLBAR_ICON_WIDTH">
+                                <image>
+                                    <Image url="images/transition.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </ToggleButton>
+
+                    <ToggleButton toggleGroup="$petriNetActionsToogleGroup"
+                                  onAction="#handleModeChange" id="arc_mode_tb">
+                        <graphic>
+                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                       fitWidth="$TOOLBAR_ICON_WIDTH">
+                                <image>
+                                    <Image url="images/arc.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </ToggleButton>
+
+                    <!-- Spacer -->
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <Button onAction="#settings">
+                        <graphic>
+                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                       fitWidth="$TOOLBAR_ICON_WIDTH">
+                                <image>
+                                    <Image url="images/settings.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+
+                    <Button onAction="#about">
+                        <graphic>
+                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                       fitWidth="$TOOLBAR_ICON_WIDTH">
+                                <image>
+                                    <Image url="images/info.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
 
 
-            </items>
-        </ToolBar>
+                </items>
+            </ToolBar>
+        </VBox>
     </top>
 
     <center>
-        <ScrollPane BorderPane.alignment="CENTER" fitToWidth="true" fitToHeight="true" >
+        <ScrollPane BorderPane.alignment="CENTER" fitToWidth="true" fitToHeight="true">
             <content>
-                <PetriNetPresentation fx:id="canvas" onMouseClicked="#handleMouseEvent" />
+                <PetriNetPresentation fx:id="canvas" onMouseClicked="#handleMouseEvent"/>
             </content>
         </ScrollPane>
     </center>
 
 
     <bottom>
-        <Text fx:id="statusBar" />
+        <Text fx:id="statusBar"/>
     </bottom>
-
 
 
 </BorderPane>
