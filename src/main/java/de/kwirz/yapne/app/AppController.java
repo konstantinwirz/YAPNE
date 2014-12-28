@@ -1,12 +1,13 @@
 package de.kwirz.yapne.app;
 
 import javafx.application.*;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.*;
 
@@ -27,18 +28,26 @@ import de.kwirz.yapne.io.PnmlParser;
 public class AppController implements Initializable {
 	
 	private static final Logger logger = Logger.getLogger(AppController.class.getName());
-	
-	private boolean isDirty = false;
-	private String currentFileName = "";
+    private static final int STATUS_BAR_MESSAGE_DURATION = 5000; // ms
+
+    private SimpleBooleanProperty isDirty = new SimpleBooleanProperty(false);
+    private SimpleStringProperty currentFileName = new SimpleStringProperty();
     private AppMode mode = AppMode.EDITING;
 
     @FXML
     private Text statusBar;
 
-    private static final int STATUS_BAR_MESSAGE_DURATION = 5000; // ms
-
     @FXML
     private PetriNetPresentation canvas;
+
+    @FXML
+    private MenuItem saveMenuItem;
+
+    @FXML
+    private MenuItem saveAsMenuItem;
+
+    @FXML
+    private MenuItem newMenuItem;
     
     private Stage primaryStage;
     
@@ -58,6 +67,12 @@ public class AppController implements Initializable {
             }
         });
 
+        saveMenuItem.disableProperty().bind(isDirty.not());
+        saveAsMenuItem.disableProperty().bind(isDirty.not().and(currentFileName.isEqualTo("")));
+        newMenuItem.disableProperty().bind(isDirty.not().and(currentFileName.isEqualTo("")));
+
+        isDirty.setValue(false);
+
         showStatusMessage("Bereit");
 
     	logger.info("initialized controller");
@@ -74,15 +89,16 @@ public class AppController implements Initializable {
 
     @FXML
     public void newDocument() {
-    	isDirty = false;
-    	currentFileName = "";
+    	currentFileName.setValue("");
+        isDirty.setValue(false);
     	canvas.getChildren().clear();
     }
     
     @FXML
     public void openDocument() {
         Settings settings = Settings.getInstance();
-        final String initialDirectory = settings.getValue("last_directory", System.getProperty("user.home"));
+        final String initialDirectory = settings.getValue("last_directory",
+                System.getProperty("user.home"));
 
     	final FileChooser fileChooser = FileChooserBuilder.create()
     			.title("Open PNML File")
@@ -115,10 +131,8 @@ public class AppController implements Initializable {
         PnmlParser parser = new PnmlParser();
         canvas.setModel(parser.parse(source));
 
-
-
-    	currentFileName = file.getPath();
-    	isDirty = false;
+    	currentFileName.setValue(file.getPath());
+        isDirty.setValue(false);
     }
 
     @FXML
@@ -129,8 +143,8 @@ public class AppController implements Initializable {
 
         File file = null;
 
-        if (!currentFileName.isEmpty()) {
-            file = new File(currentFileName);
+        if (!currentFileName.getValue().isEmpty()) {
+            file = new File(currentFileName.getValue());
         } else {
             final String initialDirectory =
                     Settings.getInstance().getValue("initial_directory", System.getProperty("user.home"));
@@ -160,6 +174,9 @@ public class AppController implements Initializable {
             writer.write(canvas.getModel().toXml());
             writer.close();
 
+            isDirty.setValue(false);
+            currentFileName.setValue(file.getPath());
+
         } catch (IOException e) {
                 e.printStackTrace();
         }
@@ -170,15 +187,16 @@ public class AppController implements Initializable {
     public void handleModeChange(ActionEvent event) {
         assert event.getEventType() == ActionEvent.ACTION;
 
-        ToggleButton sourceButton = ((ToggleButton) event.getSource());
+        RadioMenuItem sourceButton = ((RadioMenuItem) event.getSource());
 
         if (!sourceButton.isSelected()) {
             mode = AppMode.EDITING;
         } else {
             switch(sourceButton.getId()) {
-                case "place_mode_tb" : mode = AppMode.PLACE_CREATION; break;
-                case "transition_mode_tb" : mode = AppMode.TRANSITION_CREATION; break;
-                case "arc_mode_tb" : mode = AppMode.ARC_CREATION; break;
+                case "select" : mode = AppMode.EDITING; break;
+                case "place" : mode = AppMode.PLACE_CREATION; break;
+                case "transition" : mode = AppMode.TRANSITION_CREATION; break;
+                case "arc" : mode = AppMode.ARC_CREATION; break;
                 default: throw new IllegalArgumentException("this place will be never reached");
             }
         }
@@ -199,6 +217,7 @@ public class AppController implements Initializable {
                     canvas.selectElement((PetriNetNodePresentation) source);
                     canvas.moveNode((PetriNetNodePresentation) source,
                             new Point2D(event.getSceneX(), event.getSceneY()));
+                    isDirty.setValue(true);
                 } else if ( eventType == MouseEvent.MOUSE_CLICKED && source instanceof PetriNetElementPresentation) {
                     canvas.selectElement((PetriNetElementPresentation) source);
                 } else if ( eventType == MouseEvent.MOUSE_CLICKED && target instanceof  PetriNetPresentation ) {
@@ -211,6 +230,7 @@ public class AppController implements Initializable {
                         source instanceof PetriNetPresentation &&
                         target instanceof PetriNetPresentation ) {
                     canvas.createPlace(event.getSceneX(), event.getSceneY());
+                    isDirty.setValue(true);
                 }
                 break;
 
@@ -219,6 +239,7 @@ public class AppController implements Initializable {
                         source instanceof PetriNetPresentation &&
                         target instanceof PetriNetPresentation ) {
                     canvas.createTransition(event.getSceneX(), event.getSceneY());
+                    isDirty.setValue(true);
                 }
                 break;
 
@@ -238,6 +259,7 @@ public class AppController implements Initializable {
                                 canvas.createArc((PetriNetNodePresentation) canvas.getSelectedElement(),
                                         (PetriNetNodePresentation) source);
                                 canvas.unselectElement(canvas.getSelectedElement());
+                                isDirty.setValue(true);
                             }
                         }
                     }

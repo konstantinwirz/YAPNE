@@ -12,146 +12,143 @@
 <BorderPane prefHeight="600.0" prefWidth="700.0"
             xmlns="http://javafx.com/javafx/2" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="de.kwirz.yapne.app.AppController"
-            onKeyPressed="#handleKeyEvent" >
+            onKeyPressed="#handleKeyEvent">
     <fx:define>
-        <Double fx:id="TOOLBAR_ICON_HEIGHT" fx:value="20.0"/>
-        <Double fx:id="TOOLBAR_ICON_WIDTH" fx:value="20.0"/>
+        <Double fx:id="TOOLBAR_ICON_HEIGHT" fx:value="16.0"/>
+        <Double fx:id="TOOLBAR_ICON_WIDTH" fx:value="16.0"/>
     </fx:define>
     <top>
-        <VBox>
+        <MenuBar>
+            <Menu text="File">
+                <MenuItem text="New" fx:id="newMenuItem" onAction="#newDocument"
+                          accelerator="Ctrl+N">
+                    <graphic>
+                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                   fitWidth="$TOOLBAR_ICON_WIDTH">
+                            <image>
+                                <Image url="images/new.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuItem>
+                <MenuItem text="Open..." accelerator="Ctrl+O" onAction="#openDocument">
+                    <graphic>
+                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                   fitWidth="$TOOLBAR_ICON_WIDTH">
+                            <image>
+                                <Image url="images/open.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuItem>
+                <SeparatorMenuItem/>
+                <MenuItem text="Save" accelerator="Ctrl+S" onAction="#saveDocument"
+                          fx:id="saveMenuItem">
+                    <graphic>
+                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                   fitWidth="$TOOLBAR_ICON_WIDTH">
+                            <image>
+                                <Image url="images/save.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuItem>
+                <MenuItem text="Save As..." onAction="#saveAsDocument" fx:id="saveAsMenuItem"/>
+                <SeparatorMenuItem/>
+                <MenuItem text="Quit" onAction="#quit" accelerator="Ctrl+Q">
+                    <graphic>
+                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                   fitWidth="$TOOLBAR_ICON_WIDTH">
+                            <image>
+                                <Image url="images/quit.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuItem>
+            </Menu>
+            <Menu text="Edit">
+                <fx:define>
+                    <ToggleGroup fx:id="actionsToggleGroup" />
+                </fx:define>
 
-            <MenuBar>
-                <Menu text="File">
-                    <MenuItem text="New" accelerator="Ctrl+N" onAction="#newDocument" />
-                    <MenuItem text="Open..." accelerator="Ctrl+O" onAction="#openDocument" />
-                    <SeparatorMenuItem />
-                    <MenuItem text="Save" accelerator="Ctrl+S" onAction="#saveDocument" />
-                    <MenuItem text="Save As..." onAction="#saveAsDocument" />
-                    <SeparatorMenuItem />
-                    <MenuItem text="Settings..." onAction="#settings" />
-                    <SeparatorMenuItem />
-                    <MenuItem text="Quit" onAction="#quit" accelerator="Ctrl+Q" />
-                </Menu>
-                <Menu text="Actions">
-                </Menu>
+                <RadioMenuItem text="Select" id="select" selected="true"
+                               toggleGroup="$actionsToggleGroup" onAction="#handleModeChange">
+                    <graphic>
+                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                   fitWidth="$TOOLBAR_ICON_WIDTH">
+                            <image>
+                                <Image url="images/hand.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </RadioMenuItem>
 
-                <Menu text="Help">
-                    <MenuItem text="About..." onAction="#about" />
-                </Menu>
+                <SeparatorMenuItem/>
 
-            </MenuBar>
+                <RadioMenuItem text="Place" id="place" toggleGroup="$actionsToggleGroup"
+                               onAction="#handleModeChange" >
+                    <graphic>
+                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                   fitWidth="$TOOLBAR_ICON_WIDTH">
+                            <image>
+                                <Image url="images/place.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </RadioMenuItem>
 
-            <ToolBar>
-                <items>
+                <RadioMenuItem text="Transition" id="transition" toggleGroup="$actionsToggleGroup"
+                               onAction="#handleModeChange" >
+                    <graphic>
+                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                   fitWidth="$TOOLBAR_ICON_WIDTH">
+                            <image>
+                                <Image url="images/transition.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </RadioMenuItem>
 
-                    <Button onAction="#newDocument">
-                        <graphic>
-                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
-                                       fitWidth="$TOOLBAR_ICON_WIDTH">
-                                <image>
-                                    <Image url="images/new.png"/>
-                                </image>
-                            </ImageView>
-                        </graphic>
-                    </Button>
-
-                    <!-- Spacer -->
-                    <Region prefWidth="10"/>
-
-                    <Button onAction="#openDocument">
-                        <graphic>
-                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
-                                       fitWidth="$TOOLBAR_ICON_WIDTH">
-                                <image>
-                                    <Image url="images/open.png"/>
-                                </image>
-                            </ImageView>
-                        </graphic>
-                    </Button>
-
-                    <Button onAction="#saveDocument">
-                        <graphic>
-                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
-                                       fitWidth="$TOOLBAR_ICON_WIDTH">
-                                <image>
-                                    <Image url="images/save.png"/>
-                                </image>
-                            </ImageView>
-                        </graphic>
-                    </Button>
-
-                    <!-- Spacer -->
-                    <Region prefWidth="20"/>
-
-                    <fx:define>
-                        <ToggleGroup fx:id="petriNetActionsToogleGroup"/>
-                    </fx:define>
-
-                    <ToggleButton toggleGroup="$petriNetActionsToogleGroup"
-                                  onAction="#handleModeChange" id="place_mode_tb">
-                        <graphic>
-                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
-                                       fitWidth="$TOOLBAR_ICON_WIDTH">
-                                <image>
-                                    <Image url="images/place.png"/>
-                                </image>
-                            </ImageView>
-                        </graphic>
-                    </ToggleButton>
-
-                    <ToggleButton toggleGroup="$petriNetActionsToogleGroup"
-                                  onAction="#handleModeChange" id="transition_mode_tb">
-                        <graphic>
-                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
-                                       fitWidth="$TOOLBAR_ICON_WIDTH">
-                                <image>
-                                    <Image url="images/transition.png"/>
-                                </image>
-                            </ImageView>
-                        </graphic>
-                    </ToggleButton>
-
-                    <ToggleButton toggleGroup="$petriNetActionsToogleGroup"
-                                  onAction="#handleModeChange" id="arc_mode_tb">
-                        <graphic>
-                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
-                                       fitWidth="$TOOLBAR_ICON_WIDTH">
-                                <image>
-                                    <Image url="images/arc.png"/>
-                                </image>
-                            </ImageView>
-                        </graphic>
-                    </ToggleButton>
-
-                    <!-- Spacer -->
-                    <Region HBox.hgrow="ALWAYS"/>
-
-                    <Button onAction="#settings">
-                        <graphic>
-                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
-                                       fitWidth="$TOOLBAR_ICON_WIDTH">
-                                <image>
-                                    <Image url="images/settings.png"/>
-                                </image>
-                            </ImageView>
-                        </graphic>
-                    </Button>
-
-                    <Button onAction="#about">
-                        <graphic>
-                            <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
-                                       fitWidth="$TOOLBAR_ICON_WIDTH">
-                                <image>
-                                    <Image url="images/info.png"/>
-                                </image>
-                            </ImageView>
-                        </graphic>
-                    </Button>
+                <RadioMenuItem text="Arc" id="arc" toggleGroup="$actionsToggleGroup"
+                               onAction="#handleModeChange" >
+                    <graphic>
+                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                   fitWidth="$TOOLBAR_ICON_WIDTH">
+                            <image>
+                                <Image url="images/arc.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </RadioMenuItem>
 
 
-                </items>
-            </ToolBar>
-        </VBox>
+            </Menu>
+
+            <Menu text="Extras">
+                <MenuItem text="Settings..." onAction="#settings">
+                    <graphic>
+                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                   fitWidth="$TOOLBAR_ICON_WIDTH">
+                            <image>
+                                <Image url="images/settings.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuItem>
+                <SeparatorMenuItem/>
+                <MenuItem text="About..." onAction="#about">
+                    <graphic>
+                        <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
+                                   fitWidth="$TOOLBAR_ICON_WIDTH">
+                            <image>
+                                <Image url="images/info.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuItem>
+            </Menu>
+
+        </MenuBar>
     </top>
 
     <center>
