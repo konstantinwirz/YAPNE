@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -27,6 +28,8 @@ public class App extends Application {
         primaryStage.setTitle("PetriNetEditor");
         primaryStage.setScene(new Scene(root, 1100, 600));
         primaryStage.show();
+
+        primaryStage.getIcons().add(new Image("images/yapne.png"));
 
         // Damit die Anwendung auch wirklich beendet wird, nachdem das Hauptfenster geschlossen ist
         // brauchen wir noch zusätzlich System.exit Aufruf (zumindest auf Mac OS X 10.10)
