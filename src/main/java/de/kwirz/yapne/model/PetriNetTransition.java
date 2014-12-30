@@ -32,7 +32,7 @@ public class PetriNetTransition extends PetriNetNode {
      * @return {@code true} falls Transition aktiviert ist, sonst {@code false}
      */
     public boolean isEnabled() {
-        if (inputArcs == null || inputArcs.isEmpty())
+        if (inputArcs.isEmpty())
             return true;
 
         int minimumMarking = 1;
@@ -61,5 +61,28 @@ public class PetriNetTransition extends PetriNetNode {
         }
 
         return places;
+    }
+
+    public void occur() {
+        if (!isEnabled())
+            return;
+
+        int marking = 0;
+        for (PetriNetArc inputArc : inputArcs) {
+            if ( !(inputArc.getSource() instanceof PetriNetPlace) )
+                continue;
+            PetriNetPlace place = (PetriNetPlace) inputArc.getSource();
+            if (place.getMarking() >= 1) {
+                ++marking;
+                place.setMarking(place.getMarking() - 1);
+            }
+        }
+
+        for (PetriNetArc outputArc : outputArcs) {
+            if ( !(outputArc.getTarget() instanceof PetriNetPlace) )
+                continue;
+            PetriNetPlace place = (PetriNetPlace) outputArc.getTarget();
+            place.setMarking(place.getMarking() + marking);
+        }
     }
 }
