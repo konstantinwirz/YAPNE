@@ -2,6 +2,7 @@ package de.kwirz.yapne.presentation;
 
 import de.kwirz.yapne.model.PetriNetArc;
 import de.kwirz.yapne.model.PetriNetElement;
+import de.kwirz.yapne.model.PetriNetTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.shape.LineTo;
@@ -80,6 +81,8 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
         if (source == null || target == null)
             return;
 
+
+
         double x1 = source.getCenterX();
         double y1 = source.getCenterY();
         double x2 = target.getCenterX();
@@ -91,15 +94,33 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
             return;
 
         double theta = Math.atan2(dy, dx);
-        x1 = x1 + source.getCenterXOffset() * Math.cos(theta);
-        y1 = y1 + source.getCenterYOffset() * Math.sin(theta);
+
+        if (target instanceof PetriNetTransitionPresentation) {
+            double angle = Math.toDegrees(Math.atan2(-dx, dy));
+            angle = angle < 0 ? angle + 360 : angle;
+            //System.out.println(angle);
+
+            double hypotenuse = 0;
+            if (angle < 45.0 || (angle > 135.0) )
+                hypotenuse = (target.getSize() / 2) / Math.cos(Math.toRadians(angle));
+            else if (angle > 45.0 && angle < 135.0) {
+                hypotenuse = (target.getSize() / 2) / Math.sin(Math.toRadians(angle));
+            }
+
+            System.out.println(hypotenuse);
+
+        }
+
+
+        x1 = x1 + (source.getSize() / 2) * Math.cos(theta);
+        y1 = y1 + (source.getSize() / 2) * Math.sin(theta);
         getElements().add(new MoveTo(x1, y1));
 
-        x2 = x2 - target.getCenterXOffset() * Math.cos(theta);
-        y2 = y2 - target.getCenterYOffset() * Math.sin(theta);
+        x2 = x2 - target.getSize()/2 * Math.cos(theta);
+        y2 = y2 - target.getSize()/2 * Math.sin(theta);
         getElements().add(new LineTo(x2, y2));
 
-        double phi = Math.toRadians(40);
+        double phi = Math.toRadians(45);
         double rho = theta + phi;
         double barb = 10;
         double x = x2 - barb * Math.cos(rho);
@@ -111,6 +132,7 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
         rho = theta - phi;
         x = x2 - barb * Math.cos( rho );
         y = y2 - barb * Math.sin( rho );
+
         getElements().add(new LineTo(x, y));
     }
 

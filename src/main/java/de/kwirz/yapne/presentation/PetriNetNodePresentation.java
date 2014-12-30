@@ -189,19 +189,15 @@ public abstract class PetriNetNodePresentation extends BorderPane
     }
 
     private void onCenterXChanged(double value) {
-        setLayoutX(value - getCenterXOffset());
+        setLayoutX(value - getSize() / 2 - getStrokeWidth() / 2);
     }
 
     private void onCenterYChanged(double value) {
-        setLayoutY(value - getCenterYOffset());
-    }
-
-    public double getCenterXOffset() {
-        return getBoundsInParent().getWidth()/ 2 + 1;
-    }
-
-    public double getCenterYOffset() {
-        return getBoundsInParent().getHeight() / 2 + 1;
+        double offset = labelText.getBoundsInLocal().getHeight() +
+                getMargin(labelText).getBottom() +
+                getSize() / 2 +
+                getStrokeWidth() / 2;
+        setLayoutY(value - offset);
     }
 
     protected void onSizeChanged(double newSize) {}

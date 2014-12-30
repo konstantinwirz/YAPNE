@@ -126,6 +126,7 @@ public class PetriNetPlacePresentation extends PetriNetNodePresentation {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
                 onMarkingValueChanged(newValue.intValue());
+                model.setMarking(newValue.intValue());
             }
         });
 

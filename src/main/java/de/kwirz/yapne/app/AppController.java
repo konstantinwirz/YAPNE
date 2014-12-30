@@ -292,7 +292,7 @@ public class AppController implements Initializable {
     @FXML
     public void settings() {
     	Dialogs.showAndWait(new SettingsDialog(), primaryStage);
-        canvas.refresh();
+        canvas.reload();
     }
 
     private void showStatusMessage(String message) {
