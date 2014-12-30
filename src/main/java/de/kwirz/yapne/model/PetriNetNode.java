@@ -6,6 +6,7 @@ package de.kwirz.yapne.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 
 /**
@@ -18,6 +19,7 @@ public abstract class PetriNetNode extends PetriNetElement {
     private Position position = new Position();
     protected List<PetriNetArc> inputArcs = new ArrayList<>();
     protected List<PetriNetArc> outputArcs = new ArrayList<>();
+
 
     private enum ArcType {
         INPUT_ARC, OUTPUT_ARC;
@@ -221,7 +223,23 @@ public abstract class PetriNetNode extends PetriNetElement {
 
     @Override
     public String toString() {
-        return String.format("PetriNetNode{id='%s', name='%s', pos='%s'}", getId(), name, position.toString());
+        return String.format("PetriNetNode{id='%s', name='%s', pos='%s'}",
+                getId(), name, position.toString());
     }
+
+
+    /**
+     * Verbindet 2 Knoten (this -> node) mit Hilfe einer Kante
+     * @param node Zielknoten
+     * */
+    public void connectToNode(PetriNetNode node) {
+        PetriNetArc arc =
+                new PetriNetArc("arc" + String.valueOf(new Random().nextInt(Integer.MAX_VALUE)));
+
+        arc.setSource(this);
+        arc.setTarget(node);
+    }
+
+
 
 }

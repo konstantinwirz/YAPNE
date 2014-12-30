@@ -104,4 +104,15 @@ public class PetriNetNodeTest {
         node2.addInputArc(arc2);
     }
 
+    @Test
+    public void testConnectToNode() {
+        assertTrue(node1.outputArcs.isEmpty());
+        assertTrue(node2.inputArcs.isEmpty());
+
+        node1.connectToNode(node2);
+
+        assertEquals(node1.outputArcs.size(), 1);
+        assertEquals(node2.inputArcs.size(), 1);
+    }
+
 }
