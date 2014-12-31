@@ -14,12 +14,10 @@ import javafx.stage.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.*;
 import java.util.*;
 import java.util.logging.*;
 
-import de.kwirz.yapne.model.PetriNet;
 import de.kwirz.yapne.presentation.*;
 import de.kwirz.yapne.utils.Settings;
 import de.kwirz.yapne.io.PnmlParser;
@@ -50,9 +48,8 @@ public class AppController {
     private MenuItem newMenuItem;
     
     private Stage primaryStage;
-    
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    public void initialize() {
         canvas.setOnMouseClickedForEachElement(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -83,19 +80,20 @@ public class AppController {
     }
 
     @FXML
-    void quit() {
+    private void quit() {
         Platform.exit();
+        logger.log(Level.INFO, "finishing application...");
     }
 
     @FXML
-    public void newDocument() {
+    private void newDocument() {
     	currentFileName.setValue("");
         isDirty.setValue(false);
         canvas.clear();
     }
-    
+
     @FXML
-    public void openDocument() {
+    private void openDocument() {
         Settings settings = Settings.getInstance();
         final String initialDirectory = settings.getValue("last_directory",
                 System.getProperty("user.home"));
@@ -136,7 +134,7 @@ public class AppController {
     }
 
     @FXML
-    public void saveDocument() {
+    private void saveDocument() {
         File file = null;
 
         if (!currentFileName.getValue().isEmpty()) {
@@ -167,7 +165,8 @@ public class AppController {
         }
     }
 
-    public void saveAsDocument() {
+    @FXML
+    private void saveAsDocument() {
         final String initialDirectory =
                 Settings.getInstance().getValue("initial_directory", System.getProperty("user.home"));
 
@@ -186,7 +185,7 @@ public class AppController {
     }
 
     @FXML
-    public void handleModeChange(ActionEvent event) {
+    private void handleModeChange(ActionEvent event) {
         assert event.getEventType() == ActionEvent.ACTION;
 
         RadioMenuItem sourceButton = ((RadioMenuItem) event.getSource());
@@ -277,7 +276,7 @@ public class AppController {
     }
 
     @FXML
-    public void handleKeyEvent(KeyEvent event) {
+    private void handleKeyEvent(KeyEvent event) {
         if (mode.equals(AppMode.EDITING) &&
                 event.getEventType().equals(KeyEvent.KEY_PRESSED) &&
                 (event.getCode().equals(KeyCode.BACK_SPACE)
@@ -287,12 +286,12 @@ public class AppController {
     }
 
     @FXML
-    public void about() {
+    private void about() {
     	MessageBox.about("YAPNE v1.0", primaryStage);
     }
-    
+
     @FXML
-    public void settings() {
+    private void settings() {
     	Dialogs.showAndWait(new SettingsDialog(), primaryStage);
         canvas.reload();
     }
@@ -315,4 +314,5 @@ public class AppController {
             }
         }, duration);
     }
+    
 }
