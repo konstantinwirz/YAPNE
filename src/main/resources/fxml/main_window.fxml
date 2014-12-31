@@ -154,7 +154,8 @@
     <center>
         <ScrollPane BorderPane.alignment="CENTER" fitToWidth="true" fitToHeight="true">
             <content>
-                <PetriNetPresentation fx:id="canvas" onMouseClicked="#handleMouseEvent" style="-fx-background-color: lightgray;" />
+                <PetriNetPresentation fx:id="canvas" onMouseClicked="#handleMouseEvent"
+                                      style="-fx-background-color: #E8E8E8;" />
             </content>
         </ScrollPane>
     </center>
