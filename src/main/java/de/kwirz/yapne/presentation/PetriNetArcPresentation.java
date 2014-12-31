@@ -81,43 +81,48 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
         if (source == null || target == null)
             return;
 
-
-
         double x1 = source.getCenterX();
         double y1 = source.getCenterY();
         double x2 = target.getCenterX();
         double y2 = target.getCenterY();
-        double dx = x2 - x1;
-        double dy = y2 - y1;
+        final double dx = x2 - x1;
+        final double dy = y2 - y1;
         double length = Math.sqrt(Math.pow(dx, 2.0) + Math.pow(dy, 2.0));
         if (length < getMinimumLength())
             return;
 
         double theta = Math.atan2(dy, dx);
 
-        if (target instanceof PetriNetTransitionPresentation) {
-            double angle = Math.toDegrees(Math.atan2(-dx, dy));
-            angle = angle < 0 ? angle + 360 : angle;
-            //System.out.println(angle);
+        double sourceOffset = source.getSize() / 2;
+        double targetOffset = sourceOffset;
 
-            double hypotenuse = 0;
-            if (angle < 45.0 || (angle > 135.0) )
-                hypotenuse = (target.getSize() / 2) / Math.cos(Math.toRadians(angle));
-            else if (angle > 45.0 && angle < 135.0) {
-                hypotenuse = (target.getSize() / 2) / Math.sin(Math.toRadians(angle));
+        class QuadratOffsetCalculator {
+            double calculate() {
+                double alpha = Math.toDegrees(Math.atan2(Math.abs(dx), Math.abs(dy)));
+                double leg = target.getSize() / 2.0;
+                double hypotenuse = Math.sqrt( Math.pow(leg, 2.0) + Math.pow(leg, 2.0));
+                double offset = 0.0;
+                if ( alpha < 45 ) {
+                    offset = (hypotenuse * Math.cos(Math.toRadians(45))) / Math.cos(Math.toRadians(alpha));
+                } else {
+                    offset = (hypotenuse * Math.sin(Math.toRadians(45))) / Math.sin(Math.toRadians(alpha));
+                }
+                return offset;
             }
-
-            System.out.println(hypotenuse);
-
         }
 
+        if (target instanceof PetriNetTransitionPresentation) {
+            targetOffset = new QuadratOffsetCalculator().calculate();
+        } else if (source instanceof PetriNetTransitionPresentation) {
+            sourceOffset = new QuadratOffsetCalculator().calculate();
+        }
 
-        x1 = x1 + (source.getSize() / 2) * Math.cos(theta);
-        y1 = y1 + (source.getSize() / 2) * Math.sin(theta);
+        x1 = x1 + sourceOffset * Math.cos(theta);
+        y1 = y1 + sourceOffset * Math.sin(theta);
         getElements().add(new MoveTo(x1, y1));
 
-        x2 = x2 - target.getSize()/2 * Math.cos(theta);
-        y2 = y2 - target.getSize()/2 * Math.sin(theta);
+        x2 = x2 - targetOffset * Math.cos(theta);
+        y2 = y2 - targetOffset * Math.sin(theta);
         getElements().add(new LineTo(x2, y2));
 
         double phi = Math.toRadians(45);
