@@ -94,7 +94,7 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
         double theta = Math.atan2(dy, dx);
 
         double sourceOffset = source.getSize() / 2;
-        double targetOffset = sourceOffset;
+        double targetOffset = target.getSize() / 2;
 
         class QuadratOffsetCalculator {
             double calculate() {
@@ -117,6 +117,9 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
             sourceOffset = new QuadratOffsetCalculator().calculate();
         }
 
+        sourceOffset += source.getStrokeWidth();
+        targetOffset += target.getStrokeWidth();
+
         x1 = x1 + sourceOffset * Math.cos(theta);
         y1 = y1 + sourceOffset * Math.sin(theta);
         getElements().add(new MoveTo(x1, y1));
@@ -125,9 +128,9 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
         y2 = y2 - targetOffset * Math.sin(theta);
         getElements().add(new LineTo(x2, y2));
 
-        double phi = Math.toRadians(45);
+        double phi = Math.toRadians(40);
         double rho = theta + phi;
-        double barb = 10;
+        double barb = 8;
         double x = x2 - barb * Math.cos(rho);
         double y = y2 - barb * Math.sin(rho);
         getElements().add(new LineTo(x, y));

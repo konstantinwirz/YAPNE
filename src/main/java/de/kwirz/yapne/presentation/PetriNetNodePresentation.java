@@ -187,7 +187,7 @@ public abstract class PetriNetNodePresentation extends BorderPane
     }
 
     private void onCenterXChanged(double value) {
-        setLayoutX(value - getSize() / 2 - getStrokeWidth() / 2);
+        setLayoutX(value - labelText.getLayoutBounds().getWidth() / 2);
     }
 
     private void onCenterYChanged(double value) {
