@@ -25,7 +25,7 @@ import de.kwirz.yapne.utils.Settings;
 import de.kwirz.yapne.io.PnmlParser;
 
 
-public class AppController implements Initializable {
+public class AppController {
 	
 	private static final Logger logger = Logger.getLogger(AppController.class.getName());
     private static final int STATUS_BAR_MESSAGE_DURATION = 5000; // ms
@@ -91,7 +91,7 @@ public class AppController implements Initializable {
     public void newDocument() {
     	currentFileName.setValue("");
         isDirty.setValue(false);
-    	canvas.getChildren().clear();
+        canvas.clear();
     }
     
     @FXML
@@ -137,27 +137,12 @@ public class AppController implements Initializable {
 
     @FXML
     public void saveDocument() {
-        PetriNet model = canvas.getModel();
-
-        assert model != null;
-
         File file = null;
 
         if (!currentFileName.getValue().isEmpty()) {
             file = new File(currentFileName.getValue());
         } else {
-            final String initialDirectory =
-                    Settings.getInstance().getValue("initial_directory", System.getProperty("user.home"));
-            final FileChooser fileChooser = FileChooserBuilder.create()
-                    .title("Save PNML file")
-                    .initialDirectory(new File(initialDirectory))
-                    .build();
-            file = fileChooser.showSaveDialog(primaryStage);
-
-            if (file == null) {
-                logger.log(Level.WARNING, "no file to save choosen");
-                return;
-            }
+            saveAsDocument();
         }
 
         assert file != null;
@@ -178,9 +163,26 @@ public class AppController implements Initializable {
             currentFileName.setValue(file.getPath());
 
         } catch (IOException e) {
-                e.printStackTrace();
+            MessageBox.error(e.getMessage(), primaryStage);
         }
+    }
 
+    public void saveAsDocument() {
+        final String initialDirectory =
+                Settings.getInstance().getValue("initial_directory", System.getProperty("user.home"));
+
+        final FileChooser fileChooser = FileChooserBuilder.create()
+                .title("Save PNML file")
+                .initialDirectory(new File(initialDirectory))
+                .build();
+        File file = fileChooser.showSaveDialog(primaryStage);
+
+        if (file == null) {
+            logger.log(Level.WARNING, "no file to save chosen");
+        } else {
+            currentFileName.set(file.getPath());
+            saveDocument();
+        }
     }
 
     @FXML
@@ -312,9 +314,5 @@ public class AppController implements Initializable {
                 statusBar.setText("");
             }
         }, duration);
-    }
-
-    public void saveAsDocument() {
-        System.out.println("Save As");
     }
 }

@@ -233,4 +233,8 @@ public class PetriNetPresentation extends Pane {
         return selectedElement;
     }
 
+    public void clear() {
+        model.clear();
+        getChildren().clear();
+    }
 }
