@@ -49,24 +49,21 @@ public class PetriNetTransitionTest {
 
     @Test
     public void testIsEnabled() {
-        PetriNetPlace place1 = new PetriNetPlace("place1");
-        PetriNetPlace place2 = new PetriNetPlace("place2");
+        PetriNetPlace in1 = new PetriNetPlace("in1");
+        PetriNetPlace in2 = new PetriNetPlace("in2");
+        PetriNetPlace out1 = new PetriNetPlace("out1");
 
-        PetriNetArc arc1 = new PetriNetArc("arc1");
-        PetriNetArc arc2 = new PetriNetArc("arc2");
+        in1.connectToNode(transition);
+        in2.connectToNode(transition);
+        transition.connectToNode(out1);
 
-        arc1.setSource(place1);
-        arc1.setTarget(transition);
-
-        arc2.setSource(place2);
-        arc2.setTarget(transition);
-
+        assertEquals(in1.getMarking(), 0);
+        assertEquals(in2.getMarking(), 0);
         assertFalse(transition.isEnabled());
 
-        place1.setMarking(1);
-        assertFalse(transition.isEnabled());
+        in1.setMarking(1);
+        assertTrue(transition.isEnabled());
 
-        place2.setMarking(1);
         assertTrue(transition.isEnabled());
     }
 
@@ -112,10 +109,20 @@ public class PetriNetTransitionTest {
 
         transition.occur();
 
-        assertFalse(transition.isEnabled());
+        assertTrue(transition.isEnabled());
         assertEquals(in1.getMarking(), 0);
         assertEquals(in2.getMarking(), 2);
         assertEquals(out1.getMarking(), 2);
         assertEquals(out2.getMarking(), 3);
+
+        transition.occur();
+        transition.occur();
+
+        assertFalse(transition.isEnabled());
+        assertEquals(in1.getMarking(), 0);
+        assertEquals(in2.getMarking(), 0);
+        assertEquals(out1.getMarking(), 4);
+        assertEquals(out2.getMarking(), 5);
+
     }
 }

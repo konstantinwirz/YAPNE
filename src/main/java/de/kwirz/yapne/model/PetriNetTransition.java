@@ -32,19 +32,17 @@ public class PetriNetTransition extends PetriNetNode {
      * @return {@code true} falls Transition aktiviert ist, sonst {@code false}
      */
     public boolean isEnabled() {
-        if (inputArcs.isEmpty())
+        List<PetriNetPlace> places = getInputPlaces();
+
+        if (places.isEmpty())
             return true;
 
-        int minimumMarking = 1;
-        List<PetriNetPlace> places = getInputPlaces();
+        int maxMarking = 0;
         for (PetriNetPlace place : places) {
-            minimumMarking = (minimumMarking > place.getMarking())?place.getMarking():minimumMarking;
+            maxMarking =  Math.max(maxMarking, place.getMarking());
         }
 
-        if (!places.isEmpty() && minimumMarking >= 1)
-            return true;
-
-        return false;
+        return maxMarking > 0;
     }
 
     private List<PetriNetPlace> getInputPlaces() {
