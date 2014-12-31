@@ -21,7 +21,7 @@
         <MenuBar>
             <Menu text="File">
                 <MenuItem text="New" fx:id="newMenuItem" onAction="#newDocument"
-                          accelerator="Ctrl+N">
+                          accelerator="shortcut+N">
                     <graphic>
                         <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
                                    fitWidth="$TOOLBAR_ICON_WIDTH">
@@ -31,7 +31,7 @@
                         </ImageView>
                     </graphic>
                 </MenuItem>
-                <MenuItem text="Open..." accelerator="Ctrl+O" onAction="#openDocument">
+                <MenuItem text="Open..." accelerator="shortcut+O" onAction="#openDocument">
                     <graphic>
                         <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
                                    fitWidth="$TOOLBAR_ICON_WIDTH">
@@ -42,7 +42,7 @@
                     </graphic>
                 </MenuItem>
                 <SeparatorMenuItem/>
-                <MenuItem text="Save" accelerator="Ctrl+S" onAction="#saveDocument"
+                <MenuItem text="Save" accelerator="shortcut+S" onAction="#saveDocument"
                           fx:id="saveMenuItem">
                     <graphic>
                         <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
@@ -55,7 +55,7 @@
                 </MenuItem>
                 <MenuItem text="Save As..." onAction="#saveAsDocument" fx:id="saveAsMenuItem"/>
                 <SeparatorMenuItem/>
-                <MenuItem text="Quit" onAction="#quit" accelerator="Ctrl+Q">
+                <MenuItem text="Quit" onAction="#quit" accelerator="shortcut+Q">
                     <graphic>
                         <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
                                    fitWidth="$TOOLBAR_ICON_WIDTH">
@@ -71,7 +71,7 @@
                     <ToggleGroup fx:id="actionsToggleGroup" />
                 </fx:define>
 
-                <RadioMenuItem text="Select" id="select" selected="true"
+                <RadioMenuItem text="Select" id="select" selected="true" accelerator="shortcut+1"
                                toggleGroup="$actionsToggleGroup" onAction="#handleModeChange">
                     <graphic>
                         <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
@@ -86,7 +86,7 @@
                 <SeparatorMenuItem/>
 
                 <RadioMenuItem text="Place" id="place" toggleGroup="$actionsToggleGroup"
-                               onAction="#handleModeChange" >
+                               onAction="#handleModeChange" accelerator="shortcut+2" >
                     <graphic>
                         <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
                                    fitWidth="$TOOLBAR_ICON_WIDTH">
@@ -98,7 +98,7 @@
                 </RadioMenuItem>
 
                 <RadioMenuItem text="Transition" id="transition" toggleGroup="$actionsToggleGroup"
-                               onAction="#handleModeChange" >
+                               onAction="#handleModeChange" accelerator="shortcut+3" >
                     <graphic>
                         <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
                                    fitWidth="$TOOLBAR_ICON_WIDTH">
@@ -110,7 +110,7 @@
                 </RadioMenuItem>
 
                 <RadioMenuItem text="Arc" id="arc" toggleGroup="$actionsToggleGroup"
-                               onAction="#handleModeChange" >
+                               onAction="#handleModeChange" accelerator="shortcut+4" >
                     <graphic>
                         <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
                                    fitWidth="$TOOLBAR_ICON_WIDTH">
@@ -155,7 +155,7 @@
         <ScrollPane BorderPane.alignment="CENTER" fitToWidth="true" fitToHeight="true">
             <content>
                 <PetriNetPresentation fx:id="canvas" onMouseClicked="#handleMouseEvent"
-                                      style="-fx-background-color: #E8E8E8;" />
+                                      style="-fx-focus-color: transparent; -fx-background-color: #E8E8E8;" />
             </content>
         </ScrollPane>
     </center>

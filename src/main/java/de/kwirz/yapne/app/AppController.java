@@ -26,11 +26,17 @@ import de.kwirz.yapne.io.PnmlParser;
 public class AppController {
 	
 	private static final Logger logger = Logger.getLogger(AppController.class.getName());
-    private static final int STATUS_BAR_MESSAGE_DURATION = 5000; // ms
 
     private SimpleBooleanProperty isDirty = new SimpleBooleanProperty(false);
     private SimpleStringProperty currentFileName = new SimpleStringProperty();
-    private AppMode mode = AppMode.EDITING;
+    private AppMode mode = AppMode.SELECT;
+    private Timer statusBarTimer = new Timer();
+    private TimerTask statusBarClearTask = new TimerTask() {
+        @Override
+        public void run() {
+            statusBar.setText("");
+        }
+    };;
 
     @FXML
     private Text statusBar;
@@ -70,7 +76,7 @@ public class AppController {
 
         isDirty.setValue(false);
 
-        showStatusMessage("Bereit");
+        showStatusMessage("Ready", 10000);
 
     	logger.info("initialized controller");
     }
@@ -190,11 +196,15 @@ public class AppController {
 
         RadioMenuItem sourceButton = ((RadioMenuItem) event.getSource());
 
+        // Workaround (JavaFX bug)
+        // wird Mode mit einem Shortcut aktiviert, erneuert sich die Anzeige nicht (Menu)
+        sourceButton.setSelected(true);
+
         if (!sourceButton.isSelected()) {
-            mode = AppMode.EDITING;
+            mode = AppMode.SELECT;
         } else {
             switch(sourceButton.getId()) {
-                case "select" : mode = AppMode.EDITING; break;
+                case "select" : mode = AppMode.SELECT; break;
                 case "place" : mode = AppMode.PLACE_CREATION; break;
                 case "transition" : mode = AppMode.TRANSITION_CREATION; break;
                 case "arc" : mode = AppMode.ARC_CREATION; break;
@@ -203,6 +213,7 @@ public class AppController {
         }
 
         logger.log(Level.INFO, "new mode: " + mode);
+        showStatusMessage("Mode: " + mode.toString().split("_")[0]);
     }
 
     @FXML
@@ -213,7 +224,7 @@ public class AppController {
 
         switch (mode) {
 
-            case EDITING:
+            case SELECT:
                 if ( eventType == MouseEvent.MOUSE_DRAGGED && source instanceof PetriNetNodePresentation ) {
                     canvas.selectElement((PetriNetNodePresentation) source);
                     canvas.moveNode((PetriNetNodePresentation) source,
@@ -277,7 +288,7 @@ public class AppController {
 
     @FXML
     private void handleKeyEvent(KeyEvent event) {
-        if (mode.equals(AppMode.EDITING) &&
+        if (mode.equals(AppMode.SELECT) &&
                 event.getEventType().equals(KeyEvent.KEY_PRESSED) &&
                 (event.getCode().equals(KeyCode.BACK_SPACE)
                         || event.getCode().equals(KeyCode.DELETE))) {
@@ -297,22 +308,19 @@ public class AppController {
     }
 
     private void showStatusMessage(String message) {
-        showStatusMessage(message, STATUS_BAR_MESSAGE_DURATION);
+        statusBarClearTask.cancel();
+        statusBarTimer.cancel();
+        statusBarTimer.purge();
+
+        statusBar.setText(message);
     }
 
     private void showStatusMessage(String message, int duration) {
         if (duration <= 0)
             throw new IllegalArgumentException("duration must be greater than 0");
 
-        Timer timer = new Timer();
         statusBar.setText(message);
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                statusBar.setText("");
-            }
-        }, duration);
+        statusBarTimer.schedule(statusBarClearTask, duration);
     }
     
 }

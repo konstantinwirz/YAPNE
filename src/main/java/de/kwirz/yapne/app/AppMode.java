@@ -5,9 +5,8 @@ package de.kwirz.yapne.app;
  */
 
 public enum AppMode {
-    EDITING,
+    SELECT,
     PLACE_CREATION,
     TRANSITION_CREATION,
-    ARC_CREATION,
-    SIMULATING
+    ARC_CREATION;
 }
