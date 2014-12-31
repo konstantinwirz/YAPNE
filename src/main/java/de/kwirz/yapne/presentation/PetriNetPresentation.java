@@ -7,6 +7,7 @@ import de.kwirz.yapne.model.*;
 import de.kwirz.yapne.utils.Settings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -87,6 +88,12 @@ public class PetriNetPresentation extends Pane {
             if (presentation != null) {
                 ((Node) presentation).setId(id);
                 getChildren().add((Node) presentation);
+                ((Node) presentation).addEventHandler(OccurrenceEvent.OCCURRED, new EventHandler<Event>() {
+                    @Override
+                    public void handle(Event event) {
+                        reload();
+                    }
+                });
             }
         }
 

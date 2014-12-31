@@ -2,7 +2,9 @@ package de.kwirz.yapne.presentation;
 
 import de.kwirz.yapne.model.PetriNetElement;
 import de.kwirz.yapne.model.PetriNetTransition;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.RectangleBuilder;
@@ -18,6 +20,7 @@ public class PetriNetTransitionPresentation extends PetriNetNodePresentation {
 
     public PetriNetTransitionPresentation() {
         setupUi();
+        registerListeners();
     }
 
     public PetriNetTransitionPresentation(PetriNetTransition model) {
@@ -36,6 +39,19 @@ public class PetriNetTransitionPresentation extends PetriNetNodePresentation {
 
         setCenter(rectangle);
         setAlignment(rectangle, Pos.CENTER);
+    }
+
+    private void registerListeners() {
+        rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() < 2)
+                    return;
+
+                model.occur();
+                fireEvent(new OccurrenceEvent());
+            }
+        });
     }
 
     @Override

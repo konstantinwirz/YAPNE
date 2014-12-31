@@ -1,6 +1,5 @@
 package de.kwirz.yapne.presentation;
 
-import de.kwirz.yapne.model.PetriNetElement;
 import de.kwirz.yapne.model.PetriNetNode;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -20,7 +19,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -290,6 +288,7 @@ public abstract class PetriNetNodePresentation extends BorderPane
 
         model.setName(getLabel());
         model.setPosition(new PetriNetNode.Position((int) getCenterX(), (int) getCenterY()));
+        fireEvent(new OccurrenceEvent());
     }
 
     @Override
