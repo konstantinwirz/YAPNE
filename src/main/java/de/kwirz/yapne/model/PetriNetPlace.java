@@ -37,4 +37,10 @@ public class PetriNetPlace extends PetriNetNode {
                 "</graphics>\n" +
                 "</place>", getId(), getName(), getMarking(), getPosition().toXml());
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s {id=%s, name='%s', marking=%d, pos=%s}",
+                getClass().getSimpleName(), getId(), getName(), getMarking(), getPosition());
+    }
 }
