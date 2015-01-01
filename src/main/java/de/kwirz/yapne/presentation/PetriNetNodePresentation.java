@@ -186,8 +186,14 @@ public abstract class PetriNetNodePresentation extends BorderPane
         });
     }
 
+    /**
+     * Wird bei einer Änderung der {@link centerXProperty} ausgeführt.
+     * @param value X-Wert
+     */
     private void onCenterXChanged(double value) {
-        setLayoutX(value - labelText.getLayoutBounds().getWidth() / 2);
+        // Um Zentrum des Layouts richtig zu bestimmen brauchen wir die maximale Breite
+        double width = Math.max(labelText.getLayoutBounds().getWidth(), getSize());
+        setLayoutX(value - width / 2);
     }
 
     private void onCenterYChanged(double value) {
