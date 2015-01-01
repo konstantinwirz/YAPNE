@@ -8,6 +8,6 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({BuilderValueTest.class})
+@Suite.SuiteClasses({BuilderValueTest.class, UtilsTest.class})
 public class TestSuite {
 }
