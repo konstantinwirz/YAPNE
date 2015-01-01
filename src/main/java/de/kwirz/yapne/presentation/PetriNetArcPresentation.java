@@ -2,7 +2,7 @@ package de.kwirz.yapne.presentation;
 
 import de.kwirz.yapne.model.PetriNetArc;
 import de.kwirz.yapne.model.PetriNetElement;
-import de.kwirz.yapne.model.PetriNetTransition;
+import de.kwirz.yapne.utils.Utils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.shape.LineTo;
@@ -10,25 +10,46 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 
 /**
- * Created by konstantin on 20/12/14.
+ *
+ * Grafische Darstellung einer Kante
+ *
  */
 public class PetriNetArcPresentation extends Path implements PetriNetElementPresentation {
 
-    private final double MINIMUM_LENGTH = 80;
+    /**
+     * Kanten die kürzer sind werden nicht gezeichnet
+     */
+    private static final double MINIMUM_LENGTH = 50;
     private PetriNetNodePresentation source = null;
     private PetriNetNodePresentation target = null;
-    private ChangeListener<Number> changeListener = null;
     private PetriNetArc model = null;
+    private ChangeListener<Number> changeListener = new ChangeListener<Number>() {
+        @Override
+        public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+            update();
+        }
+    };
 
-
+    /**
+     * Erstellt eine Instanz
+     */
     public PetriNetArcPresentation() {
-        changeListener = new ChangeListener<Number>() {
+        setupUi();
+        registerListeners();
+    }
+
+    private void registerListeners() {
+        // erzwingt dass strokeWidth zwischen Min und Max Werten liegt.
+        strokeWidthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                update();
+                setStrokeWidth(Utils.ensureRange(newValue.doubleValue(),
+                        MINIMUM_STROKE_WIDTH, MAXIMUM_STROKE_WIDTH));
             }
-        };
+        });
+    }
 
+    private void setupUi() {
         setPickOnBounds(true);
         setSmooth(true);
     }
@@ -47,8 +68,8 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
 
     public void setSource(PetriNetNodePresentation source) {
         if (this.source != null) {
-            this.source.centerXProperty().addListener(changeListener);
-            this.source.centerYProperty().addListener(changeListener);
+            this.source.centerXProperty().removeListener(changeListener);
+            this.source.centerYProperty().removeListener(changeListener);
         }
         this.source = source;
         update();

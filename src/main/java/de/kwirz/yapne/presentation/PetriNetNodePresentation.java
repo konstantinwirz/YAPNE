@@ -1,6 +1,7 @@
 package de.kwirz.yapne.presentation;
 
 import de.kwirz.yapne.model.PetriNetNode;
+import de.kwirz.yapne.utils.Utils;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -37,14 +38,9 @@ public abstract class PetriNetNodePresentation extends BorderPane
 
     private static double MAXIMUM_SIZE = 150.0;
     private static double MINIMUM_SIZE = 20.0;
-    private static double DEFAULT_SIZE = 40.0;
-
-    private static double MINIMUM_STROKE_WIDTH = 0.5;
-    private static double MAXIMUM_STROKE_WIDTH = 10.0;
-    private static double DEFAULT_STROKE_WIDTH = 2.5;
+    private static double DEFAULT_SIZE = 45.0;
 
     private static Color DEFAULT_FILL_COLOR = Color.TRANSPARENT;
-    private static Color DEFAULT_STROKE_COLOR = Color.BLACK;
 
     private DoubleProperty size = new SimpleDoubleProperty(DEFAULT_SIZE);
     private StringProperty label = new SimpleStringProperty();
@@ -90,25 +86,24 @@ public abstract class PetriNetNodePresentation extends BorderPane
         size.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                double size = newValue.doubleValue();
-
-                if (size > MAXIMUM_SIZE)
-                    size = MAXIMUM_SIZE;
-                else if (size < MINIMUM_SIZE)
-                    size = MINIMUM_SIZE;
-
-                onSizeChanged(size);
+                double value = newValue.doubleValue();
+                if (Utils.inRange(value, MINIMUM_SIZE, MAXIMUM_SIZE)) {
+                    onSizeChanged(value);
+                } else {
+                    size.set(Utils.ensureRange(value, MINIMUM_SIZE, MAXIMUM_SIZE));
+                }
             }
         });
 
         strokeWidth.addListener(new ChangeListener<Number>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number olValue, Number newValue) {
-                final double value = newValue.doubleValue();
-                if (value < getMinimumStrokeWidth() || value > getMaximumStrokeWidth())
-                    throw new IllegalArgumentException("invalid stroke width passed");
-
-                onStrokeWidthChanged(value);
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                double value = newValue.doubleValue();
+                if (Utils.inRange(value, MINIMUM_STROKE_WIDTH, MAXIMUM_STROKE_WIDTH)) {
+                    onStrokeWidthChanged(value);
+                } else {
+                    strokeWidth.set(Utils.ensureRange(value, MINIMUM_STROKE_WIDTH, MAXIMUM_STROKE_WIDTH));
+                }
             }
         });
 
@@ -187,7 +182,7 @@ public abstract class PetriNetNodePresentation extends BorderPane
     }
 
     /**
-     * Wird bei einer Änderung der {@link centerXProperty} ausgeführt.
+     * Wird bei einer Änderung der {@link #centerXProperty} ausgeführt.
      * @param value X-Wert
      */
     private void onCenterXChanged(double value) {
@@ -219,7 +214,6 @@ public abstract class PetriNetNodePresentation extends BorderPane
         this.label.set(label);
     }
 
-
     public final double getSize() {
         return size.get();
     }
@@ -232,15 +226,6 @@ public abstract class PetriNetNodePresentation extends BorderPane
         this.size.set(size);
     }
 
-    public static double getMaximumSize() {
-        return MAXIMUM_SIZE;
-    }
-
-    public static double getMinimumSize() {
-        return MINIMUM_SIZE;
-    }
-
-
     public final double getStrokeWidth() {
         return this.strokeWidth.get();
     }
@@ -251,14 +236,6 @@ public abstract class PetriNetNodePresentation extends BorderPane
 
     public final DoubleProperty strokeWidthProperty() {
         return this.strokeWidth;
-    }
-
-    public static double getMinimumStrokeWidth() {
-        return MINIMUM_STROKE_WIDTH;
-    }
-
-    public static double getMaximumStrokeWidth() {
-        return MAXIMUM_STROKE_WIDTH;
     }
 
     public double getCenterX() {
@@ -308,13 +285,4 @@ public abstract class PetriNetNodePresentation extends BorderPane
         setCenterX(model.getPosition().getX());
         setCenterY(model.getPosition().getY());
     }
-
-    public static double getDefaultStrokeWidth() {
-        return DEFAULT_STROKE_WIDTH;
-    }
-
-    public static double getDefaultSize() {
-        return DEFAULT_SIZE;
-    }
-    
 }

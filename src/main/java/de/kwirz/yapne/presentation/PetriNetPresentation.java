@@ -86,7 +86,7 @@ public class PetriNetPresentation extends Pane {
             }
 
             if (presentation != null) {
-                ((Node) presentation).setId(id);
+                ((Node) presentation).setId(normalizeId(id));
                 getChildren().add((Node) presentation);
                 ((Node) presentation).addEventHandler(OccurrenceEvent.OCCURRED, new EventHandler<Event>() {
                     @Override
@@ -106,9 +106,9 @@ public class PetriNetPresentation extends Pane {
                 continue;
 
             PetriNetNodePresentation source =
-                    (PetriNetNodePresentation) lookup("#" + ((PetriNetArc) element).getSource().getId());
+                    (PetriNetNodePresentation) lookup("#" + normalizeId(((PetriNetArc) element).getSource().getId()));
             PetriNetNodePresentation target =
-                    (PetriNetNodePresentation)  lookup("#" + ((PetriNetArc) element).getTarget().getId());
+                    (PetriNetNodePresentation)  lookup("#" + normalizeId(((PetriNetArc) element).getTarget().getId()));
 
             assert source != null && target != null;
 
@@ -120,7 +120,7 @@ public class PetriNetPresentation extends Pane {
                     .build();
             ++arcCounter;
 
-            ((Node) presentation).setId(id);
+            ((Node) presentation).setId(normalizeId(id));
             getChildren().add((Node) presentation);
         }
 
@@ -130,12 +130,12 @@ public class PetriNetPresentation extends Pane {
 
     private double getStrokeWidthFromSettings() {
         return Double.valueOf(Settings.getInstance()
-                .getValue("stroke_width", PetriNetNodePresentation.getDefaultStrokeWidth()));
+                .getValue("stroke_width", PetriNetNodePresentation.DEFAULT_STROKE_WIDTH));
     }
 
     private double getNodeSizeFormSettings() {
         return Double.valueOf(Settings.getInstance()
-                .getValue("node_size", PetriNetNodePresentation.getDefaultSize()));
+                .getValue("node_size", PetriNetNodePresentation.DEFAULT_STROKE_WIDTH));
     }
 
     public PetriNet getModel() {
@@ -236,5 +236,14 @@ public class PetriNetPresentation extends Pane {
     public void clear() {
         model.clear();
         getChildren().clear();
+    }
+
+    /**
+     * JavaFX FrameWork benutzt für Id's CSS Selektoren, in denen einigen Zeichen (z.B. . @) nicht
+     * vorkommen dürfen.
+     *
+     */
+    private String normalizeId(String id) {
+        return id.replace('.','_');
     }
 }
