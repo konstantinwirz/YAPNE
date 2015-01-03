@@ -63,8 +63,14 @@ public class PetriNetTransitionTest {
 
         in1.setMarking(1);
         assertTrue(transition.isEnabled());
+    }
 
-        assertTrue(transition.isEnabled());
+    @Test
+    public void testIsEnabledWithoutInputNodes() {
+        PetriNetPlace out = new PetriNetPlace("out");
+        transition.connectToNode(out);
+
+        assertFalse(transition.isEnabled());
     }
 
     @Test

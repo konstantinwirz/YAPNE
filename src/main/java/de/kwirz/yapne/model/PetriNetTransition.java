@@ -35,7 +35,7 @@ public class PetriNetTransition extends PetriNetNode {
         List<PetriNetPlace> places = getInputPlaces();
 
         if (places.isEmpty())
-            return true;
+            return outputArcs.isEmpty();
 
         int maxMarking = 0;
         for (PetriNetPlace place : places) {
