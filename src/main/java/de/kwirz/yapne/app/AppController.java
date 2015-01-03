@@ -3,8 +3,11 @@ package de.kwirz.yapne.app;
 import javafx.application.*;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.*;
 import javafx.fxml.*;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
@@ -52,10 +55,14 @@ public class AppController {
 
     @FXML
     private MenuItem newMenuItem;
+
+    @FXML
+    private ScrollPane scrollPane;
     
     private Stage primaryStage;
 
-    public void initialize() {
+    @FXML
+    private void initialize() {
         canvas.setOnMouseClickedForEachElement(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -67,6 +74,14 @@ public class AppController {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 handleMouseEvent(mouseEvent);
+            }
+        });
+
+        scrollPane.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observableValue, Bounds oldBounds, Bounds newBounds) {
+                scrollPane.setFitToHeight(scrollPane.getContent().getLayoutBounds().getHeight() < newBounds.getHeight());
+                scrollPane.setFitToWidth(scrollPane.getContent().getLayoutBounds().getWidth() < newBounds.getWidth());
             }
         });
 

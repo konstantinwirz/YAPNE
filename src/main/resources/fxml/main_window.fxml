@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.URL?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
 
 <?import de.kwirz.yapne.presentation.PetriNetPresentation?>
 
 
-<?import javafx.scene.text.Text?>
-<?import java.net.URL?>
 <BorderPane prefHeight="600.0" prefWidth="700.0"
             xmlns="http://javafx.com/javafx/2" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="de.kwirz.yapne.app.AppController"
@@ -159,7 +159,7 @@
     </top>
 
     <center>
-        <ScrollPane BorderPane.alignment="CENTER" >
+        <ScrollPane fx:id="scrollPane" BorderPane.alignment="CENTER" >
             <content>
                 <PetriNetPresentation fx:id="canvas" onMouseClicked="#handleMouseEvent" />
             </content>
