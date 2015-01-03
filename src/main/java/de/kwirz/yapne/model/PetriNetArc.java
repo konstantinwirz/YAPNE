@@ -57,4 +57,13 @@ public class PetriNetArc extends PetriNetElement {
         return String.format("<arc id=\"%s\" source=\"%s\" target=\"%s\"> </arc>", getId(),
                 getSource()!=null?getSource().getId():"", getTarget()!=null?getTarget().getId():"");
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s { id='%s', target='%s', source='%s' ",
+                getId(),
+                getClass().getSimpleName(),
+                target == null?"":target.getName(),
+                source == null? "":source.getName());
+    }
 }
