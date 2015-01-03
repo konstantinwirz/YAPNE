@@ -1,38 +1,60 @@
 package de.kwirz.yapne.app;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import de.kwirz.yapne.presentation.PetriNetNodePresentation;
 import de.kwirz.yapne.utils.Settings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * Einstellungsdialog 
- * 
+ * Einstellungsdialog
+ * <p>
+ * In diesem Dialog lassen sich folgende Optionen einstellen:
+ * <ul>
+ * <li>Knotengrösse</li>
+ * <li>Liniendicke</li>
+ * </ul>
  *
+ * Einstellungen werden mit Hilfe der {@link Settings} Klasse geladen
+ * und gespeichert.
+ *
+ * <p>
+ * <b>Note:</b>
+ * <br>
+ * Folgende Schlüssel werden verwendet:
+ * <ul>
+ * <li>Knotengröße - node_size</li>
+ * <li>Liniedicke - stroke_width</li>
+ * </ul>
  */
-public class SettingsDialog extends GridPane implements Initializable {
-	
-	private static int DEFAULT_STROKE_WIDTH = 1;
-	private static int DEFAULT_NODE_SIZE = 14;
-	
+public class SettingsDialog extends GridPane {
+
 	@FXML
-	private IntegerField nodeSizeInputField;
-	
+	private Slider nodeSizeSlider;
+
 	@FXML
-	private IntegerField strokeWidthInputField;
+	private Slider strokeWidthSlider;
+
+	@FXML
+	private Text nodeSizeValue;
+
+	@FXML
+	private Text strokeWidthValue;
 	
-	
+
 	public SettingsDialog() {
 		final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settings_dialog.fxml"));
 		loader.setRoot(this);
     	loader.setController(this);
-    	
+
+		setId("settings-dialog");
+		getStylesheets().add(getClass().getResource("/css/yapne.css").toExternalForm());
     	try {
 			loader.load();
 		} catch (IOException e) {
@@ -40,24 +62,53 @@ public class SettingsDialog extends GridPane implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
-	@Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+	@FXML
+    private void initialize() {
 		Settings settings = Settings.getInstance();
-		nodeSizeInputField.setValue(Integer.valueOf(settings.getValue("node_size",
-				String.valueOf(DEFAULT_NODE_SIZE))));
-		strokeWidthInputField.setValue(Integer.valueOf(settings.getValue("stroke_width",
-				String.valueOf(DEFAULT_STROKE_WIDTH))));
+		onNodeSizeChanged(Double.valueOf(settings.getValue("node_size",
+				PetriNetNodePresentation.DEFAULT_SIZE)));
+		nodeSizeSlider.setValue(Double.valueOf(nodeSizeValue.getText()));
+		onStrokeWidthChanged(Double.valueOf(settings.getValue("stroke_width",
+				PetriNetNodePresentation.DEFAULT_STROKE_WIDTH)));
+		strokeWidthSlider.setValue(Double.valueOf(strokeWidthValue.getText()));
+
+		strokeWidthSlider.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+				onStrokeWidthChanged(newValue.doubleValue());
+			}
+		});
+
+		nodeSizeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+				onNodeSizeChanged(newValue.doubleValue());
+			}
+		});
+
     }
+
+	private void onNodeSizeChanged(double size) {
+		nodeSizeValue.setText(formatValue(size));
+	}
+
+	private void onStrokeWidthChanged(double width) {
+		strokeWidthValue.setText(formatValue(width));
+	}
+
+	private String formatValue(double value) {
+		return String.format("%.1f", value);
+	}
 	
 	@FXML
 	public void handleCloseButtonAction() {
-		Stage stage = (Stage) nodeSizeInputField.getScene().getWindow();
+		Stage stage = (Stage) nodeSizeSlider.getScene().getWindow();
 		
 		try {
 			Settings settings = Settings.getInstance();
-			settings.setValue("stroke_width", strokeWidthInputField.getValue());
-			settings.setValue("node_size", nodeSizeInputField.getValue());
+			settings.setValue("stroke_width", strokeWidthSlider.getValue());
+			settings.setValue("node_size", nodeSizeSlider.getValue());
 		} catch (Exception e) {
 			MessageBox.error(String.format("couldn't store settings: %s", e.getMessage()), stage);
 		} finally {

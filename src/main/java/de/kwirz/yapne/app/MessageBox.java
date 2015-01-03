@@ -23,7 +23,7 @@ import javafx.stage.Window;
  * Zeigt Meldungen
  *
  */
-public class MessageBox extends GridPane implements Initializable {
+public class MessageBox extends GridPane {
 	
 	@FXML
 	private Text messageText;
@@ -83,6 +83,7 @@ public class MessageBox extends GridPane implements Initializable {
 		final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/message_box.fxml"));
 		loader.setRoot(this);
     	loader.setController(this);
+		setId("message-box");
     	
     	try {
 			loader.load();
@@ -91,16 +92,12 @@ public class MessageBox extends GridPane implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
-	@FXML
-	public void handleCloseButtonAction() {
-		System.out.println("ACTION");
-	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	@FXML
+	public void initialize() {
 		imageView.setImage(new Image(getImagePathByMessageType(messageType)));
 		messageText.setText(message);
+		getStylesheets().add(getClass().getResource("/css/yapne.css").toExternalForm());
 	}
 	
 	@FXML

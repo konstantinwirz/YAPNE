@@ -9,14 +9,21 @@
 
 
 <?import javafx.scene.text.Text?>
+<?import java.net.URL?>
 <BorderPane prefHeight="600.0" prefWidth="700.0"
             xmlns="http://javafx.com/javafx/2" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="de.kwirz.yapne.app.AppController"
-            onKeyPressed="#handleKeyEvent">
+            onKeyPressed="#handleKeyEvent" styleClass="root">
     <fx:define>
         <Double fx:id="TOOLBAR_ICON_HEIGHT" fx:value="16.0"/>
         <Double fx:id="TOOLBAR_ICON_WIDTH" fx:value="16.0"/>
     </fx:define>
+
+    <stylesheets>
+        <URL value="@/css/yapne.css" />
+    </stylesheets>
+
+
     <top>
         <MenuBar>
             <Menu text="File">
@@ -125,7 +132,7 @@
             </Menu>
 
             <Menu text="Extras">
-                <MenuItem text="Settings..." onAction="#settings">
+                <MenuItem text="Settings..." onAction="#settings" accelerator="shortcut+,">
                     <graphic>
                         <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
                                    fitWidth="$TOOLBAR_ICON_WIDTH">
@@ -152,17 +159,16 @@
     </top>
 
     <center>
-        <ScrollPane BorderPane.alignment="CENTER" fitToWidth="true" fitToHeight="true">
+        <ScrollPane BorderPane.alignment="CENTER" >
             <content>
-                <PetriNetPresentation fx:id="canvas" onMouseClicked="#handleMouseEvent"
-                                      style="-fx-focus-color: transparent; -fx-background-color: #E8E8E8;" />
+                <PetriNetPresentation fx:id="canvas" onMouseClicked="#handleMouseEvent" />
             </content>
         </ScrollPane>
     </center>
 
 
     <bottom>
-        <Text fx:id="statusBar"/>
+        <Text fx:id="statusBar" id="status-bar" />
     </bottom>
 
 

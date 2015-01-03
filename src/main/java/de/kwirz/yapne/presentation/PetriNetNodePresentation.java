@@ -36,11 +36,11 @@ import javafx.stage.Window;
 public abstract class PetriNetNodePresentation extends BorderPane
         implements PetriNetElementPresentation {
 
-    private static double MAXIMUM_SIZE = 150.0;
-    private static double MINIMUM_SIZE = 20.0;
-    private static double DEFAULT_SIZE = 45.0;
+    public final static double MAXIMUM_SIZE = 150.0;
+    public final static double MINIMUM_SIZE = 20.0;
+    public final static double DEFAULT_SIZE = 45.0;
 
-    private static Color DEFAULT_FILL_COLOR = Color.TRANSPARENT;
+    private final static Color DEFAULT_FILL_COLOR = Color.TRANSPARENT;
 
     private DoubleProperty size = new SimpleDoubleProperty(DEFAULT_SIZE);
     private StringProperty label = new SimpleStringProperty();

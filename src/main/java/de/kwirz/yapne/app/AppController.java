@@ -89,6 +89,7 @@ public class AppController {
     private void quit() {
         Platform.exit();
         logger.log(Level.INFO, "finishing application...");
+        System.exit(0);
     }
 
     @FXML

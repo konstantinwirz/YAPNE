@@ -4,17 +4,21 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
 
 
+<?import java.net.URL?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" type="javafx.scene.layout.GridPane"
          alignment="center" vgap="50" hgap="15" prefWidth="210" prefHeight="150"
-         minHeight="140" minWidth="200" >
+         minHeight="140" minWidth="200" styleClass="root">
 	<padding>
         <Insets top="10" bottom="5" right="10" left="10" />
     </padding>
+
+    <stylesheets>
+        <URL value="@/css/yapne.css" />
+    </stylesheets>
     
     <ImageView fx:id="imageView" GridPane.columnIndex="0" GridPane.rowIndex="0" fitHeight="32" fitWidth="32" />
     
