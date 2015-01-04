@@ -60,7 +60,7 @@ public class PetriNetArc extends PetriNetElement {
 
     @Override
     public String toString() {
-        return String.format("%s { id='%s', target='%s', source='%s' ",
+        return String.format("%s { id='%s', target='%s', source='%s' }",
                 getId(),
                 getClass().getSimpleName(),
                 target == null?"":target.getName(),

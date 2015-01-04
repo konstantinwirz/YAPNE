@@ -133,6 +133,18 @@ public class PetriNetTest {
         assertFalse(net.hasElementById("arc2"));
     }
 
+    @Test
+    public void testRemoveArc() {
+        assertTrue(net.hasElementById("place1"));
+        assertTrue(net.hasElementById("arc1"));
+        assertEquals(((PetriNetNode) net.getElementById("place1")).inputArcs.size(), 1);
+        assertEquals(((PetriNetNode) net.getElementById("transition1")).outputArcs.size(), 1);
+
+        net.removeElementById("arc1");
+        assertFalse(net.hasElementById("arc1"));
+        assertTrue(((PetriNetNode) net.getElementById("place1")).inputArcs.isEmpty());
+        //assertTrue(((PetriNetNode) net.getElementById("transition1")).outputArcs.isEmpty());
+    }
 
     @Test
     public void testToXml() {
