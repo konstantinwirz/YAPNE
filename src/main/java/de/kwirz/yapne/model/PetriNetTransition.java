@@ -26,25 +26,27 @@ public class PetriNetTransition extends PetriNetNode {
     }
 
     /**
-     * Eine Transition ohne Eingangsstellen ist stets aktiviert
-     * oder wenn jede ihrer Eingangsstellen (Stellen, von denen eine Kante zur Transition führt)
-     * wenigstens eine Marke trägt
-     * @return {@code true} falls Transition aktiviert ist, sonst {@code false}
+     * Gibt <code>true</code> zurück falls diese Transition aktiviert ist.
+     * <p>
+     * Eine Transition ist aktiviert falls:
+     * <ul>
+     *     <li>keine Eingangsstellen vorhanden</li>
+     *     <li>jede ihrer Eingangsstellen wenigstens eine Marke trägt</li>
+     * </ul>
+     *
      */
     public boolean isEnabled() {
-        List<PetriNetPlace> places = getInputPlaces();
-
-        if (places.isEmpty())
-            return outputArcs.isEmpty();
-
-        int maxMarking = 0;
-        for (PetriNetPlace place : places) {
-            maxMarking =  Math.max(maxMarking, place.getMarking());
+        for (PetriNetPlace place : getInputPlaces()) {
+            if (place.getMarking() < 1)
+                return false;
         }
 
-        return maxMarking > 0;
+        return true;
     }
 
+    /**
+     * Gibt alle Eingangsstellen dieser Transition zurück.
+     */
     private List<PetriNetPlace> getInputPlaces() {
         List<PetriNetPlace> places = new ArrayList<>();
 

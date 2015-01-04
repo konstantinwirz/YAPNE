@@ -227,19 +227,50 @@ public abstract class PetriNetNode extends PetriNetElement {
                 getId(), name, position.toString());
     }
 
-
     /**
-     * Verbindet 2 Knoten (this -> node) mit Hilfe einer Kante
+     * Macht eine Verbindung mit Hilfe einer Kante mit diesen Knoten als Quellknoten
      * @param node Zielknoten
      * */
     public void connectToNode(PetriNetNode node) {
-        PetriNetArc arc =
-                new PetriNetArc("arc" + String.valueOf(new Random().nextInt(Integer.MAX_VALUE)));
+        PetriNetArc arc = generateArc();
 
         arc.setSource(this);
         arc.setTarget(node);
     }
 
+    /**
+     *  @see #connectToNode(PetriNetNode)
+     */
+    public void connectToNodes(PetriNetNode ... nodes) {
+        for (PetriNetNode node : nodes)
+            connectToNode(node);
+    }
 
+    /**
+     * Macht eine Verbindung mit Hilfe einer Kante mit diesen Knoten als Zielknoten
+     * @param node Quellknoten
+     */
+    public void connectFromNode(PetriNetNode node) {
+        PetriNetArc arc = generateArc();
+
+        arc.setSource(node);
+        arc.setTarget(this);
+    }
+
+    /**
+     * @see #connectFromNode
+     */
+    public void connectFromNodes(PetriNetNode ... nodes) {
+        for (PetriNetNode node : nodes) {
+            connectFromNode(node);
+        }
+    }
+
+    /**
+     * Gibt eine Kante mit zufallsgenerierten Id zurück
+     */
+    private PetriNetArc generateArc() {
+        return new PetriNetArc("arc" + String.valueOf(new Random().nextInt(Integer.MAX_VALUE)));
+    }
 
 }
