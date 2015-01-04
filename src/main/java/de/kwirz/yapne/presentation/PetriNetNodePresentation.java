@@ -188,7 +188,7 @@ public abstract class PetriNetNodePresentation extends BorderPane
     private void onCenterXChanged(double value) {
         // Um Zentrum des Layouts richtig zu bestimmen brauchen wir die maximale Breite
         double width = Math.max(labelText.getLayoutBounds().getWidth(), getSize());
-        setLayoutX(value - width / 2);
+        setLayoutX(value - width / 2 - getStrokeWidth());
     }
 
     private void onCenterYChanged(double value) {
