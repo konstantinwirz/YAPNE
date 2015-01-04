@@ -2,6 +2,7 @@ package de.kwirz.yapne.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Created by konstantin on 26/11/14.
@@ -64,23 +65,33 @@ public class PetriNetTransition extends PetriNetNode {
     }
 
     public void occur() {
-        if (!isEnabled())
+        if (!isEnabled()) {
+            logger.log(Level.WARNING, "transition is not enabled, nothing to do...");
             return;
+        }
+
+        if (outputArcs.isEmpty()) {
+            logger.log(Level.WARNING, "there are no output arcs, nothing to do...");
+            return;
+        }
 
         int marking = 0;
         for (PetriNetArc inputArc : inputArcs) {
-            if ( !(inputArc.getSource() instanceof PetriNetPlace) )
-                continue;
+            assert inputArc.getSource() instanceof PetriNetPlace;
+
             PetriNetPlace place = (PetriNetPlace) inputArc.getSource();
-            if (place.getMarking() >= 1) {
-                ++marking;
-                place.setMarking(place.getMarking() - 1);
-            }
+
+            assert place.getMarking() > 0;
+
+            place.setMarking(place.getMarking() - 1);
+            ++marking;
         }
 
+        assert marking == inputArcs.size();
+
         for (PetriNetArc outputArc : outputArcs) {
-            if ( !(outputArc.getTarget() instanceof PetriNetPlace) )
-                continue;
+            assert outputArc.getTarget() instanceof PetriNetPlace;
+
             PetriNetPlace place = (PetriNetPlace) outputArc.getTarget();
             place.setMarking(place.getMarking() + marking);
         }

@@ -86,6 +86,21 @@ public class PetriNetTransitionTest {
     }
 
     @Test
+    public void testOccurrenceWithoutOutputNodes() {
+        PetriNetPlace in = new PetriNetPlace("in");
+        in.setMarking(1);
+        in.connectToNode(transition);
+
+        assertTrue(transition.isEnabled());
+
+        transition.occur();
+
+        assertTrue(transition.isEnabled());
+        assertEquals(in.getMarking(), 1);
+
+    }
+
+    @Test
     public void testOccurrenceByEnabledTransition() {
         PetriNetPlace in1 = new PetriNetPlace("in1");
         PetriNetPlace in2 = new PetriNetPlace("in2");
