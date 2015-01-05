@@ -1,28 +1,40 @@
 package de.kwirz.yapne.model;
 
 /**
- * Created by konstantin on 26/11/14.
+ * Repräsentiert eine Stelle im Petri Netz
  */
-public class PetriNetPlace extends PetriNetNode {
+public final class PetriNetPlace extends PetriNetNode {
+
+    /** Stellenmarkierung */
     private int marking = 0;
 
+    /**
+     * Erstellt eine Stelle
+     * @param id Kennung
+     */
     public PetriNetPlace(final String id) {
         super(id);
     }
 
+    /** Gibt Markierung zurück */
     public int getMarking() {
         return marking;
     }
 
+    /**
+     * Setzt Markierung
+     * @throws IllegalArgumentException falls <b>marking</b> negativ ist
+     */
     public void setMarking(int marking) {
-        if (marking < 0) {
+        if (marking < 0)
             throw new IllegalArgumentException("marking cannot be negative");
-        }
+
         this.marking = marking;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public String toXml() {
+    public String toPNML() {
         return String.format("<place id=\"%s\">\n" +
                 "<name>\n" +
                 "<value>%s</value>\n" +
@@ -38,9 +50,11 @@ public class PetriNetPlace extends PetriNetNode {
                 "</place>", getId(), getName(), getMarking(), getPosition().toXml());
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return String.format("%s {id=%s, name='%s', marking=%d, pos=%s}",
                 getClass().getSimpleName(), getId(), getName(), getMarking(), getPosition());
     }
+
 }

@@ -4,7 +4,7 @@ import javafx.event.Event;
 import javafx.event.EventType;
 
 /**
- * Created by konstantin on 30/12/14.
+ * Event wird ausgelöst beim Schalten einer Transition
  */
 public class OccurrenceEvent extends Event {
 
@@ -14,7 +14,7 @@ public class OccurrenceEvent extends Event {
         this(OCCURRED);
     }
 
-    public OccurrenceEvent(EventType<? extends Event> eventType) {
+    private OccurrenceEvent(EventType<? extends Event> eventType) {
         super(eventType);
     }
 }

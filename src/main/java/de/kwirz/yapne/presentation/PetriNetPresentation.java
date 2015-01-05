@@ -19,32 +19,85 @@ import javafx.scene.paint.Color;
 
 
 /**
- * Created by konstantin on 20/12/14.
+ * Grafische Darstellung eines Petri Netzes.
+ * <p>
+ * Bildet Elemente der Klasse {@link de.kwirz.yapne.model.PetriNet}, die hier als Model
+ * eingesetzt wird, auf ihre Präsentationen ab, zeichnet sie und bietet folgende Operationen an:
+ * <ul>
+ *     <li>Erstellen und Entfernen von Transitionen, Stellen und Kanten</li>
+ *     <li>Verschieben von Transitionen und Stellen</li>
+ *     <li>Aus- un Ab -wählen von Transitionen, Stellen und Kanten</li>
+ * </ul>
+ *
  */
 public class PetriNetPresentation extends Pane {
+
+    /** wird zum Loggen verwendet */
     private static final Logger logger = Logger.getLogger(PetriNetPresentation.class.getName());
 
-    private PetriNet model;
+    /** Ein {@link PetriNet} dient als Model */
+    private PetriNet model = new PetriNet();
 
+    /**
+     * Anzahl Stellen im Netz.
+     * <p>
+     * Wird für automatische Generierung von Stellen Ids verwendet.
+     */
     private int placeCounter = 0;
+
+    /**
+     *
+     * Anzahl Transitionen im Netz
+     * <p>
+     * Wird für automatische Generierung von Transitionen Ids verwendet.
+     */
     private int transitionCounter = 0;
+
+    /**
+     *
+     * Anzahl der Kanten im Netz
+     * <p>
+     * Wird für automatische Generierung von Kanten Ids verwendet.
+     */
     private int arcCounter = 0;
 
+    /**  Managt Mausklicks für jedes Element des Netzes */
     private EventHandler<? super MouseEvent> mouseClickedEventHandler;
+    /** Managt Maus Dragged Events für jedes Element des Netzes */
     private EventHandler<? super MouseEvent> mouseDraggedEventHandler;
 
-    private PetriNetElementPresentation selectedElement;
+    /** Id aktuell ausgewähltes Elements */
+    private String selectedElementId = null;
 
-
+    /**
+     * Erstellt eine <b>PetriNetPresentation</b>
+     */
     public PetriNetPresentation() {
-        model = new PetriNet();
+
     }
 
+    /**
+     * Setzt den Model.
+     * Modelelemente werden neu gezeichnet
+     */
     public void setModel(PetriNet model) {
         this.model = model;
         reload();
     }
 
+    /**
+     * Erstellt Präsentationen aus den Modelelementen und zeichnet sie.
+     * <p>
+     * <ol>
+     * <li>Alle Präsentationen werden entfernt.</li>
+     * <li>Erstelle Präsentationen für Stellen und Transitionen aus dem Model</li>
+     * <li>Erstelle Präsentationen für Kanten aus dem Model</li>
+     * <li>Installiere Maus Events Handler für jede Präsentation</li>
+     * </ol>
+     * <p>
+     * Kantenpräsentationen werden zuletzt erstellt um sicher zu gehen dass alle Ziel- und
+     * Quellknoten bereits als Präsentationen existieren.
+     */
     public void reload() {
         getChildren().clear();
 
@@ -128,21 +181,25 @@ public class PetriNetPresentation extends Pane {
         setOnMouseClickedForEachElement(mouseClickedEventHandler);
     }
 
+    /** Liest und konvertiert die <b>strokeWidth</b> Eigenschaft aus den Einstellungen */
     private double getStrokeWidthFromSettings() {
         return Double.valueOf(Settings.getInstance()
                 .getValue("stroke_width", PetriNetNodePresentation.DEFAULT_STROKE_WIDTH));
     }
 
+    /** Liest und konvertiert die <b>nodeSize</b> Eigenschaft aus den Einstellungen */
     private double getNodeSizeFormSettings() {
         return Double.valueOf(Settings.getInstance()
                 .getValue("node_size", PetriNetNodePresentation.DEFAULT_STROKE_WIDTH));
     }
 
+    /** Gibt den Model zurück */
     public PetriNet getModel() {
         return model;
     }
 
 
+    /** Setzt den Handler für jeden Knoten des Netzes */
     public void setOnMouseClickedForEachElement(EventHandler<? super MouseEvent> handler) {
         for (Node node : getChildren()) {
             node.setOnMouseClicked(handler);
@@ -150,6 +207,7 @@ public class PetriNetPresentation extends Pane {
         mouseClickedEventHandler = handler;
     }
 
+    /** Setzt den Handler für jeden Knoten des Netzes */
     public void setOnMouseDraggedForEachElement(EventHandler<? super MouseEvent> handler) {
         for (Node node : getChildren()) {
             node.setOnMouseDragged(handler);
@@ -157,6 +215,14 @@ public class PetriNetPresentation extends Pane {
         mouseDraggedEventHandler = handler;
     }
 
+    /**
+     * Erstellt eine Stelle und fügt sie dem Model hinzu.
+     * <p>
+     * Um Änderungen sichtbar zu machen werden Präsentationen neu gezeichnet.
+     * @see #reload()
+     * @param x X-Koordinate
+     * @param y Y-Koordinate
+     */
     public void createPlace(double x, double y) {
         PetriNetPlace place = new PetriNetPlace(String.format("place%d", ++placeCounter));
         place.setName(place.getId());
@@ -167,6 +233,14 @@ public class PetriNetPresentation extends Pane {
         reload();
     }
 
+    /**
+     * Erstellt eine Transition und fügt sie dem Model hinzu.
+     * <p>
+     * Um Änderungen sichtbar zu machen werden Präsentationen neu gezeichnet.
+     * @see #reload()
+     * @param x X-Koordinate
+     * @param y Y-Koordinate
+     */
     public void createTransition(double x, double y) {
         PetriNetTransition transition = new PetriNetTransition(String.format("trans%d", ++transitionCounter));
         transition.setName(transition.getId());
@@ -176,6 +250,14 @@ public class PetriNetPresentation extends Pane {
         reload();
     }
 
+    /**
+     * Erstellt eine Kante und fügt sie dem Model hinzu.
+     * <p>
+     * Um Änderungen sichtbar zu machen werden Präsentationen neu gezeichnet.
+     * @see #reload()
+     * @param source Präsentation des Quellknotens
+     * @param target Präsentation des Zielknotens
+     */
     public void createArc(PetriNetNodePresentation source, PetriNetNodePresentation target) {
         PetriNetArc arc = new PetriNetArc(String.format("arc%d", ++arcCounter));
         arc.setSource((PetriNetNode) source.getModel());
@@ -185,11 +267,22 @@ public class PetriNetPresentation extends Pane {
         reload();
     }
 
-    public void selectElement(PetriNetElementPresentation element) {
-        if (selectedElement != null)
-            unselectElement(selectedElement);
+    /**
+     * Wählt ein Element aus.
+     * <p>
+     * Element wird sichtbar als Ausgewählt hervorgehoben. Ist bereits ein Element ausgewählt,
+     * wird das abgewählt.
+     * @param id Element zum auswählen
+     */
+    public void selectElementById(String id) {
+        if (selectedElementId != null)
+            unselectElement();
 
-        assert element != null;
+        Node node = lookup("#" + id);
+        if (node == null) {
+            logger.log(Level.WARNING, "no node with id '" + id + "' found");
+            return;
+        }
 
         DropShadow shadow = DropShadowBuilder.create()
                 .offsetX(3)
@@ -197,51 +290,85 @@ public class PetriNetPresentation extends Pane {
                 .radius(5)
                 .color(Color.color(0.4, 0.5, 0.6))
                 .build();
-        ((Node) element).setEffect(shadow);
-        selectedElement = element;
+        node.setEffect(shadow);
+        selectedElementId = node.getId();
     }
 
-    public void unselectElement(PetriNetElementPresentation element) {
-        if (element != null) {
-            ((Node) selectedElement).setEffect(null);
-            selectedElement = null;
+    /**
+     * Wählt ein Element ab.
+     * <p>Falls Element ausgewählt ist, wird das abgewählt.
+     */
+    public void unselectElement() {
+        Node node = lookup("#" + selectedElementId);
+        if (node == null) {
+            logger.log(Level.WARNING, "no node with id '" + selectedElementId + "' found");
+        } else {
+            node.setEffect(null);
         }
+        selectedElementId = null;
     }
 
+    /**
+     * Entfernt ausgewähltes Element
+     * <p>Element wird aus dem Model entfernt und anschließend neu gezeichnet.
+     */
     public void removeSelectedElement() {
-        if (selectedElement == null) {
+        Node node = lookup("#" + selectedElementId);
+
+        if (node == null) {
             logger.log(Level.WARNING, "no element selected");
             return;
         }
 
-        assert selectedElement != null;
+        assert node != null;
 
-        getModel().removeElementById(selectedElement.getModel().getId());
-        selectedElement = null;
+        getModel().removeElementById(((PetriNetElementPresentation) node).getModel().getId());
+        selectedElementId = "";
         reload();
     }
 
+
+    /**
+     * Verschiebt eine Knotenpräsentation.
+     * @param presentation Präsentation zum verschieben
+     * @param point Koordinate
+     */
     public void moveNode(PetriNetNodePresentation presentation, Point2D point) {
+        // Vermeidet Verschiebungen zu weit nach Links oder Hoch
         double x = Math.max(point.getX(), 0);
         double y = Math.max(point.getY(), 0);
+
         presentation.setCenterX(x);
         presentation.setCenterY(y);
         presentation.syncToModel();
     }
 
+    /**
+     * Gibt aktuell ausgewähltes Element zurück.
+     * <p>Wenn kein Element ausgewählt gibt <code>null</code> zurück.
+     */
     public PetriNetElementPresentation getSelectedElement() {
-        return selectedElement;
-    }
+        Node node = lookup("#" + selectedElementId);
+        if (node == null)
+            return null;
 
-    public void clear() {
-        model.clear();
-        getChildren().clear();
+        return (PetriNetElementPresentation) node;
     }
 
     /**
-     * JavaFX FrameWork benutzt für Id's CSS Selektoren, in denen einigen Zeichen (z.B. . @) nicht
-     * vorkommen dürfen.
-     *
+     * Löscht alle Elemente aus dem Model und ihre Präsentationen.
+     */
+    public void clear() {
+        model.clear();
+        getChildren().clear();
+        reload();
+    }
+
+    /**
+     * Normalisiert Ids.
+     * <p>
+     * JavaFX FrameWork benutzt für Id's CSS Selektoren, in denen einige Zeichen (z.B. Punkt) nicht
+     * vorkommen dürfen. So werden hier Punkte durch Unterstriche ersetzt.
      */
     private String normalizeId(String id) {
         return id.replace('.','_');

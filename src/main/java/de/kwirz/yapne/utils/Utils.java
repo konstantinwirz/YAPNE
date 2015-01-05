@@ -8,15 +8,15 @@ package de.kwirz.yapne.utils;
 public class Utils {
 
     /**
-     * Liefert {@code true} falls {@code value >= min && value <= max}
+     * Gibt {@code true} zurück falls {@code value >= min && value <= max}
      */
     public static <T extends Comparable> boolean inRange(T value, T min, T max) {
         return value.compareTo(min) >=0 && value.compareTo(max) <= 0;
     }
 
     /**
-     * Versichert dass {@code value} nicht kleiner als {@code min} und nicht größer als {@code max}
-     * ist
+     * Versichert dass {@code value} nicht kleiner als {@code min} und nicht größer als
+     * {@code max} ist
      * @see #inRange
      */
     public static <T extends Comparable> T ensureRange(T value, T min, T max) {

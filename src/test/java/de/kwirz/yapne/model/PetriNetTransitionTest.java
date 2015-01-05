@@ -1,9 +1,5 @@
 package de.kwirz.yapne.model;
 
-import de.kwirz.yapne.model.PetriNetArc;
-import de.kwirz.yapne.model.PetriNetNode;
-import de.kwirz.yapne.model.PetriNetPlace;
-import de.kwirz.yapne.model.PetriNetTransition;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -22,7 +18,7 @@ public class PetriNetTransitionTest {
         transition.setName("a");
         transition.setPosition(new PetriNetNode.Position(200, 100));
 
-        assertEquals(transition.toXml(), "<transition id=\"transition1\">\n" +
+        assertEquals(transition.toPNML(), "<transition id=\"transition1\">\n" +
                 "<name>\n" +
                 "<value>a</value>\n" +
                 "</name>\n" +

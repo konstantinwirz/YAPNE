@@ -10,10 +10,9 @@
 
 <?import java.net.URL?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" type="javafx.scene.layout.GridPane"
-         alignment="center" vgap="50" hgap="15" prefWidth="210" prefHeight="150"
-         minHeight="140" minWidth="200" styleClass="root">
+         alignment="center" vgap="20" hgap="15" styleClass="root">
 	<padding>
-        <Insets top="10" bottom="5" right="10" left="10" />
+        <Insets top="20" bottom="20" right="20" left="20" />
     </padding>
 
     <stylesheets>

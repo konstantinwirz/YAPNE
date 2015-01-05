@@ -1,12 +1,12 @@
 package de.kwirz.yapne.presentation;
 
-import de.kwirz.yapne.app.IntegerField;
 import de.kwirz.yapne.model.*;
 import javafx.beans.property.*;
 import javafx.beans.value.*;
 import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.*;
+import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.*;
@@ -15,22 +15,108 @@ import javafx.stage.*;
 
 
 /**
- * Created by konstantin on 20/12/14.
+ * Grafische Darstellung einer Stelle.
+ * <p>
+ * Eine Stelle wird mit Hilfe eines Kreises mit der Markierung in der Mitte dargestellt.
+ * Falls die Markierung ist 1, wird die als einzelner Punkt dargestellt, sonst als dezimale Zahl.
  */
-public class PetriNetPlacePresentation extends PetriNetNodePresentation {
+public final class PetriNetPlacePresentation extends PetriNetNodePresentation {
 
+    /** Eine Petri Netz Stelle dient als Model */
     private PetriNetPlace model;
+
+    /** Kreis und Markierung werden in einem {@link javafx.scene.layout.StackPane} dargestellt */
     private StackPane stack = null;
-    private Circle markingCircle = null;
-    private Text markingText = null;
+
+    /** Form der Stelle */
     private Circle circle = null;
 
-    private IntegerProperty marking = new SimpleIntegerProperty(0);
+    /** Markierungspunkt falls Markierung = 1 */
+    private Circle markingCircle = null;
+
+    /** Markierungszahl falls Markierung > 1 */
+    private Text markingText = null;
+
+    /**
+     * Markierung.
+     * <p><b>Standardwert:</b> <br>
+     * 0
+     */
+    private final IntegerProperty marking = new SimpleIntegerProperty(0);
+
+    /**
+     * Erlaubt die Eingabe von positiven Ganzzahlen.
+     * <p>
+     * Da die Klasse von {@link javafx.scene.control.TextField} erbt, muss der Eingabetext in
+     * Ganzzahl konvertiert werden und umgekehrt.
+     */
+     private final class IntegerField extends TextField {
+
+        /** Dieser Wert wird im Feld angezeigt. */
+        private IntegerProperty value = new SimpleIntegerProperty();
+
+        /**
+         * Erstellt ein Feld.
+         */
+        public IntegerField () {
+            // convertiert Ganzzahl in Text
+            value.addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable,
+                                    Number oldValue, Number newValue) {
+                    setText(newValue.toString());
+                }
+            });
+            // konvertiert Eingabetext ins Ganzzahl
+            textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                                    String oldValue, String newValue) {
+                    if (newValue.isEmpty())
+                        return;
+
+                    setText(newValue.matches("\\d*") ? newValue : oldValue);
+                    setValue(Integer.valueOf(getText()));
+                }
+            });
+
+            // beim Fokus verlust, wenn Eingabefelt leer ist - auf 0 setzen.
+            focusedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable,
+                                    Boolean oldValue, Boolean newValue) {
+                    if (getText().isEmpty())
+                        setText("0");
+
+                }
+            });
+        }
+
+        /**
+         * Setzt den Wert.
+         * <p>Wert wird im Feld angezeigt.
+         */
+        public void setValue(int value) {
+            this.value.set(value);
+        }
+
+        /** Gibt den angezeigten Wert zurück */
+        public int getValue() {
+            return this.value.get();
+        }
+
+        /** Gibt die {@link #value} Eigenschaft zurück */
+        public IntegerProperty valueProperty() {
+            return this.value;
+        }
+
+    }
+
 
     /**
      * Bei einem Mausklick auf den Kreis soll sich ein Dialog zur Eingabe von Markierung
      * öffnen, da in der Mitte sich entweder ein Circle oder Text befinden (abhängig von
-     * Markierung) wird dieser Handler auch für diese Knoten gesetzt.
+     * Markierung) wird dieser Handler auch für diese Elemente gesetzt.
      */
     private EventHandler<MouseEvent> inputMarkingOnMouseClick = new EventHandler<MouseEvent>() {
         @Override
@@ -82,19 +168,22 @@ public class PetriNetPlacePresentation extends PetriNetNodePresentation {
         }
     };
 
-
+    /**
+     * Erstellt eine Instanz von <b>PetriNetPlacePresentation</b>
+     */
     public PetriNetPlacePresentation() {
         setupUi();
         registerListeners();
     }
 
+    /** Konfiguriert UI */
     private void setupUi() {
         stack = StackPaneBuilder.create()
                 .build();
         circle = CircleBuilder.create()
                 .strokeWidth(getStrokeWidth())
-                .fill(getDefaultFillColor())
-                .stroke(getDefaultStrokeColor())
+                .fill(DEFAULT_FILL_COLOR)
+                .stroke(DEFAULT_STROKE_COLOR)
                 .radius(getSize() / 2)
                 .build();
         stack.getChildren().add(circle);
@@ -104,18 +193,26 @@ public class PetriNetPlacePresentation extends PetriNetNodePresentation {
         onMarkingValueChanged(getMarking());
     }
 
+    /** Registriert Listener */
     private void registerListeners() {
+        // Macht ein Model Update, falls Markierung sich ändert.
         marking.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
                 onMarkingValueChanged(newValue.intValue());
-                model.setMarking(newValue.intValue());
+                if (model != null)
+                    model.setMarking(newValue.intValue());
             }
         });
 
         circle.setOnMouseClicked(inputMarkingOnMouseClick);
     }
 
+    /**
+     * {@inheritDoc}
+     * Aktualisiert Kreisgröße
+     * @param newSize Durchmesser des Kreises
+     */
     @Override
     protected void onSizeChanged(double newSize) {
         if (circle == null)
@@ -124,23 +221,36 @@ public class PetriNetPlacePresentation extends PetriNetNodePresentation {
             circle.setRadius(newSize / 2);
     }
 
+    /** Gibt Markierung zurück */
     public final int getMarking() {
         return marking.get();
     }
 
+    /** Gibt {@link #marking} Eigenschaft zurück */
     public final IntegerProperty markingProperty() {
         return marking;
     }
 
+    /** Setzt Markierung */
     public final void setMarking(int marking) {
         this.marking.set(marking);
     }
 
+    /**
+     * {@inheritDoc}
+     * Aktualisiert Linienstärke
+     */
     @Override
     protected void onStrokeWidthChanged(double newWidth) {
         circle.setStrokeWidth(newWidth);
     }
 
+    /**
+     * Wird bei einer Änderung der Markierung ausgeführt.
+     * <p>Hier wird das Markierungselement in der Mitte angepasst, abhängig vom Markierung.
+     * @param newMarking neue Markierung
+     * @throws IllegalArgumentException falls Markierung negativ ist
+     */
     protected void onMarkingValueChanged(int newMarking) {
         if (newMarking < 0) {
             throw new IllegalArgumentException("marking cannot be negative");
@@ -167,26 +277,31 @@ public class PetriNetPlacePresentation extends PetriNetNodePresentation {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setModel(PetriNetElement element) {
         model = (PetriNetPlace) element;
         syncFromModel();
     }
 
+    /** {@inheritDoc} */
     @Override
     public PetriNetElement getModel() {
         return model;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void syncToModel() {
         super.syncToModel();
         model.setMarking(getMarking());
     }
 
+    /** {@inheritDoc} */
     @Override
     public void syncFromModel() {
         super.syncFromModel();
         setMarking(model.getMarking());
     }
+
 }

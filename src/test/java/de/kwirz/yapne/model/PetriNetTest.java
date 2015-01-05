@@ -148,7 +148,7 @@ public class PetriNetTest {
 
     @Test
     public void testToXml() {
-        assertEquals(net.toXml(), "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n" +
+        assertEquals(net.toPNML(), "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n" +
                 "<pnml>\n" +
                 "<net>\n" +
                 "<transition id=\"transition1\">\n" +

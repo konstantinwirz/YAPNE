@@ -10,19 +10,27 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 
 /**
- *
- * Grafische Darstellung einer Kante
- *
+ * Grafische Darstellung einer Kante.
+ * <p>Verbindet 2 Knoten, überwacht deren Positionsänderungen und zeichnet sich neu
+ * falls notwendig
  */
 public class PetriNetArcPresentation extends Path implements PetriNetElementPresentation {
 
-    /**
-     * Kanten die kürzer sind werden nicht gezeichnet
-     */
+    /** Kanten die kürzer sind werden nicht gezeichnet */
     private static final double MINIMUM_LENGTH = 50;
+
+    /** Quellknoten */
     private PetriNetNodePresentation source = null;
+
+    /** Zielknoten */
     private PetriNetNodePresentation target = null;
+
+    /** Model */
     private PetriNetArc model = null;
+
+    /**
+     * Zeichnet die Kante neu
+     */
     private ChangeListener<Number> changeListener = new ChangeListener<Number>() {
         @Override
         public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -30,14 +38,13 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
         }
     };
 
-    /**
-     * Erstellt eine Instanz
-     */
+    /** Erstellt eine Kante */
     public PetriNetArcPresentation() {
         setupUi();
         registerListeners();
     }
 
+    /** Registriert Listener */
     private void registerListeners() {
         // erzwingt dass strokeWidth zwischen Min und Max Werten liegt.
         strokeWidthProperty().addListener(new ChangeListener<Number>() {
@@ -49,23 +56,34 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
         });
     }
 
+    /**
+     * Aktiviert Anti-Aliasing und PickOnBounds (vereinfacht das Auswählen mit der Mouse)
+     */
     private void setupUi() {
         setPickOnBounds(true);
         setSmooth(true);
     }
 
     /**
-     * Setzt source und target auf Null
+     * Setzt Quell- und Zielknoten zurück
      */
     public void clear() {
         setSource(null);
         setTarget(null);
     }
 
+    /**
+     * Gibt Quellknoten zurück
+     */
     public PetriNetNodePresentation getSource() {
         return source;
     }
 
+    /**
+     * Setzt den Quellknoten
+     * <p>Es werden Positionsänderungslistener registriert, falls Quellknoten bereits gesetzt
+     * ist, werden zuerst seine Listener entfernt.
+     */
     public void setSource(PetriNetNodePresentation source) {
         if (this.source != null) {
             this.source.centerXProperty().removeListener(changeListener);
@@ -77,10 +95,18 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
         source.centerYProperty().addListener(changeListener);
     }
 
+    /**
+     * Gibt Zielknoten zurück
+     */
     public PetriNetNodePresentation getTarget() {
         return target;
     }
 
+    /**
+     * Setzt den Zielknoten
+     * <p>Es werden Positionsänderungslistener registriert, falls Zielknoten bereits gesetzt
+     * ist, werden zuerst seine Listener entfernt.
+     */
     public void setTarget(PetriNetNodePresentation target) {
         if (this.target != null) {
             this.target.centerXProperty().removeListener(changeListener);
@@ -92,10 +118,11 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
         target.centerYProperty().addListener(changeListener);
     }
 
-    public double getMinimumLength() {
-        return MINIMUM_LENGTH;
-    }
-
+    /**
+     * Zeichnet ein Pfeil zwischen den Zeil- und Quellknoten.
+     * <p>Pfeil fängt an an der Außenkante des Quellknotens und endet and der Außenkante
+     * des Zielknotens.
+     */
     private void update() {
         getElements().clear();
 
@@ -109,7 +136,7 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
         final double dx = x2 - x1;
         final double dy = y2 - y1;
         double length = Math.sqrt(Math.pow(dx, 2.0) + Math.pow(dy, 2.0));
-        if (length < getMinimumLength())
+        if (length < MINIMUM_LENGTH)
             return;
 
         double theta = Math.atan2(dy, dx);
@@ -117,6 +144,10 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
         double sourceOffset = source.getSize() / 2;
         double targetOffset = target.getSize() / 2;
 
+        /**
+         * Berechnet Abstand zwischen Zentrum des Quadrats und dem Schnittpunkt
+         * der Gerade und der Seite des Quadrats
+         */
         class QuadratOffsetCalculator {
             double calculate() {
                 double alpha = Math.toDegrees(Math.atan2(Math.abs(dx), Math.abs(dy)));
@@ -165,21 +196,25 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
         getElements().add(new LineTo(x, y));
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setModel(PetriNetElement element) {
         this.model = (PetriNetArc) element;
     }
 
+    /** {@inheritDoc} */
     @Override
     public PetriNetElement getModel() {
         return model;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void syncToModel() {
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public void syncFromModel() {
 

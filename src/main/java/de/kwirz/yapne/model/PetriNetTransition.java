@@ -5,17 +5,21 @@ import java.util.List;
 import java.util.logging.Level;
 
 /**
- * Created by konstantin on 26/11/14.
+ * Repräsentiert eine Transition im Petri Netz
  */
-public class PetriNetTransition extends PetriNetNode {
+public final class PetriNetTransition extends PetriNetNode {
 
-
+    /**
+     * Erstellt eine Transition
+     * @param id Kennung
+     */
     public PetriNetTransition(String id) {
         super(id);
     }
 
+    /** {@inheritDoc} */
     @Override
-    public String toXml() {
+    public String toPNML() {
         return String.format("<transition id=\"%s\">\n" +
                 "<name>\n" +
                 "<value>%s</value>\n" +
@@ -45,9 +49,7 @@ public class PetriNetTransition extends PetriNetNode {
         return true;
     }
 
-    /**
-     * Gibt alle Eingangsstellen dieser Transition zurück.
-     */
+    /** Gibt alle Eingangsstellen zurück. */
     private List<PetriNetPlace> getInputPlaces() {
         List<PetriNetPlace> places = new ArrayList<>();
 
@@ -64,6 +66,16 @@ public class PetriNetTransition extends PetriNetNode {
         return places;
     }
 
+    /**
+     * Schaltet die Transition
+     * <p>
+     * Damit die Schaltung erfolgt müssen folgende Bedingungen erfüllt sein
+     * <ol>
+     * <li>Transition ist aktiviert</li>
+     * <li>Ausgangsknoten sind vorhanden</li>
+     * </ol>
+     *
+     */
     public void occur() {
         if (!isEnabled()) {
             logger.log(Level.WARNING, "transition is not enabled, nothing to do...");
@@ -76,6 +88,7 @@ public class PetriNetTransition extends PetriNetNode {
         }
 
         int marking = 0;
+        // decrementieree Markierung bei jeder Eingansstelle
         for (PetriNetArc inputArc : inputArcs) {
             assert inputArc.getSource() instanceof PetriNetPlace;
 
@@ -87,8 +100,10 @@ public class PetriNetTransition extends PetriNetNode {
             ++marking;
         }
 
+
         assert marking == inputArcs.size();
 
+        // incrementiere Markierung bei jeder Ausgangsstelle
         for (PetriNetArc outputArc : outputArcs) {
             assert outputArc.getTarget() instanceof PetriNetPlace;
 
@@ -96,4 +111,5 @@ public class PetriNetTransition extends PetriNetNode {
             place.setMarking(place.getMarking() + marking);
         }
     }
+
 }

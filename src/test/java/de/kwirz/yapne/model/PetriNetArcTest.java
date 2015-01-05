@@ -1,9 +1,6 @@
 package de.kwirz.yapne.model;
 
 
-import de.kwirz.yapne.model.PetriNetArc;
-import de.kwirz.yapne.model.PetriNetPlace;
-import de.kwirz.yapne.model.PetriNetTransition;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -28,6 +25,6 @@ public class PetriNetArcTest {
     public void testToXML() {
         arc.setSource(new PetriNetTransition("transition1"));
         arc.setTarget(new PetriNetPlace("place1"));
-        assertEquals(arc.toXml(), "<arc id=\"arc1\" source=\"transition1\" target=\"place1\"> </arc>");
+        assertEquals(arc.toPNML(), "<arc id=\"arc1\" source=\"transition1\" target=\"place1\"> </arc>");
     }
 }

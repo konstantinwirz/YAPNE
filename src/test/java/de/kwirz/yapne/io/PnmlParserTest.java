@@ -17,11 +17,18 @@ public class PnmlParserTest {
         parser = new PnmlParser();
     }
 
-    @Test
-    public void testParseInvalidInput() {
+    @Test(expected = RuntimeException.class)
+    public void testParseEmptySource() {
         PetriNet net = parser.parse("");
+    }
 
-        assertTrue(net.getIds().isEmpty());
+    @Test(expected = RuntimeException.class)
+    public void testParseInvalidSource() {
+        final String input = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n" +
+                "<pnml>\n" +
+                "  <net>\n" +
+                "<pnml>";
+        parser.parse(input);
     }
 
     @Test

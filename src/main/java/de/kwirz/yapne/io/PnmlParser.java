@@ -48,9 +48,17 @@ public class PnmlParser {
      */
     private boolean isValue = false;
 
+    /**
+     * Wird beim Parsen aufgebaut
+     */
     private PetriNet net = null;
 
 
+    /**
+     * Parst <b>input</b> und erstellt daraus Petri Netz Model
+     * @param input PNML Repräsentation eines Netzes
+     * @return Petri Netz
+     */
     public PetriNet parse(final String input) {
         net = new PetriNet();
 
@@ -58,8 +66,7 @@ public class PnmlParser {
         try {
             xmlParser = XMLInputFactory.newInstance().createXMLEventReader(stream);
         } catch (XMLStreamException e) {
-            System.err.println("XML processing error:" + e.getMessage());
-            e.printStackTrace();
+            throw new RuntimeException("XML processing error", e);
         }
 
         try {
@@ -94,10 +101,9 @@ public class PnmlParser {
                 }
             }
         } catch (XMLStreamException e) {
-            System.err.println("could not process PNML document: " + e.getMessage());
-            e.printStackTrace();
+            throw new RuntimeException("could not process PNML document", e);
         } catch (NullPointerException e) {
-            System.err.println("couldn't parse the given source: " + e.getMessage());
+            throw new RuntimeException("couldn't parse the given source", e);
         }
 
         return net;

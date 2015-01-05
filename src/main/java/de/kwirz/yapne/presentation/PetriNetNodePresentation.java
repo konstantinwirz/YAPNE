@@ -13,7 +13,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -31,39 +30,95 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 /**
- * Created by konstantin on 20/12/14.
+ * Abstrakte Basisklasse für Stellen und Transitionen.
+ * <p>
+ * Implementiert gemeinsame Funktionalität für grafische Darstellungen von Transitionen und Stellen:
+ * <ul>
+ * <li>Knotengröße </li>
+ * <li>Knotenname</li>
+ * </ul>
+ * Knotenname wird oberhalb des Knotens gezeichnet, bei einem Doppelklick lässt sich der Name ändern.
+ * <p>
+ * Klassen die von dieser ableiten müssen den Knoten selbst zeichnen und dann als {@link BorderPane} <b>center</b>
+ * setzen.
  */
-public abstract class PetriNetNodePresentation extends BorderPane
-        implements PetriNetElementPresentation {
+public abstract class PetriNetNodePresentation
+        extends BorderPane  implements PetriNetElementPresentation {
 
+    /** Maximale Größe des Knotens */
     public final static double MAXIMUM_SIZE = 150.0;
+
+    /** Minimale Größe des Knotens */
     public final static double MINIMUM_SIZE = 20.0;
+
+    /** Standardgröße des Knotens */
     public final static double DEFAULT_SIZE = 45.0;
 
-    private final static Color DEFAULT_FILL_COLOR = Color.TRANSPARENT;
+    /** Standardfüllfarbe des Knotens */
+    public final static Color DEFAULT_FILL_COLOR = Color.TRANSPARENT;
 
-    private DoubleProperty size = new SimpleDoubleProperty(DEFAULT_SIZE);
-    private StringProperty label = new SimpleStringProperty();
-    private DoubleProperty strokeWidth = new SimpleDoubleProperty(DEFAULT_STROKE_WIDTH);
-    private DoubleProperty centerX = new SimpleDoubleProperty(0.0);
-    private DoubleProperty centerY = new SimpleDoubleProperty(0.0);
+    /**
+     * Größe des Knotens.
+     * <p>
+     * <b>Standardwert:</b> <br>
+     * {@value #DEFAULT_SIZE}
+     * @see #setSize
+     * @see #getSize
+     * @see #sizeProperty
+     */
+    private final DoubleProperty size = new SimpleDoubleProperty(DEFAULT_SIZE);
 
+    /**
+     * Knotenname.
+     */
+    private final StringProperty label = new SimpleStringProperty();
+
+
+    /**
+     * Linienstärke.
+     * <p><b>Standardwert:</b> <br>
+     * {@value de.kwirz.yapne.presentation.PetriNetElementPresentation#DEFAULT_STROKE_WIDTH}
+     * @see #getStrokeWidth
+     * @see #setStrokeWidth
+     * @see #strokeWidthProperty
+     */
+    private final DoubleProperty strokeWidth = new SimpleDoubleProperty(DEFAULT_STROKE_WIDTH);
+
+    /**
+     * X-Koordinate des Knotenzentrums.
+     * <p><b>Standardwert:</b> <br>
+     * 0.0
+     */
+    private final DoubleProperty centerX = new SimpleDoubleProperty(0.0);
+
+    /**
+     * Y-Koordinate des Knotenzentrums.
+     * <p><b>Standardwert:</b> <br>
+     * 0.0
+     */
+    private final DoubleProperty centerY = new SimpleDoubleProperty(0.0);
+
+    /**
+     * In diesem Element steht Knotenname
+     */
     private Text labelText;
+
+    /**
+     * Dieser Zähler wird zum automatischen Generieren von Knotennamen verwendet
+     */
     private static int counter = 0;
 
+    /**
+     * Erstellt eine <b>PetriNetNodePresentation</b>
+     */
     public PetriNetNodePresentation() {
         setupUi();
         registerListeners();
     }
 
-    public static Color getDefaultFillColor() {
-        return DEFAULT_FILL_COLOR;
-    }
-
-    public static Color getDefaultStrokeColor() {
-        return DEFAULT_STROKE_COLOR;
-    }
-
+    /**
+     * Erstellt und konfiguriert UI Elemente
+     */
     private void setupUi() {
         labelText = TextBuilder.create()
                 .text(String.format("Item %d", ++counter))
@@ -75,7 +130,11 @@ public abstract class PetriNetNodePresentation extends BorderPane
         this.setMargin(labelText, new Insets(0, 0, 5, 0));
     }
 
+    /**
+     * Registriert Listener.
+     */
     private void registerListeners() {
+        // Knotennamen setzen.
         label.addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
@@ -83,6 +142,7 @@ public abstract class PetriNetNodePresentation extends BorderPane
             }
         });
 
+        // sicherstellen dass die Größe >= MINIMUM_SIZE und <= MAXIMUM_SIZE
         size.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -95,6 +155,7 @@ public abstract class PetriNetNodePresentation extends BorderPane
             }
         });
 
+        // sicherstellen dass Linienstärke >= MINIMUM_STROKE_WIDTH und <= MAXIMUM_STROKE_WIDTH
         strokeWidth.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -107,28 +168,23 @@ public abstract class PetriNetNodePresentation extends BorderPane
             }
         });
 
+        // wenn die Eiganschaft geändert wird - führe den Handler aus.
         centerX.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                Node center = getCenter();
-                if (center == null)
-                    throw new NullPointerException("center node can not be null");
-
                 onCenterXChanged(newValue.doubleValue());
             }
         });
 
+        // wenn die Eiganschaft geändert wird - führe den Handler aus.
         centerY.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                Node center = getCenter();
-                if (center == null)
-                    throw new NullPointerException("center node can not be null");
-
                 onCenterYChanged(newValue.doubleValue());
             }
         });
 
+        // Zeige die Maske zum Editieren von Knotennamen.
         labelText.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -183,7 +239,7 @@ public abstract class PetriNetNodePresentation extends BorderPane
 
     /**
      * Wird bei einer Änderung der {@link #centerXProperty} ausgeführt.
-     * @param value X-Wert
+     * @param value X-Koordinate
      */
     private void onCenterXChanged(double value) {
         // Um Zentrum des Layouts richtig zu bestimmen brauchen wir die maximale Breite
@@ -191,7 +247,12 @@ public abstract class PetriNetNodePresentation extends BorderPane
         setLayoutX(value - width / 2 - getStrokeWidth());
     }
 
+    /**
+     * Wird bei einer Änderung der {@link #centerYProperty} ausgeführt.
+     * @param value Y-Koordinate
+     */
     private void onCenterYChanged(double value) {
+        // entferne Knotennamenhöhe und alle Zwischeräume
         double offset = labelText.getBoundsInLocal().getHeight() +
                 getMargin(labelText).getBottom() +
                 getSize() / 2 +
@@ -199,69 +260,102 @@ public abstract class PetriNetNodePresentation extends BorderPane
         setLayoutY(value - offset);
     }
 
-    protected void onSizeChanged(double newSize) {}
-    protected void onStrokeWidthChanged(double newWidth) {}
+    /**
+     * Wird bei einer Änderung der Knotengröße ausgeführt
+     * @param newSize neue Knotengröße
+     */
+    protected void onSizeChanged(double newSize) {
 
+    }
+
+    /**
+     * Wird bei einer Änderung der Linienstärke ausgeführt.
+     * @param newWidth neue Linienstärke
+     */
+    protected void onStrokeWidthChanged(double newWidth) {
+
+    }
+
+    /** Setzt den Knotennamen */
     public final String getLabel() {
         return label.get();
     }
 
+    /** Gibt die {@link #label} Eigenschaft zurück */
     public final StringProperty labelProperty() {
         return label;
     }
 
+    /** Setzt den Knotennamen */
     public final void setLabel(String label) {
         this.label.set(label);
     }
 
+    /** Gibt die Knotengröße zurück */
     public final double getSize() {
         return size.get();
     }
 
+    /** Gibt die {@link #size} Eigenschaft zurück */
     public final DoubleProperty sizeProperty() {
         return size;
     }
 
+    /** Setzt die Knotengröße */
     public final void setSize(double size) {
         this.size.set(size);
     }
 
+    /** Gibt die Linienstärke zurück */
     public final double getStrokeWidth() {
         return this.strokeWidth.get();
     }
 
+    /** Setzt die Linienstärke */
     public final void setStrokeWidth(double width) {
         this.strokeWidth.set(width);
     }
 
+    /** Gibt die {@link #strokeWidth} Eigenschaft zurück */
     public final DoubleProperty strokeWidthProperty() {
         return this.strokeWidth;
     }
 
-    public double getCenterX() {
+    /** Gibt die X-Koordinate des Knotenzentrums zurück. */
+    public final double getCenterX() {
         return centerX.get();
     }
 
-    public DoubleProperty centerXProperty() {
+    /** Gibt die {@link #centerX} Eigenschaft zurück */
+    public final DoubleProperty centerXProperty() {
         return centerX;
     }
 
-    public void setCenterX(double centerX) {
+    /** Setzt die X-Koordinate des Knotenzentrums */
+    public final void setCenterX(double centerX) {
         this.centerX.set(centerX);
     }
 
-    public double getCenterY() {
+    /** Gibt die Y-Koordinate des Knotenzentrums zurück. */
+    public final double getCenterY() {
         return centerY.get();
     }
 
-    public DoubleProperty centerYProperty() {
+    /** Gibt die {@link #centerY} Eigenschaft zurück */
+    public final DoubleProperty centerYProperty() {
         return centerY;
     }
 
-    public void setCenterY(double centerY) {
+    /** Setzt die Y-Koordinate des Knotenzentrums */
+    public final void setCenterY(double centerY) {
         this.centerY.set(centerY);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Klassen die diese Methode überschreiben müssen Methode der Superklasse unbedingt ausführen.
+     */
     @Override
     public void syncToModel() {
         assert getModel() != null;
@@ -271,9 +365,13 @@ public abstract class PetriNetNodePresentation extends BorderPane
 
         model.setName(getLabel());
         model.setPosition(new PetriNetNode.Position((int) getCenterX(), (int) getCenterY()));
-        fireEvent(new OccurrenceEvent());
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Klassen die diese Methode überschreiben müssen Methode der Superklasse unbedingt ausführen.
+     */
     @Override
     public void syncFromModel() {
         assert getModel() != null;
@@ -285,4 +383,5 @@ public abstract class PetriNetNodePresentation extends BorderPane
         setCenterX(model.getPosition().getX());
         setCenterY(model.getPosition().getY());
     }
+
 }

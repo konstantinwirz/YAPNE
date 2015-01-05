@@ -1,21 +1,37 @@
 package de.kwirz.yapne.model;
 
 /**
- * Representiert eine Kante im Petri Netz
+ * Repräsentiert eine Kante im Petri Netz
  */
-public class PetriNetArc extends PetriNetElement {
+public final class PetriNetArc extends PetriNetElement {
 
+    /** Quellknoten */
     private PetriNetNode source = null;
+
+    /** Zielknoten */
     private PetriNetNode target = null;
 
+    /**
+     * Erstellt eine Kante
+     * @param id Kennung dieser Kante
+     */
     public PetriNetArc(final String id) {
         super(id);
     }
 
+    /** Gibt Quellknoten zurück  */
     public PetriNetNode getSource() {
         return source;
     }
 
+    /**
+     * Setzt den Quellknoten.
+     * <p>Diese Kante wird bei dem Knoten <b>source</b> als Ausgangskante gesetzt, falls
+     * ein Quellknoten bereits gesetzt ist, wird diese Kante aus seiner Ausgangskantenliste
+     * entfernt und er wird überschrieben.
+     * @param source Quellknoten
+     * @throws IllegalArgumentException falls Quell- und Zielknoten vom selben Typ sind
+     */
     public void setSource(PetriNetNode source) {
         if (this.source == source)
             return;
@@ -32,10 +48,19 @@ public class PetriNetArc extends PetriNetElement {
             this.source.addOutputArc(this);
     }
 
+    /** Gibt Zielknoten zurück  */
     public PetriNetNode getTarget() {
         return target;
     }
 
+    /**
+     * Setzt den Zielknoten.
+     * <p>Diese Kante wird bei dem Knoten <b>target</b> als Eingangskante gesetzt, falls
+     * ein Zielknoten bereits gesetzt ist, wird diese Kante aus seiner Eingangskantenliste
+     * entfernt und er wird überschrieben.
+     * @param target Zielknoten
+     * @throws IllegalArgumentException falls Quell- und Zielknoten vom selben Typ sind
+     */
     public void setTarget(PetriNetNode target) {
         if (this.target == target)
             return;
@@ -52,12 +77,14 @@ public class PetriNetArc extends PetriNetElement {
             this.target.addInputArc(this);
     }
 
+    /** {@inheritDoc} */
     @Override
-    public String toXml() {
+    public String toPNML() {
         return String.format("<arc id=\"%s\" source=\"%s\" target=\"%s\"> </arc>", getId(),
                 getSource()!=null?getSource().getId():"", getTarget()!=null?getTarget().getId():"");
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return String.format("%s { id='%s', target='%s', source='%s' }",

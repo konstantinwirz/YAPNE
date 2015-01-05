@@ -1,7 +1,5 @@
 package de.kwirz.yapne.model;
 
-import de.kwirz.yapne.model.PetriNetNode;
-import de.kwirz.yapne.model.PetriNetPlace;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -25,7 +23,7 @@ public class PetriNetPlaceTest {
         place.setName("p1");
         place.setMarking(0);
         place.setPosition(new PetriNetNode.Position(400, 250));
-        assertEquals(place.toXml(), "<place id=\"place1\">\n" +
+        assertEquals(place.toPNML(), "<place id=\"place1\">\n" +
                 "<name>\n" +
                 "<value>p1</value>\n" +
                 "</name>\n" +

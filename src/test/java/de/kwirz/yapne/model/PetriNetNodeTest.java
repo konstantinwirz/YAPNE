@@ -14,7 +14,7 @@ public class PetriNetNodeTest {
         }
 
         @Override
-        public String toXml() {
+        public String toPNML() {
             return "";
         }
     }
@@ -26,7 +26,7 @@ public class PetriNetNodeTest {
         }
 
         @Override
-        public String toXml() {
+        public String toPNML() {
             return "";
         }
     }

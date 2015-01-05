@@ -8,13 +8,13 @@ import java.util.logging.Logger;
 
 /**
  * Repräsentiert ein Petri Netz
- * <p>
- * Verwaltet Elemente des Petri Netzes, liefert die PNML Darstellung des Netzes.
+ * <p>Verwaltet Elemente des Petri Netzes, liefert die PNML Darstellung des Netzes.
+ * <p>Es ist wichtig dass Elemente eine eindeutige Kennung haben.
  */
-public class PetriNet {
+public final class PetriNet implements PNMLable {
 
     /**
-     * Logger
+     * Wird zum Loggen verwendet
      */
     private final static Logger logger = Logger.getLogger(PetriNet.class.getName());
 
@@ -24,9 +24,13 @@ public class PetriNet {
     private List<PetriNetElement> elements = new ArrayList<>();
 
     /**
-     * Fügt ein Element den Netz hinzu.
+     * Fügt ein Element hinzu.
      *
-     * @exception IllegalArgumentException falls Element ist nicht gültig
+     * @exception IllegalArgumentException falls Validierungsfunktion fehlgeschlagen ist
+     * @see #validateElement
+     * @see #validatePlace
+     * @see #validateTransition
+     * @see #validateArc
      */
     public void addElement(PetriNetElement element) {
         validateElement(element);
@@ -35,9 +39,13 @@ public class PetriNet {
     }
 
     /**
-     * Macht Validierung von Elementen
+     * Validiert Petri Netz Elemente
      *
-     * @exception IllegalArgumentException falls Element ist nicht gültig
+     * @exception IllegalArgumentException falls Element ist nicht gültig:
+     * <ul>
+     *     <li>Id ist leer</li>
+     *     <li>Es existiert bereits ein Element mit der Id</li>
+     * </ul>
      */
     private void validateElement(PetriNetElement element) {
         if (element.getId().trim().isEmpty())
@@ -58,8 +66,8 @@ public class PetriNet {
     }
 
     /**
-     * Macht Validierung von Kanten
-     * @exception IllegalArgumentException falls Kante nicht gültig
+     * Validiert Kanten
+     * @exception IllegalArgumentException falls Kante keinen Ziel- oder Quellknoten hat.
      */
     private void validateArc(PetriNetArc arc) {
         if (arc.getSource() == null || arc.getTarget() == null) {
@@ -67,26 +75,17 @@ public class PetriNet {
         }
     }
 
-    /**
-     * Kann Code enthalten zum validieren von Stellen.
-     * @exception IllegalArgumentException falls Stelle nicht gültig
-     */
+    /** Validiert Stellen */
     private void validatePlace(PetriNetPlace place) {
 
     }
 
-    /**
-     * Kann Code enthalten zum validieren von Übergängen
-     * @exception IllegalArgumentException falls Übergang nicht gültig
-     */
-    private void validateTransition(PetriNetTransition place) {
+    /** Validiert Transitionen */
+    private void validateTransition(PetriNetTransition transition) {
 
     }
 
-    /**
-     * Liefert Id's aller Elemente im Netz
-     * @return
-     */
+    /** Liefert Id's aller Elemente */
     public List<String> getIds() {
         ArrayList<String> ids = new ArrayList<>();
         for(PetriNetElement element : this.elements) {
@@ -95,9 +94,7 @@ public class PetriNet {
         return ids;
     }
 
-    /**
-     * Entfernt alle Element aus dem Netz
-     */
+    /** Entfernt alle Elemente */
     public void clear() {
         elements.clear();
     }
@@ -128,7 +125,7 @@ public class PetriNet {
     /**
      * Entfernt ein Element aus dem Petri Netz.
      * <p>
-     * Falls der Element eine Kante ist, werden Verweise auf diese Kante von Zeil- und
+     * Falls der Element eine Kante ist, werden Verweise auf diese Kante von Ziel- und
      * Quellknoten entfernt.
      * Falls der Element ein Knoten ist, werden seine Eingangs- und Ausgangskanten entfernt.
      *
@@ -173,13 +170,11 @@ public class PetriNet {
         logger.log(Level.INFO, "removed element: " + element.getId());
     }
 
-    /**
-     * Liefert eine PNML Representation des Netzes
-     */
-    public String toXml() {
+    /** {@inheritDoc} */
+    public String toPNML() {
         String elementsXml = "";
         for (PetriNetElement element : elements) {
-            elementsXml += element.toXml() + "\n";
+            elementsXml += element.toPNML() + "\n";
         }
 
         return "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n" +

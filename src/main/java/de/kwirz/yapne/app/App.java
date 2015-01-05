@@ -12,11 +12,19 @@ import javafx.stage.WindowEvent;
 
 
 /**
- *
- *
+ * Einstiegspunkt der Anwendung.
+ * <p>
+ * Hier wird unsere UI aus einer FXML Datei gelesen, Controller initialisiert, Fenstergröße und
+ * Fenstertitel gesetzt.
  */
 public class App extends Application {
 
+    /**
+     * Haupteinstiegspunkt für eine JavaFX Anwendung.
+     * <p>
+     * Wird ausgeführt nach dem das System bereit ist unsere Anwendung zu starten.
+     * @param primaryStage Haupt-Stage dieser Anwendung
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
     	final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main_window.fxml"));
@@ -25,8 +33,9 @@ public class App extends Application {
     	
     	controller.setPrimaryStage(primaryStage);
 
-        primaryStage.setTitle("PetriNetEditor");
+        primaryStage.setTitle("YAPNE - Konstantin Wirz/8124396");
         primaryStage.setScene(new Scene(root, 1100, 600));
+        primaryStage.sizeToScene();
         primaryStage.show();
 
         primaryStage.getIcons().add(new Image("images/yapne.png"));
@@ -42,6 +51,7 @@ public class App extends Application {
         });
     }
 
+    /** Startet die Anwendung */
     public static void main(String[] args) {
         launch(args);
     }
