@@ -47,7 +47,7 @@ public final class PetriNetPlace extends PetriNetNode {
                 "<graphics>\n" +
                 "%s\n" +
                 "</graphics>\n" +
-                "</place>", getId(), getName(), getMarking(), getPosition().toXml());
+                "</place>", getId(), getName(), getMarking(), getPosition().toPNML());
     }
 
     /** {@inheritDoc} */

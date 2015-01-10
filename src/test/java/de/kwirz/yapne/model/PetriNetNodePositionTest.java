@@ -1,7 +1,6 @@
 package de.kwirz.yapne.model;
 
 
-import de.kwirz.yapne.model.PetriNetNode;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -37,7 +36,7 @@ public class PetriNetNodePositionTest {
     @Test
     public void testToXML() {
         PetriNetNode.Position position = new PetriNetNode.Position(100, 200);
-        assertEquals(position.toXml(), "<position x=\"100\" y=\"200\" />");
+        assertEquals(position.toPNML(), "<position x=\"100\" y=\"200\" />");
     }
 
 }

@@ -66,7 +66,7 @@ public abstract class PetriNetNode extends PetriNetElement {
     /**
      * Repräsentiert eine Position, ein 2D Punkt, mit <b>x</b> und <b>y</b> Eigenschaften.
      */
-    public static class Position {
+    public static class Position implements PNMLable {
         /**
          * Koordinaten
          */
@@ -135,7 +135,7 @@ public abstract class PetriNetNode extends PetriNetElement {
         /**
          * Gibt die PNML Repräsentation zurück
          */
-        public String toXml() {
+        public String toPNML() {
             return String.format("<position x=\"%d\" y=\"%d\" />", getX(), getY());
         }
 

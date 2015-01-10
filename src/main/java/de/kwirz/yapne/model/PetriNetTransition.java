@@ -27,7 +27,7 @@ public final class PetriNetTransition extends PetriNetNode {
                 "<graphics>\n" +
                 "%s\n" +
                 "</graphics>\n" +
-                "</transition>", getId(), getName(), getPosition().toXml());
+                "</transition>", getId(), getName(), getPosition().toPNML());
     }
 
     /**
