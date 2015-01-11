@@ -19,3 +19,6 @@ out/*
 .project
 /bin/
 .idea/
+doc/tex/.texpadtmp/
+doc/html/
+doc/tex/*.pdf
