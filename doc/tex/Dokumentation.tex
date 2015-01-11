@@ -3,10 +3,10 @@
  \geometry{
  a4paper,
  total={210mm,297mm},
- left=32mm,
- right=32mm,
- top=30mm,
- bottom=30mm,
+ left=41mm,
+ right=41mm,
+ top=31mm,
+ bottom=31mm,
  }
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
@@ -69,7 +69,7 @@ Sollte sich die Präsentation ändern, dann werden die Daten in den Model geschr
 
 \emph{PetriNetNodePresentation} ist eine grafische Darstellung eines Knoten (Stelle, Transition), Klasse erbt von \emph{javafx.scene.layout.BorderPane}, die \textbf{Top} Position von \emph{BorderPane} wird für Anzeige der Knotennamen beansprucht, die \textbf{Center} Position wird von Kinderklassen gesetzt. \emph{PetriNetPlacePresentation} setzt als \textbf{Center} einen Kreis mit der Markierung in der Mitte, \emph{PetriNetTransitionPresentation} ein Quadrat.
 
-\emph{PetriNetArcPresentation} ist eine grafische Darstellung einer Kante, nachdem Source und Target Eigenschaften mit \emph{setSource(PetriNetNodePresentation node)} und \emph{setTarget(PetriNetNodePresentation node)} gesetzt sind, zeichnet die Klasse eine Gerade von Mittelpunkt des Quellknoten bis Mittelpunkt des Zielknotens mit einem Pfeil am Ende. Die Gerade startet und endet an den Außenkanten. Werden Ziel- oder Quellknoten bewegt, aktualisiert sich auch die Kante.
+\emph{PetriNetArcPresentation} ist eine grafische Darstellung einer Kante, nachdem Source und Target Eigenschaften mit \emph{setSource(PetriNetNode\-Presentation node)} und \emph{setTarget(PetriNetNodePresentation node)} gesetzt sind, zeichnet die Klasse eine Gerade von Mittelpunkt des Quellknoten bis Mittelpunkt des Zielknotens mit einem Pfeil am Ende. Die Gerade startet und endet an den Außenkanten. Werden Ziel- oder Quellknoten bewegt, aktualisiert sich auch die Kante.
 
 \emph{PetriNetPresentation} ist eine grafische Darstellung eines Petri Netzes. Nach dem der Model gesetzt ist, werden für jedes Element des Models korrespondierende Präsentation erstellt und dargestellt. Außerdem können Elemente aus- und abgewählt werden, entfernt sowie der aktuelle Model kann neu gezeichnet werden.
 
@@ -95,5 +95,76 @@ Dieses Package enthält unterschiedliche Hilfsklassen: \emph{Utils}, \emph{Build
 
 \section{Bedienhandbuch}
 
+
+\subsection{Allgemein}
+\includegraphics[width=\linewidth]{start_screen} \\
+Das Fenster der Anwendung ist in 3 Bereiche aufgeteilt:
+\begin{enumerate}
+\item{Menüleiste}
+\item{Arbeitsbereich}
+\item{Statusbar}
+\end{enumerate}
+Über die Menüleiste sind alle Aktionen, die \emph{YAPNE} Anwendung anbietet zugänglich (was übrigens auch mit Shortcuts geht). Im Arbeitsbereich wird das Petri Netz bearbeitet und im Statusbar werden verschiedene Statusnachrichten angezeigt z.B. aktueller Modus.
+
+
+
+\subsection{File-Menü} 
+
+\includegraphics{menu_file}
+
+Menüeinträge \textbf{File $\rightarrow$ New}, \textbf{File $\rightarrow$ Save} und \textbf{File $\rightarrow$ Save As} sind aktiv, falls im aktuellen \textbf{PNML} Dokument Änderungen vorgenommen wurden, sonst sind sie deaktiviert.
+
+Menüeintrag \textbf{File $\rightarrow$ New} säubert das Arbeitsbereich, ein neues \textbf{PNML} Dokument öffnet.
+Über Menüeintrag \textbf{File $\rightarrow$ Open} kann eine \textbf{PNML} Datei zum Bearbeiten geöffnet werden. \textbf{File $\rightarrow$ Save} und \textbf{File $\rightarrow$ Save As} speichern das aktuelle \textbf{PNML} Dokument.
+Menüeintrag \textbf{File $\rightarrow$ Quit} schließt die Anwendung.
+
+\subsection{Edit-Menü} 
+
+\includegraphics{menu_edit}
+
+Hier kann zwischen Modi dieser Anwendung geschaltet werden.
+
+\subsubsection{Place-Modus}
+Beim einfachen Klicken im Arbeitsbereich mit der rechten Maustaste, werden Stellen erzeugt.
+
+\subsubsection{Transition-Modus}
+Beim einfachen Klicken im Arbeitsbereich mit der rechten Maustaste, werden Transitionen erzeugt.
+
+\subsubsection{Arc-Modus}
+In diesem Modus können gerichtete Verbindungen zwischen Stellen und Transitionen erstellt werden. Dafür wählt man einen Knoten von dem die Kante ausgehen soll, der ausgewählte Knoten wird dann sichtbar hervorgehoben. \\
+\includegraphics[scale=0.6]{arc_mode1} \\
+Zunächst wählt man Knoten aus, der die Kante als Eingangskante bekommt.\\
+\includegraphics[scale=0.6]{arc_mode2} \\
+usw. z.B. mit 3 weiteren Klicks \textbf{Place B $\rightarrow$ Trans A $\rightarrow$ Place A} können restliche Knoten verbunden werden. \\
+\includegraphics[scale=0.6]{arc_mode3} \\
+
+
+\subsubsection{Select-Modus}
+
+In diesem Modus sind folgende Aktionen zulässig:
+\begin{itemize}
+\item{Auswählen von Elementen} \\
+Stelle \textbf{A} ist ausgewählt. \\
+\includegraphics[scale=0.5]{select}
+\item{Verschieben von Stellen und Transitionen, dabei werden die Kanten mitverschoben}
+\item{Löschen von Stellen und Transitionen, dabei werden Ein- und Ausgangskanten mitgelöscht (mit \textbf{Backspace} oder \textbf{Del} Taste)}
+\item{Ändern von Markierungen von Stellen (mit Doppelklick öffnet sich ein Dialog)} \\
+\includegraphics[scale=0.5]{marking}
+\item{Ändern von Namen von Stellen und Transitionen (mit Doppelklick auf der Beschriftung öffnet sich ein Dialog) } \\
+\includegraphics[scale=0.55]{name}
+\item{Schalten von Transitionen (mit einem Doppelklick auf der Transition)} \\
+Vor dem Schalten \\
+\includegraphics[scale=0.5]{trans_before} \\
+Nach dem Schalten \\
+\includegraphics[scale=0.5]{trans_after}
+\end{itemize}
+
+
+
+\subsection{Extras-Menü} 
+
+\includegraphics{menu_extras}
+
+Über den Menüeintrag \textbf{Extras $\rightarrow$ Settings} können Anwendungseinstellungen vorgenommen werden. Menüeintrag \textbf{Extras $\rightarrow$ About} zeigt eine Message Box mit Anwednungsinformationen.
 
 \end{document}
