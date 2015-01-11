@@ -132,7 +132,7 @@
             </Menu>
 
             <Menu text="Extras">
-                <MenuItem text="Settings..." onAction="#settings" accelerator="shortcut+,">
+                <MenuItem text="Settings..." onAction="#settings" accelerator="shortcut+p">
                     <graphic>
                         <ImageView fitHeight="$TOOLBAR_ICON_HEIGHT"
                                    fitWidth="$TOOLBAR_ICON_WIDTH">
