@@ -244,7 +244,7 @@ public abstract class PetriNetNodePresentation
     private void onCenterXChanged(double value) {
         // Um Zentrum des Layouts richtig zu bestimmen brauchen wir die maximale Breite
         double width = Math.max(labelText.getLayoutBounds().getWidth(), getSize());
-        setLayoutX(value - width / 2 - getStrokeWidth());
+        setLayoutX(value - width / 2);
     }
 
     /**
