@@ -1,5 +1,6 @@
 package de.kwirz.yapne.presentation;
 
+import de.kwirz.yapne.model.PetriNetElement;
 import de.kwirz.yapne.model.PetriNetNode;
 import de.kwirz.yapne.utils.Utils;
 import javafx.beans.property.DoubleProperty;
@@ -211,8 +212,12 @@ public abstract class PetriNetNodePresentation
                 field.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        if (!field.getText().isEmpty())
+                        if (!field.getText().isEmpty()) {
                             label.set(field.getText());
+                            PetriNetElement model = getModel();
+                            if (model != null)
+                                ((PetriNetNode) model).setName(field.getText());
+                        }
                         dialog.close();
                     }
                 });
