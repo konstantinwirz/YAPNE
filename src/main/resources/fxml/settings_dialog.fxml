@@ -24,10 +24,10 @@
 
 	<Text text="Node size: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
     <Slider fx:id="nodeSizeSlider" GridPane.columnIndex="1" GridPane.rowIndex="0"
-            min="20"
-            max="150"
-            value="45" />
-    <Text fx:id="nodeSizeValue" text="${nodeSizeSlider.value}" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+            min="20.0"
+            max="150.0"
+            value="45.0" />
+    <Text fx:id="nodeSizeValue" GridPane.columnIndex="2" GridPane.rowIndex="0" />
 
 
     <Text text="Stroke width: " GridPane.columnIndex="0" GridPane.rowIndex="1" />
@@ -35,8 +35,7 @@
             min="0.5"
             max="10.0"
             value="2.0" />
-    <Text fx:id="strokeWidthValue" GridPane.columnIndex="2" GridPane.rowIndex="1"
-          text="${strokeWidthSlider.value}"/>
+    <Text fx:id="strokeWidthValue" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 
 
     <HBox alignment="BOTTOM_RIGHT" spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="3">

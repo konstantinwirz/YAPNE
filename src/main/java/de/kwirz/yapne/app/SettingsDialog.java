@@ -1,6 +1,9 @@
 package de.kwirz.yapne.app;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import de.kwirz.yapne.presentation.PetriNetNodePresentation;
 import de.kwirz.yapne.utils.Settings;
 import javafx.beans.value.ChangeListener;
@@ -34,6 +37,8 @@ import javafx.stage.Stage;
  * </ul>
  */
 public class SettingsDialog extends GridPane {
+
+    private static final Logger logger = Logger.getLogger(SettingsDialog.class.getName());
 
 	/** Slider zum Einstellen von Knotengröße */
 	@FXML
@@ -76,31 +81,51 @@ public class SettingsDialog extends GridPane {
     private void initialize() {
 		// Lese Einstellungen und sertze die Werte
 		Settings settings = Settings.getInstance();
-		onNodeSizeChanged(Double.valueOf(settings.getValue("node_size",
-				PetriNetNodePresentation.DEFAULT_SIZE)));
-		nodeSizeSlider.setValue(Double.valueOf(nodeSizeValue.getText()));
-		onStrokeWidthChanged(Double.valueOf(settings.getValue("stroke_width",
-				PetriNetNodePresentation.DEFAULT_STROKE_WIDTH)));
-		strokeWidthSlider.setValue(Double.valueOf(strokeWidthValue.getText()));
 
-		// Verbinde Linienstärke-Slider mit seiner Anzeiger
-		strokeWidthSlider.valueProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-				onStrokeWidthChanged(newValue.doubleValue());
-			}
-		});
-		// Verbinde Knotengröße-Slider mit seiner Anzeiger
-		nodeSizeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-				onNodeSizeChanged(newValue.doubleValue());
-			}
-		});
+        double nodeSize = PetriNetNodePresentation.DEFAULT_SIZE;
+        double strokeWidth = PetriNetNodePresentation.DEFAULT_STROKE_WIDTH;
+
+        try {
+            nodeSize = Double.valueOf(settings.getValue("node_size",
+                    PetriNetNodePresentation.DEFAULT_SIZE));
+            strokeWidth = Double.valueOf(settings.getValue("stroke_width",
+                    PetriNetNodePresentation.DEFAULT_STROKE_WIDTH)).doubleValue();
+        } catch (NumberFormatException e) {
+            logger.log(Level.WARNING, "couldn't parse floating point values from settings file", e);
+        }
+
+        registerListeners();
+
+		nodeSizeSlider.setValue(nodeSize);
+        onNodeSizeChanged(nodeSize);
+
+		strokeWidthSlider.setValue(strokeWidth);
+        onStrokeWidthChanged(strokeWidth);
 
     }
 
-	/**
+    /**
+     * registriert Listener für Linienstärke und Knotengröße Slider
+     */
+    private void registerListeners() {
+        // Verbinde Linienstärke-Slider mit seiner Anzeiger
+        strokeWidthSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                onStrokeWidthChanged(newValue.doubleValue());
+            }
+        });
+        // Verbinde Knotengröße-Slider mit seiner Anzeiger
+        nodeSizeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                onNodeSizeChanged(newValue.doubleValue());
+            }
+        });
+    }
+
+
+    /**
 	 * Wird bei Änderung der Knotengröße ausgeführt.
 	 * @param size new Knotengröße
 	 */
@@ -147,8 +172,8 @@ public class SettingsDialog extends GridPane {
 	 */
 	private void saveSettings() throws IOException {
 		Settings settings = Settings.getInstance();
-		settings.setValue("stroke_width", strokeWidthSlider.getValue());
-		settings.setValue("node_size", nodeSizeSlider.getValue());
+		settings.setValue("stroke_width", strokeWidthValue.getText());
+		settings.setValue("node_size", nodeSizeValue.getText());
 	}
 
 }
