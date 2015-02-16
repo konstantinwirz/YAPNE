@@ -13,6 +13,9 @@ import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  * Grafische Darstellung einer Stelle.
@@ -21,6 +24,9 @@ import javafx.stage.*;
  * Falls die Markierung ist 1, wird die als einzelner Punkt dargestellt, sonst als dezimale Zahl.
  */
 public final class PetriNetPlacePresentation extends PetriNetNodePresentation {
+
+    /** wird zum Loggen eingesetzt */
+    private static final Logger logger = Logger.getLogger(PetriNetPlacePresentation.class.getName());
 
     /** Eine Petri Netz Stelle dient als Model */
     private PetriNetPlace model;
@@ -75,8 +81,13 @@ public final class PetriNetPlacePresentation extends PetriNetNodePresentation {
                     if (newValue.isEmpty())
                         return;
 
-                    setText(newValue.matches("\\d*") ? newValue : oldValue);
-                    setValue(Integer.valueOf(getText()));
+                    setText(newValue.matches("\\d+")?newValue:oldValue.matches("\\d+")?oldValue:"");
+
+                    try {
+                        setValue(Integer.valueOf(getText()));
+                    } catch (NumberFormatException e) {
+                        logger.warning("not a number");
+                    }
                 }
             });
 
