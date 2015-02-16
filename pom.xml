@@ -6,6 +6,9 @@
 	<groupId>de.kwirz</groupId>
 	<artifactId>yapne</artifactId>
 	<version>1.0</version>
+    <organization>
+        <name>Fern-Uni Hagen</name>
+    </organization>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -49,6 +52,7 @@
 				<version>2.0</version>
 				<configuration>
 					<mainClass>de.kwirz.yapne.app.App</mainClass>
+                    <verbose>true</verbose>
 				</configuration>
 			</plugin>
 			<plugin>
