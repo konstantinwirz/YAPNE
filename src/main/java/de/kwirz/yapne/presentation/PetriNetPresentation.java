@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import de.kwirz.yapne.model.*;
 import de.kwirz.yapne.utils.Settings;
+import de.kwirz.yapne.utils.Utils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -16,6 +17,7 @@ import javafx.scene.effect.DropShadowBuilder;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import sun.nio.cs.UTF_32LE;
 
 
 /**
@@ -334,9 +336,9 @@ public class PetriNetPresentation extends Pane {
      * @param point Koordinate
      */
     public void moveNode(PetriNetNodePresentation presentation, Point2D point) {
-        // Vermeidet Verschiebungen zu weit nach Links oder Hoch
-        double x = Math.max(point.getX(), 0);
-        double y = Math.max(point.getY(), 0);
+        // vermeidet Verschiebungen außerhalb des Sichtbereichs
+        double x = Utils.ensureRange(point.getX(), 0d, getLayoutBounds().getWidth());
+        double y = Utils.ensureRange(point.getY(), 0d, getLayoutBounds().getHeight());
 
         presentation.setCenterX(x);
         presentation.setCenterY(y);
