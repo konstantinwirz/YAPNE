@@ -366,7 +366,7 @@ public class AppController {
                 if ( eventType == MouseEvent.MOUSE_DRAGGED && source instanceof PetriNetNodePresentation ) {
                     canvas.selectElementById(((Node) source).getId());
                     canvas.moveNode((PetriNetNodePresentation) source,
-                            new Point2D(event.getSceneX(), event.getSceneY()));
+                            canvas.sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY())));
                     isDirty.setValue(true);
                 } else if ( eventType == MouseEvent.MOUSE_CLICKED && source instanceof PetriNetElementPresentation) {
                     canvas.selectElementById(((Node) source).getId());

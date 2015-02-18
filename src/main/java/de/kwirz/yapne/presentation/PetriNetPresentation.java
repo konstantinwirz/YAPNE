@@ -17,7 +17,6 @@ import javafx.scene.effect.DropShadowBuilder;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import sun.nio.cs.UTF_32LE;
 
 
 /**
@@ -337,8 +336,10 @@ public class PetriNetPresentation extends Pane {
      */
     public void moveNode(PetriNetNodePresentation presentation, Point2D point) {
         // vermeidet Verschiebungen außerhalb des Sichtbereichs
-        double x = Utils.ensureRange(point.getX(), 0d, getLayoutBounds().getWidth());
-        double y = Utils.ensureRange(point.getY(), 0d, getLayoutBounds().getHeight());
+        double offset = presentation.getSize() / 2;
+
+        double x = Utils.ensureRange(point.getX(), 0 + offset, point.getX() - offset);
+        double y = Utils.ensureRange(point.getY(), 0 + offset, point.getY() - offset);
 
         presentation.setCenterX(x);
         presentation.setCenterY(y);
