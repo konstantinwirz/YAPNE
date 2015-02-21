@@ -59,7 +59,7 @@ public final class PetriNetTransitionPresentation extends PetriNetNodePresentati
         rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (event.getClickCount() < 2)
+                if (event.getClickCount() != 2)
                     return;
 
                 model.occur();
