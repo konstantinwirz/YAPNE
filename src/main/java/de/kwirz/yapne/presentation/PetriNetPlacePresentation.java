@@ -1,6 +1,7 @@
 package de.kwirz.yapne.presentation;
 
 import de.kwirz.yapne.model.*;
+import de.kwirz.yapne.utils.Utils;
 import javafx.beans.property.*;
 import javafx.beans.value.*;
 import javafx.event.*;
@@ -279,13 +280,21 @@ public final class PetriNetPlacePresentation extends PetriNetNodePresentation {
             stack.getChildren().add(markingCircle);
             markingCircle.setOnMouseClicked(inputMarkingOnMouseClick);
         } else if (newMarking > 1) {
-            markingText = TextBuilder.create().
-                    text(String.valueOf(newMarking))
+            markingText = TextBuilder.create()
+                    .text(String.valueOf(newMarking))
+                    .font(FontBuilder.create().size(calculateProperMarkingFontSize()).build())
                     .strokeWidth(getStrokeWidth())
                     .build();
             stack.getChildren().add(markingText);
             markingText.setOnMouseClicked(inputMarkingOnMouseClick);
         }
+    }
+
+    /** Gibt passende Schriftgröße für Markierung zurück */
+    private double calculateProperMarkingFontSize() {
+        double maxFontSize = getSize() / 4.0;
+        double minFontSize = 10.0;
+        return Utils. ensureRange(maxFontSize, minFontSize, maxFontSize);
     }
 
     /** {@inheritDoc} */
