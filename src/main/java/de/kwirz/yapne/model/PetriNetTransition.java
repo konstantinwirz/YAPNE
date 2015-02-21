@@ -69,12 +69,7 @@ public final class PetriNetTransition extends PetriNetNode {
     /**
      * Schaltet die Transition
      * <p>
-     * Damit die Schaltung erfolgt müssen folgende Bedingungen erfüllt sein
-     * <ol>
-     * <li>Transition ist aktiviert</li>
-     * <li>Ausgangsknoten sind vorhanden</li>
-     * </ol>
-     *
+     * Damit die Schaltung erfolgt muss diese Transition aktiviert sein
      */
     public void occur() {
         if (!isEnabled()) {
@@ -82,33 +77,34 @@ public final class PetriNetTransition extends PetriNetNode {
             return;
         }
 
-        if (outputArcs.isEmpty()) {
-            logger.log(Level.WARNING, "there are no output arcs, nothing to do...");
-            return;
-        }
+        if (!inputArcs.isEmpty())
+            decrementMarkingOfInputPlaces();
 
-        int marking = 0;
-        // decrementieree Markierung bei jeder Eingansstelle
-        for (PetriNetArc inputArc : inputArcs) {
-            assert inputArc.getSource() instanceof PetriNetPlace;
+        if (!outputArcs.isEmpty())
+            incrementMarkingOfOutputPlaces();
+    }
 
-            PetriNetPlace place = (PetriNetPlace) inputArc.getSource();
-
-            assert place.getMarking() > 0;
-
-            place.setMarking(place.getMarking() - 1);
-            ++marking;
-        }
-
-
-        assert marking == inputArcs.size();
-
-        // incrementiere Markierung bei jeder Ausgangsstelle
+    /**
+     * Inkrementiert Markierungen aller Ausgangsstellen
+     */
+    private void incrementMarkingOfOutputPlaces() {
         for (PetriNetArc outputArc : outputArcs) {
             assert outputArc.getTarget() instanceof PetriNetPlace;
 
             PetriNetPlace place = (PetriNetPlace) outputArc.getTarget();
-            place.setMarking(place.getMarking() + marking);
+            place.setMarking(place.getMarking() + 1);
+        }
+    }
+
+    /**
+     * Decrementiert Markierungen aller Eingangsstellen.
+     */
+    private void decrementMarkingOfInputPlaces() {
+        for (PetriNetArc inputArc : inputArcs) {
+            assert inputArc.getSource() instanceof PetriNetPlace;
+            PetriNetPlace place = (PetriNetPlace) inputArc.getSource();
+            assert place.getMarking() > 0;
+            place.setMarking(place.getMarking() - 1);
         }
     }
 
