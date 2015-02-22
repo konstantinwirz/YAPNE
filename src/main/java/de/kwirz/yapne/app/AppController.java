@@ -108,6 +108,9 @@ public class AppController {
     /** Hauptstage der Anwendung */
     private Stage primaryStage;
 
+    /** Ist <code>true</code> falls gerade eine Verschiebung der Elemente stattfindet */
+    boolean dragActive = false;
+
     /**
      * Wird ausgeführt nachdem root Element komplett abgearbeitet ist.
      * <p>
@@ -365,19 +368,26 @@ public class AppController {
 
             case SELECT:
                 if ( eventType == MouseEvent.MOUSE_DRAGGED && source instanceof PetriNetNodePresentation ) {
+                    dragActive = true;
+                    if (canvas.getSelectedElements().size() == 1 && !event.isControlDown())
+                        canvas.unselectAllElements();
                     canvas.selectElementById(((Node) source).getId());
                     canvas.moveSelectedNodes((PetriNetNodePresentation) source,
                             canvas.sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY())));
                     isDirty.setValue(true);
                 } else if ( eventType == MouseEvent.MOUSE_CLICKED && source instanceof PetriNetElementPresentation) {
-                    String id = ((Node) source).getId();
-                    if (event.isControlDown())
-                        canvas.switchSelectedStateById(id);
-                    else
-                        canvas.selectExclusiveElementById(id);
+                    if (!dragActive) {
+                        String id = ((Node) source).getId();
+                        if (event.isControlDown())
+                            canvas.switchSelectedStateById(id);
+                        else
+                            canvas.selectExclusiveElementById(id);
+                    }
+                    dragActive = false;
                 } else if ( eventType == MouseEvent.MOUSE_CLICKED && target instanceof  PetriNetPresentation ) {
-                    if (!event.isControlDown())
+                    if (!dragActive && !event.isControlDown())
                         canvas.unselectAllElements();
+                    dragActive = false;
                 }
                 break;
 
@@ -388,6 +398,7 @@ public class AppController {
                     canvas.createPlace(event.getSceneX(), event.getSceneY());
                     isDirty.setValue(true);
                 }
+                dragActive = false;
                 break;
 
             case TRANSITION_CREATION:
@@ -397,34 +408,37 @@ public class AppController {
                     canvas.createTransition(event.getSceneX(), event.getSceneY());
                     isDirty.setValue(true);
                 }
+                dragActive = false;
                 break;
 
             case ARC_CREATION:
                 try {
                     if (eventType == MouseEvent.MOUSE_CLICKED) {
-                        List<PetriNetElementPresentation> selectedElements = canvas.getSelectedElements();
-                        if (selectedElements.size() != 1) {
-                            if (source instanceof PetriNetNodePresentation)
-                                canvas.selectExclusiveElementById(((Node) source).getId());
+                        if (source instanceof PetriNetPresentation &&
+                                target instanceof PetriNetPresentation) {
+                            canvas.unselectAllElements();
+                        } else {
+                            List<PetriNetElementPresentation> selectedElements = canvas.getSelectedElements();
+                            if (selectedElements.size() != 1) {
+                                if (source instanceof PetriNetNodePresentation)
+                                    canvas.selectExclusiveElementById(((Node) source).getId());
 
-                        } else { // exactly one element is selected
-                            if (source instanceof PetriNetPresentation &&
-                                    target instanceof PetriNetPresentation) {
-                                canvas.unselectAllElements();
-                            } else if (source instanceof PetriNetNodePresentation &&
-                                    !selectedElements.get(0).getClass().equals(source.getClass())) {
-                                canvas.createArc((PetriNetNodePresentation) selectedElements.get(0),
-                                        (PetriNetNodePresentation) source);
-                                canvas.unselectAllElements();
-                                canvas.selectElementById(((Node) source).getId());
-                                isDirty.setValue(true);
+                            } else { // exactly one element is selected
+                                if (source instanceof PetriNetNodePresentation &&
+                                        !selectedElements.get(0).getClass().equals(source.getClass())) {
+                                    canvas.createArc((PetriNetNodePresentation) selectedElements.get(0),
+                                            (PetriNetNodePresentation) source);
+                                    canvas.unselectAllElements();
+                                    canvas.selectElementById(((Node) source).getId());
+                                    isDirty.setValue(true);
+                                }
                             }
                         }
                     }
                 } catch (IllegalArgumentException e) {
                     showStatusMessage(e.getMessage());
                 }
-
+                dragActive = false;
                 break;
 
             default:
