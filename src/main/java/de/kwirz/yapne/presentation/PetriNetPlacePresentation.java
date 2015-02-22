@@ -133,7 +133,7 @@ public final class PetriNetPlacePresentation extends PetriNetNodePresentation {
     private EventHandler<MouseEvent> inputMarkingOnMouseClick = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
-            if (event.getClickCount() < 2)
+            if (event.getClickCount() != 2)
                 return;
 
             final Node source = (Node) event.getSource();

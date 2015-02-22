@@ -1,5 +1,6 @@
 package de.kwirz.yapne.presentation;
 
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,36 +40,13 @@ public class PetriNetPresentation extends Pane {
     /** Ein {@link PetriNet} dient als Model */
     private PetriNet model = new PetriNet();
 
-    /**
-     * Anzahl Stellen im Netz.
-     * <p>
-     * Wird für automatische Generierung von Stellen Ids verwendet.
-     */
-    private int placeCounter = 0;
-
-    /**
-     *
-     * Anzahl Transitionen im Netz
-     * <p>
-     * Wird für automatische Generierung von Transitionen Ids verwendet.
-     */
-    private int transitionCounter = 0;
-
-    /**
-     *
-     * Anzahl der Kanten im Netz
-     * <p>
-     * Wird für automatische Generierung von Kanten Ids verwendet.
-     */
-    private int arcCounter = 0;
-
     /**  Managt Mausklicks für jedes Element des Netzes */
     private EventHandler<? super MouseEvent> mouseClickedEventHandler;
     /** Managt Maus Dragged Events für jedes Element des Netzes */
     private EventHandler<? super MouseEvent> mouseDraggedEventHandler;
 
-    /** Id aktuell ausgewähltes Elements */
-    private String selectedElementId = null;
+    /** Id's aktuell ausgewählter Elemente */
+    private Set<String> selectedElements = new HashSet<>();
 
     /**
      * Erstellt eine <b>PetriNetPresentation</b>
@@ -102,10 +80,6 @@ public class PetriNetPresentation extends Pane {
     public void reload() {
         getChildren().clear();
 
-        placeCounter = 0;
-        transitionCounter = 0;
-        arcCounter = 0;
-
         Settings settings = Settings.getInstance();
         double strokeWidth = getStrokeWidthFromSettings();
         double nodeSize = getNodeSizeFormSettings();
@@ -123,7 +97,6 @@ public class PetriNetPresentation extends Pane {
                         .size(nodeSize)
                         .strokeWidth(strokeWidth)
                         .build();
-                ++placeCounter;
                 ((PetriNetPlacePresentation) presentation).markingProperty().addListener(new ChangeListener<Number>() {
                     @Override
                     public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
@@ -136,7 +109,6 @@ public class PetriNetPresentation extends Pane {
                         .size(nodeSize)
                         .strokeWidth(strokeWidth)
                         .build();
-                ++transitionCounter;
             }
 
             if (presentation != null) {
@@ -172,7 +144,6 @@ public class PetriNetPresentation extends Pane {
                     .model((PetriNetArc) element)
                     .strokeWidth(strokeWidth)
                     .build();
-            ++arcCounter;
 
             ((Node) presentation).setId(normalizeId(id));
             getChildren().add((Node) presentation);
@@ -225,13 +196,27 @@ public class PetriNetPresentation extends Pane {
      * @param y Y-Koordinate
      */
     public void createPlace(double x, double y) {
-        PetriNetPlace place = new PetriNetPlace(String.format("place%d", ++placeCounter));
+        PetriNetPlace place = new PetriNetPlace(generateValidElementName("place"));
         place.setName(place.getId());
         Point2D localPoint = localToScene(x ,y);
         place.setPosition(new PetriNetNode.Position((int)localPoint.getX(), (int)localPoint.getY()));
 
         model.addElement(place);
         reload();
+    }
+
+    /**
+     * Gibt eindeutigen Namen mit dem Suffix <b>suffix</b> und einer Zahl zurück.
+     * @param suffix z.B. place oder transition
+     */
+    private String generateValidElementName(String suffix) {
+        final int MAX_LOOKUPS = 1000;
+        for (int i = 1; i < MAX_LOOKUPS; ++i) {
+            String name = suffix + String.valueOf(i);
+            if (lookup("#" + name) == null)
+                return name;
+        }
+        return suffix + String.valueOf(new Random().nextInt());
     }
 
     /**
@@ -243,7 +228,7 @@ public class PetriNetPresentation extends Pane {
      * @param y Y-Koordinate
      */
     public void createTransition(double x, double y) {
-        PetriNetTransition transition = new PetriNetTransition(String.format("trans%d", ++transitionCounter));
+        PetriNetTransition transition = new PetriNetTransition(generateValidElementName("trans"));
         transition.setName(transition.getId());
         transition.setPosition(new PetriNetNode.Position((int)x , (int)y));
 
@@ -260,12 +245,21 @@ public class PetriNetPresentation extends Pane {
      * @param target Präsentation des Zielknotens
      */
     public void createArc(PetriNetNodePresentation source, PetriNetNodePresentation target) {
-        PetriNetArc arc = new PetriNetArc(String.format("arc%d", ++arcCounter));
+        PetriNetArc arc = new PetriNetArc(generateValidElementName("arc"));
         arc.setSource((PetriNetNode) source.getModel());
         arc.setTarget((PetriNetNode) target.getModel());
 
         model.addElement(arc);
         reload();
+    }
+
+    /**
+     * Wählt eine Element aus. Alle anderen Elemente werden abgewählt.
+     * @param id Id des Elements
+     */
+    public void selectExclusiveElementById(String id) {
+        unselectAllElements();
+        selectElementById(id);
     }
 
     /**
@@ -276,9 +270,6 @@ public class PetriNetPresentation extends Pane {
      * @param id Element zum auswählen
      */
     public void selectElementById(String id) {
-        if (selectedElementId != null)
-            unselectElement();
-
         Node node = lookup("#" + id);
         if (node == null) {
             logger.log(Level.WARNING, "no node with id '" + id + "' found");
@@ -292,70 +283,146 @@ public class PetriNetPresentation extends Pane {
                 .color(Color.color(0.4, 0.5, 0.6))
                 .build();
         node.setEffect(shadow);
-        selectedElementId = node.getId();
+        selectedElements.add(node.getId());
+    }
+
+    /**
+     * Wählt alle (ausgewählte) Elemente ab.
+     */
+    public void unselectAllElements() {
+        Iterator<String> iter = selectedElements.iterator();
+        while (iter.hasNext()) {
+            unselectElementById(iter.next());
+            iter.remove();
+        }
     }
 
     /**
      * Wählt ein Element ab.
-     * <p>Falls Element ausgewählt ist, wird das abgewählt.
+     * <p><b>Wichtig!</b><br>Id bleibt in {@link #selectedElements} enthalten.
+     *
+     * @param id Id des Elements
      */
-    public void unselectElement() {
-        Node node = lookup("#" + selectedElementId);
+    private void unselectElementById(String id) {
+        Node node = lookup("#" + id);
         if (node == null) {
-            logger.log(Level.WARNING, "no node with id '" + selectedElementId + "' found");
+            logger.log(Level.WARNING, "no node with id '" + id + "' found");
         } else {
             node.setEffect(null);
         }
-        selectedElementId = null;
+    }
+
+    /**
+     * Wählt das Element aus oder ab
+     * @param id Id des Elements
+     */
+    public void switchSelectedStateById(String id) {
+        if (selectedElements.contains(id)) {
+            unselectElementById(id);
+            selectedElements.remove(id);
+        } else {
+            selectElementById(id);
+        }
     }
 
     /**
      * Entfernt ausgewähltes Element
      * <p>Element wird aus dem Model entfernt und anschließend neu gezeichnet.
      */
-    public void removeSelectedElement() {
-        Node node = lookup("#" + selectedElementId);
+    public void removeSelectedElements() {
+        for (String id : selectedElements) {
+            removeElementById(id);
+        }
+
+        selectedElements.clear();
+        reload();
+    }
+
+    private void removeElementById(String id) {
+        Node node = lookup("#" + id);
 
         if (node == null) {
-            logger.log(Level.WARNING, "no element selected");
+            logger.log(Level.WARNING, "couldn't found node with id " + id);
             return;
         }
 
         assert node != null;
 
         getModel().removeElementById(((PetriNetElementPresentation) node).getModel().getId());
-        selectedElementId = "";
-        reload();
     }
 
 
     /**
-     * Verschiebt eine Knotenpräsentation.
-     * @param presentation Präsentation zum verschieben
-     * @param point Koordinate
+     * Verschiebt ausgewählte Knoten.
+     * @param leaderNode Dies ist der führende Konoten
+     * @param point neue Koordinate
      */
-    public void moveNode(PetriNetNodePresentation presentation, Point2D point) {
-        // vermeidet Verschiebungen außerhalb des Sichtbereichs
-        double offset = presentation.getSize() / 2;
+    public void moveSelectedNodes(PetriNetNodePresentation leaderNode, Point2D point) {
+        double deltaX = point.getX() - leaderNode.getCenterX();
+        double deltaY = point.getY() - leaderNode.getCenterY();
 
-        double x = Utils.ensureRange(point.getX(), 0 + offset, point.getX() - offset);
-        double y = Utils.ensureRange(point.getY(), 0 + offset, point.getY() - offset);
+        List<PetriNetNodePresentation> nodes = getSelectedNodes();
+        assert nodes.contains(leaderNode);
 
-        presentation.setCenterX(x);
-        presentation.setCenterY(y);
-        presentation.syncToModel();
+        final double OFFSET = leaderNode.getSize() / 2;
+
+        double minX = leaderNode.getCenterX();
+        double minY = leaderNode.getCenterY();
+        for (PetriNetNodePresentation node : nodes) {
+            if (node.getCenterX() < minX)
+                minX = node.getCenterX();
+            if (node.getCenterY() < minY)
+                minY = node.getCenterY();
+        }
+
+        deltaX = Utils.ensureRange(deltaX, OFFSET - minX, deltaX);
+        deltaY = Utils.ensureRange(deltaY, OFFSET - minY, deltaY);
+
+        for (PetriNetNodePresentation node : nodes) {
+            double x = node.getCenterX() + deltaX;
+            double y = node.getCenterY() + deltaY;
+
+            x = Utils.ensureRange(x, OFFSET, x);
+            y = Utils.ensureRange(y, OFFSET, y);
+
+            node.setCenterX(x);
+            node.setCenterY(y);
+
+            node.syncToModel();
+        }
     }
 
     /**
-     * Gibt aktuell ausgewähltes Element zurück.
-     * <p>Wenn kein Element ausgewählt gibt <code>null</code> zurück.
+     * Gibt die Liste aller zur Zeit ausgewählter Knoten zurück
      */
-    public PetriNetElementPresentation getSelectedElement() {
-        Node node = lookup("#" + selectedElementId);
-        if (node == null)
-            return null;
+    private List<PetriNetNodePresentation> getSelectedNodes() {
+        List<PetriNetNodePresentation> nodes = new ArrayList<>();
 
-        return (PetriNetElementPresentation) node;
+        for (PetriNetElementPresentation element : getSelectedElements()) {
+            if (element instanceof PetriNetNodePresentation)
+                nodes.add((PetriNetNodePresentation) element);
+        }
+
+        return nodes;
+    }
+
+
+    /**
+     * Gibt Elemente zurück die z.Z. ausgewählt sind.
+     */
+    public List<PetriNetElementPresentation> getSelectedElements() {
+        List<PetriNetElementPresentation> elements = new ArrayList<>();
+
+        for (String id : selectedElements) {
+            Node node = lookup("#" + id);
+            if (node != null) {
+                elements.add((PetriNetElementPresentation) node);
+            } else {
+                logger.warning("couldn't find element with id " + id);
+            }
+        }
+
+        return elements;
     }
 
     /**
