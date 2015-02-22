@@ -172,8 +172,8 @@ public class SettingsDialog extends GridPane {
 	 */
 	private void saveSettings() throws IOException {
 		Settings settings = Settings.getInstance();
-		settings.setValue("stroke_width", strokeWidthValue.getText());
-		settings.setValue("node_size", nodeSizeValue.getText());
+		settings.setValue("stroke_width", strokeWidthValue.getText().replace(",","."));
+		settings.setValue("node_size", nodeSizeValue.getText().replace(",","."));
 	}
 
 }
