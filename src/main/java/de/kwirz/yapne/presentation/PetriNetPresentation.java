@@ -198,11 +198,19 @@ public class PetriNetPresentation extends Pane {
     public void createPlace(double x, double y) {
         PetriNetPlace place = new PetriNetPlace(generateValidElementName("place"));
         place.setName(place.getId());
-        Point2D localPoint = localToScene(x ,y);
-        place.setPosition(new PetriNetNode.Position((int)localPoint.getX(), (int)localPoint.getY()));
-
+        place.setPosition(new PetriNetNode.Position((int)x, (int)y));
+        
         model.addElement(place);
         reload();
+    }
+
+    /**
+     * Erstellt eine Stelle und fügt sie dem Model hinzu.
+     * @see #createPlace(double, double)
+     * @param point X,Y Koordinaten
+     */
+    public void createPlace(Point2D point) {
+        createPlace(point.getX(), point.getY());
     }
 
     /**
@@ -234,6 +242,17 @@ public class PetriNetPresentation extends Pane {
 
         model.addElement(transition);
         reload();
+    }
+
+    /**
+     * Erstellt eine Transition und fügt sie dem Model hinzu.
+     * <p>
+     * Um Änderungen sichtbar zu machen werden Präsentationen neu gezeichnet.
+     * @see #reload()
+     * @param point X,Y-Koordinaten
+     */
+    public void createTransition(Point2D point) {
+        createTransition(point.getX(), point.getY());
     }
 
     /**

@@ -373,7 +373,7 @@ public class AppController {
                         canvas.unselectAllElements();
                     canvas.selectElementById(((Node) source).getId());
                     canvas.moveSelectedNodes((PetriNetNodePresentation) source,
-                            canvas.sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY())));
+                            canvas.sceneToLocal(event.getSceneX(), event.getSceneY()));
                     isDirty.setValue(true);
                 } else if ( eventType == MouseEvent.MOUSE_CLICKED && source instanceof PetriNetElementPresentation) {
                     if (!dragActive) {
@@ -395,7 +395,7 @@ public class AppController {
                 if (    eventType == MouseEvent.MOUSE_CLICKED &&
                         source instanceof PetriNetPresentation &&
                         target instanceof PetriNetPresentation ) {
-                    canvas.createPlace(event.getSceneX(), event.getSceneY());
+                    canvas.createPlace(canvas.sceneToLocal(event.getSceneX(), event.getSceneY()));
                     isDirty.setValue(true);
                 }
                 dragActive = false;
@@ -405,7 +405,7 @@ public class AppController {
                 if (    eventType == MouseEvent.MOUSE_CLICKED &&
                         source instanceof PetriNetPresentation &&
                         target instanceof PetriNetPresentation ) {
-                    canvas.createTransition(event.getSceneX(), event.getSceneY());
+                    canvas.createTransition(canvas.sceneToLocal(event.getSceneX(), event.getSceneY()));
                     isDirty.setValue(true);
                 }
                 dragActive = false;
