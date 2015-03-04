@@ -1,1 +1,1 @@
-This is a simple petri nets editor.
+*YAPNE* is a simple petri net editor
