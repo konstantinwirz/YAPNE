@@ -23,12 +23,6 @@ import de.kwirz.yapne.model.*;
 public class PnmlParser {
 
     /**
-     * Dies ist eine Referenz zum XML Parser. Diese Referenz wird durch die
-     * Methode parse() initialisiert.
-     */
-    private XMLEventReader xmlParser = null;
-
-    /**
      * Diese Variable dient als Zwischenspeicher für die ID des zuletzt gefundenen Elements.
      */
     private String lastId = null;
@@ -63,6 +57,11 @@ public class PnmlParser {
         net = new PetriNet();
 
         InputStream stream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+        /*
+            Dies ist eine Referenz zum XML Parser. Diese Referenz wird durch die
+            Methode parse() initialisiert.
+        */
+        XMLEventReader xmlParser;
         try {
             xmlParser = XMLInputFactory.newInstance().createXMLEventReader(stream);
         } catch (XMLStreamException e) {
@@ -78,12 +77,16 @@ public class PnmlParser {
                         break;
                     case XMLStreamConstants.END_ELEMENT:
                         final String name = event.asEndElement().getName().toString().toLowerCase();
-                        if (name.equals("token")) {
-                            isToken = false;
-                        } else if (name.equals(name)) {
-                            isName = false;
-                        } else if (name.equals("value")) {
-                            isValue = false;
+                        switch (name) {
+                            case "token":
+                                isToken = false;
+                                break;
+                            case "name":
+                                isName = false;
+                                break;
+                            case "value":
+                                isValue = false;
+                                break;
                         }
                         break;
                     case XMLStreamConstants.CHARACTERS:

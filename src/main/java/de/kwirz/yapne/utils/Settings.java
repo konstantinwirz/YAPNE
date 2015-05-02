@@ -96,6 +96,7 @@ public class Settings {
 	 * Gibt <code>true</code> zurück, falls ein Wert für den Schlüssel vorhanden ist.
 	 * @param key Schlüssel.
 	 */
+	@SuppressWarnings("unused")
 	public boolean hasKey(String key) {
 		return getAllKeys().contains(key);
 	}
@@ -108,7 +109,7 @@ public class Settings {
 	 * @throws IOException falls Eingabe/Ausgabe Fehler auftreten.
 	 */
 	public <T> void setValue(String key, T value) throws IOException {
-		String valueAsString = "";
+		String valueAsString;
 		if (value instanceof Object)
 			valueAsString = value.toString();
 		else

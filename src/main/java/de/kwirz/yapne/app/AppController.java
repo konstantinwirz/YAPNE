@@ -1,30 +1,37 @@
 package de.kwirz.yapne.app;
 
-import javafx.application.*;
+import de.kwirz.yapne.io.PnmlParser;
+import de.kwirz.yapne.presentation.PetriNetElementPresentation;
+import de.kwirz.yapne.presentation.PetriNetNodePresentation;
+import de.kwirz.yapne.presentation.PetriNetPresentation;
+import de.kwirz.yapne.utils.Settings;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.*;
-import javafx.fxml.*;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventType;
+import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.input.*;
-import javafx.scene.text.*;
-import javafx.stage.*;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.logging.*;
-
-import de.kwirz.yapne.presentation.*;
-import de.kwirz.yapne.utils.Settings;
-import de.kwirz.yapne.io.PnmlParser;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -71,7 +78,7 @@ public class AppController {
         /**
          * In diesem Modus ist nur Erstellung von Kanten möglich
          */
-        ARC_CREATION;
+        ARC_CREATION
     }
 
     /**
@@ -117,7 +124,7 @@ public class AppController {
      *
      */
     @FXML
-    private void initialize() {
+    private void  initialize() {
         registerListeners();
         setupMenu();
         showStatusMessage("Ready");
@@ -162,30 +169,16 @@ public class AppController {
      * </ul>
      */
     private void registerListeners() {
-        canvas.setOnMouseClickedForEachElement(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                handleMouseEvent(mouseEvent);
-            }
-        });
+        canvas.setOnMouseClickedForEachElement(this::handleMouseEvent);
+        canvas.setOnMouseDraggedForEachElement(this::handleMouseEvent);
 
-        canvas.setOnMouseDraggedForEachElement(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                handleMouseEvent(mouseEvent);
-            }
+        /*
+        scrollPane.viewportBoundsProperty().addListener((observableValue, oldBounds, newBounds) -> {
+            Bounds layoutBounds = scrollPane.getContent().getLayoutBounds();
+            scrollPane.setFitToHeight(layoutBounds.getHeight() < newBounds.getHeight());
+            scrollPane.setFitToWidth(layoutBounds.getWidth() < newBounds.getWidth());
         });
-
-        scrollPane.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
-            @Override
-            public void changed(ObservableValue<? extends Bounds> observableValue,
-                                Bounds oldBounds,
-                                Bounds newBounds) {
-                Bounds layoutBounds = scrollPane.getContent().getLayoutBounds();
-                scrollPane.setFitToHeight(layoutBounds.getHeight() < newBounds.getHeight());
-                scrollPane.setFitToWidth(layoutBounds.getWidth() < newBounds.getWidth());
-            }
-        });
+        */
     }
 
     /**
@@ -224,34 +217,32 @@ public class AppController {
         final String initialDirectory = settings.getValue("last_directory",
                 System.getProperty("user.home"));
 
-    	final FileChooser fileChooser = FileChooserBuilder.create()
-    			.title("Open PNML File")
-    			.extensionFilters(new FileChooser.ExtensionFilter("PNML files (*.pnml)", "*.pnml"))
-                .initialDirectory(new File(initialDirectory))
-    			.build();
-    	
+    	final FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open PNML File");
+        fileChooser.setInitialDirectory(new File(initialDirectory));
+        fileChooser.getExtensionFilters()
+            .add(new FileChooser.ExtensionFilter("PNML files (*.pnml)", "*.pnml"));
+
     	final File file = fileChooser.showOpenDialog(primaryStage);
 
-        if (file == null) // no selection
+        if (file == null) // keine Datei ausgewählt
             return;
 
-        // Store directory
+        // Pfad wird gespeichert
         try {
             settings.setValue("last_directory", file.getParent());
         } catch (IOException e) {
             MessageBox.error("couldn't store settings", primaryStage);
         }
 
-        String source = null;
+        String source;
 		try {
 			source = new String(Files.readAllBytes(Paths.get(file.getPath())));
 		} catch (IOException e) {
 			MessageBox.error("couldn't read file " + file.getPath(), primaryStage);
 			return;
 		}
-		
-		assert source != null;
-		
+
         PnmlParser parser = new PnmlParser();
         try {
             canvas.setModel(parser.parse(source));
@@ -269,7 +260,7 @@ public class AppController {
      */
     @FXML
     private void saveDocument() {
-        File file = null;
+        File file;
 
         if (!currentFileName.getValue().isEmpty()) {
             file = new File(currentFileName.getValue());
@@ -278,15 +269,17 @@ public class AppController {
             return;
         }
 
-        assert file != null;
-
         try {
             if (!file.toPath().getFileName().toString().endsWith(".pnml")) {
                 file = new File(file.toPath().toString() + ".pnml");
             }
 
-            if (!file.exists())
-                file.createNewFile();
+            if (!file.exists()) {
+                boolean success = file.createNewFile();
+                if (!success) {
+                    logger.warning("Datei " + file.getName() + " existiert bereits");
+                }
+            }
 
             FileWriter writer = new FileWriter(file);
             writer.write(canvas.getModel().toPNML());
@@ -309,10 +302,9 @@ public class AppController {
         final String initialDirectory =
                 Settings.getInstance().getValue("initial_directory", System.getProperty("user.home"));
 
-        final FileChooser fileChooser = FileChooserBuilder.create()
-                .title("Save PNML file")
-                .initialDirectory(new File(initialDirectory))
-                .build();
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save PNML file");
+        fileChooser.setInitialDirectory(new File(initialDirectory));
         File file = fileChooser.showSaveDialog(primaryStage);
 
         if (file == null) {
@@ -331,10 +323,6 @@ public class AppController {
         assert event.getEventType() == ActionEvent.ACTION;
 
         RadioMenuItem sourceButton = ((RadioMenuItem) event.getSource());
-
-        // Workaround (JavaFX bug)
-        // wird Mode mit einem Shortcut aktiviert, erneuert sich die Anzeige nicht (Menu)
-        sourceButton.setSelected(true);
 
         if (!sourceButton.isSelected()) {
             mode = AppMode.SELECT;
@@ -423,7 +411,7 @@ public class AppController {
                                 if (source instanceof PetriNetNodePresentation)
                                     canvas.selectExclusiveElementById(((Node) source).getId());
 
-                            } else { // exactly one element is selected
+                            } else { // genau ein Element ist ausgewählt
                                 if (source instanceof PetriNetNodePresentation &&
                                         !selectedElements.get(0).getClass().equals(source.getClass())) {
                                     canvas.createArc((PetriNetNodePresentation) selectedElements.get(0),

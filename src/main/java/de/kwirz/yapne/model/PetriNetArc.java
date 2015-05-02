@@ -1,5 +1,8 @@
 package de.kwirz.yapne.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * Repräsentiert eine Kante im Petri Netz
  */
@@ -87,10 +90,11 @@ public final class PetriNetArc extends PetriNetElement {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return String.format("%s { id='%s', target='%s', source='%s' }",
-                getId(),
-                getClass().getSimpleName(),
-                target == null?"":target.getName(),
-                source == null? "":source.getName());
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
+                .append("target", target)
+                .append("source", source)
+                .toString();
     }
+
 }

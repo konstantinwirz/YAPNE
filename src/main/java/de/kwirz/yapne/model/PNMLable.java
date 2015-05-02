@@ -7,5 +7,5 @@ public interface PNMLable {
     /**
      * Gibt die <b>PNML</b> Repräsentation zurück
      */
-    public String toPNML();
+    String toPNML();
 }

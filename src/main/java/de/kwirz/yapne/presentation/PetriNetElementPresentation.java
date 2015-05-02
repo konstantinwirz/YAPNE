@@ -10,27 +10,27 @@ import javafx.scene.paint.Color;
 public interface PetriNetElementPresentation {
 
     /** Minimale Linienstärke = {@value #MINIMUM_STROKE_WIDTH}  */
-    public final static double MINIMUM_STROKE_WIDTH = 0.5;
+    double MINIMUM_STROKE_WIDTH = 0.5;
 
     /** Maximale Linienstärke = {@value #MAXIMUM_STROKE_WIDTH} */
-    public final static double MAXIMUM_STROKE_WIDTH = 10.0;
+    double MAXIMUM_STROKE_WIDTH = 10.0;
 
     /** Standard Linienstärke = {@value #DEFAULT_STROKE_WIDTH} */
-    public final static double DEFAULT_STROKE_WIDTH = 2.0;
+    double DEFAULT_STROKE_WIDTH = 2.0;
 
     /** Linienfarbe */
-    public final static Color DEFAULT_STROKE_COLOR = Color.BLACK;
+    Color DEFAULT_STROKE_COLOR = Color.BLACK;
 
     /** Setzt den Model */
-    public void setModel(PetriNetElement element);
+    void setModel(PetriNetElement element);
 
     /** Gibt den Model zurück */
-    public PetriNetElement getModel();
+    PetriNetElement getModel();
 
     /** Schreibt Änderungen in den Model */
-    public void syncToModel();
+    void syncToModel();
 
     /** Liest Änderungen aus dem Model */
-    public void syncFromModel();
+    void syncFromModel();
 
 }

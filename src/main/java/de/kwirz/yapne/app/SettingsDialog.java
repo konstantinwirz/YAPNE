@@ -1,19 +1,17 @@
 package de.kwirz.yapne.app;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import de.kwirz.yapne.presentation.PetriNetNodePresentation;
 import de.kwirz.yapne.utils.Settings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Einstellungsdialog.
@@ -79,7 +77,7 @@ public class SettingsDialog extends GridPane {
 	 */
 	@FXML
     private void initialize() {
-		// Lese Einstellungen und sertze die Werte
+		// Lese Einstellungen und setzt die Werte
 		Settings settings = Settings.getInstance();
 
         double nodeSize = PetriNetNodePresentation.DEFAULT_SIZE;
@@ -89,7 +87,7 @@ public class SettingsDialog extends GridPane {
             nodeSize = Double.valueOf(settings.getValue("node_size",
                     PetriNetNodePresentation.DEFAULT_SIZE));
             strokeWidth = Double.valueOf(settings.getValue("stroke_width",
-                    PetriNetNodePresentation.DEFAULT_STROKE_WIDTH)).doubleValue();
+                    PetriNetNodePresentation.DEFAULT_STROKE_WIDTH));
         } catch (NumberFormatException e) {
             logger.log(Level.WARNING, "couldn't parse floating point values from settings file", e);
         }
@@ -109,18 +107,12 @@ public class SettingsDialog extends GridPane {
      */
     private void registerListeners() {
         // Verbinde Linienstärke-Slider mit seiner Anzeiger
-        strokeWidthSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                onStrokeWidthChanged(newValue.doubleValue());
-            }
+        strokeWidthSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            onStrokeWidthChanged(newValue.doubleValue());
         });
         // Verbinde Knotengröße-Slider mit seiner Anzeiger
-        nodeSizeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                onNodeSizeChanged(newValue.doubleValue());
-            }
+        nodeSizeSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            onNodeSizeChanged(newValue.doubleValue());
         });
     }
 

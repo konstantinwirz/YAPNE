@@ -1,5 +1,8 @@
 package de.kwirz.yapne.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * Repräsentiert eine Stelle im Petri Netz
  */
@@ -53,8 +56,10 @@ public final class PetriNetPlace extends PetriNetNode {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return String.format("%s {id=%s, name='%s', marking=%d, pos=%s}",
-                getClass().getSimpleName(), getId(), getName(), getMarking(), getPosition());
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
+                .append("marking", marking)
+                .toString();
     }
 
 }

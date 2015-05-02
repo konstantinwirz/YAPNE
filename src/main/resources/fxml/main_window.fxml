@@ -159,7 +159,7 @@
     </top>
 
     <center>
-        <ScrollPane fx:id="scrollPane" BorderPane.alignment="CENTER" >
+        <ScrollPane fx:id="scrollPane" BorderPane.alignment="CENTER" fitToHeight="true" fitToWidth="true¡" >
             <content>
                 <PetriNetPresentation fx:id="canvas" onMouseClicked="#handleMouseEvent" />
             </content>

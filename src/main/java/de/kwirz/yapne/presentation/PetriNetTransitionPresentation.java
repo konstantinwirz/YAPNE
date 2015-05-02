@@ -2,12 +2,9 @@ package de.kwirz.yapne.presentation;
 
 import de.kwirz.yapne.model.PetriNetElement;
 import de.kwirz.yapne.model.PetriNetTransition;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.RectangleBuilder;
 
 /**
  * Grafische Darstellung einer Transition.
@@ -41,13 +38,9 @@ public final class PetriNetTransitionPresentation extends PetriNetNodePresentati
 
     /** Erstellt und konfiguriert UI Elemente */
     private void setupUi() {
-        rectangle = RectangleBuilder.create()
-                .width(getSize())
-                .stroke(DEFAULT_STROKE_COLOR)
-                .fill(DEFAULT_FILL_COLOR)
-                .height(getSize())
-                .strokeWidth(getStrokeWidth())
-                .build();
+        rectangle = new Rectangle(getSize(), getSize(), DEFAULT_FILL_COLOR);
+        rectangle.setStrokeWidth(getStrokeWidth());
+        rectangle.setStroke(DEFAULT_STROKE_COLOR);
 
         setCenter(rectangle);
         setAlignment(rectangle, Pos.CENTER);
@@ -55,16 +48,13 @@ public final class PetriNetTransitionPresentation extends PetriNetNodePresentati
 
     /** Registriert Listener */
     private void registerListeners() {
-        // Schaltet Transition beim Doppelklick.
-        rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getClickCount() != 2)
-                    return;
+        /* Schaltet Transition beim Doppelklick. */
+        rectangle.setOnMouseClicked(event -> {
+            if (event.getClickCount() != 2)
+                return;
 
-                model.occur();
-                fireEvent(new OccurrenceEvent());
-            }
+            model.occur();
+            fireEvent(new OccurrenceEvent());
         });
     }
 

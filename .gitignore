@@ -1,4 +1,4 @@
-*.class
+I*.class
 .classpath
 
 # Mobile Tools for Java (J2ME)
@@ -22,3 +22,6 @@ out/*
 doc/tex/.texpadtmp/
 doc/html/
 doc/tex/*.pdf
+
+*.iml
+

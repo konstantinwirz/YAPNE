@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * Repräsentiert ein Petri Netz
@@ -76,22 +77,20 @@ public final class PetriNet implements PNMLable {
     }
 
     /** Validiert Stellen */
-    private void validatePlace(PetriNetPlace place) {
+    @SuppressWarnings("unused")
+    private void validatePlace(PetriNetPlace unused) {
 
     }
 
     /** Validiert Transitionen */
-    private void validateTransition(PetriNetTransition transition) {
+    @SuppressWarnings("unused")
+    private void validateTransition(PetriNetTransition unused) {
 
     }
 
     /** Liefert Id's aller Elemente */
     public List<String> getIds() {
-        ArrayList<String> ids = new ArrayList<>();
-        for(PetriNetElement element : this.elements) {
-            ids.add(element.getId());
-        }
-        return ids;
+        return this.elements.stream().map(PetriNetElement::getId).collect(Collectors.toList());
     }
 
     /** Entfernt alle Elemente */
@@ -145,7 +144,6 @@ public final class PetriNet implements PNMLable {
             Iterator<PetriNetArc> iterator = node.inputArcs.iterator();
             while (iterator.hasNext()) {
                 PetriNetArc arc = iterator.next();
-                PetriNetNode target = arc.getTarget();
                 if (hasElementById(arc.getId()))
                     elements.remove(arc);
                 iterator.remove();
@@ -154,7 +152,6 @@ public final class PetriNet implements PNMLable {
             iterator = node.outputArcs.iterator();
             while (iterator.hasNext()) {
                 PetriNetArc arc = iterator.next();
-                PetriNetNode source = arc.getSource();
                 if (hasElementById(arc.getId()))
                     elements.remove(arc);
                 iterator.remove();

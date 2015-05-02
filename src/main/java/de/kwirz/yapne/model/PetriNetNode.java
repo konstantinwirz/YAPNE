@@ -1,5 +1,10 @@
 package de.kwirz.yapne.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -144,7 +149,10 @@ public abstract class PetriNetNode extends PetriNetElement {
          */
         @Override
         public String toString() {
-            return String.format("Position{x=%d, y=%d}", x, y);
+            return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                    .append("x", x)
+                    .append("y", y)
+                    .toString();
         }
 
         /**
@@ -162,7 +170,10 @@ public abstract class PetriNetNode extends PetriNetElement {
                 return false;
 
             Position position = (Position) other;
-            return position.getX() == this.getX() && position.getY() == this.getY();
+            return new EqualsBuilder()
+                    .append(getX(), position.getX())
+                    .append(getY(), position.getY())
+                    .isEquals();
         }
 
         /**
@@ -170,7 +181,10 @@ public abstract class PetriNetNode extends PetriNetElement {
          */
         @Override
         public int hashCode() {
-            return (x + 1) * 17 + (y + 1) * 31;
+            return new HashCodeBuilder(31, 17)
+                    .append(x)
+                    .append(y)
+                    .toHashCode();
         }
     }
 
@@ -338,12 +352,12 @@ public abstract class PetriNetNode extends PetriNetElement {
 
         PetriNetNode that = (PetriNetNode) o;
 
-        if (inputArcs != null ? !inputArcs.equals(that.inputArcs) : that.inputArcs != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (outputArcs != null ? !outputArcs.equals(that.outputArcs) : that.outputArcs != null) return false;
-        if (position != null ? !position.equals(that.position) : that.position != null) return false;
-
-        return true;
+        return new EqualsBuilder()
+                .append(inputArcs, that.inputArcs)
+                .append(name, that.name)
+                .append(outputArcs, that.outputArcs)
+                .append(position, that.position)
+                .isEquals();
     }
 
     /**
@@ -351,12 +365,12 @@ public abstract class PetriNetNode extends PetriNetElement {
      */
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (position != null ? position.hashCode() : 0);
-        result = 31 * result + (inputArcs != null ? inputArcs.hashCode() : 0);
-        result = 31 * result + (outputArcs != null ? outputArcs.hashCode() : 0);
-        return result;
+        return new HashCodeBuilder(31, 17)
+                .append(name)
+                .append(position)
+                .append(inputArcs)
+                .append(outputArcs)
+                .hashCode();
     }
 
     /**
@@ -364,8 +378,11 @@ public abstract class PetriNetNode extends PetriNetElement {
      */
     @Override
     public String toString() {
-        return String.format("PetriNetNode{id='%s', name='%s', pos='%s'}",
-                getId(), name, position.toString());
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
+                .append("name", name)
+                .append("position", position)
+                .toString();
     }
 
     /**

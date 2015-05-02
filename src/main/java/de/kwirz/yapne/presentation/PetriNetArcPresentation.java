@@ -4,7 +4,6 @@ import de.kwirz.yapne.model.PetriNetArc;
 import de.kwirz.yapne.model.PetriNetElement;
 import de.kwirz.yapne.utils.Utils;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -31,12 +30,7 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
     /**
      * Zeichnet die Kante neu
      */
-    private ChangeListener<Number> changeListener = new ChangeListener<Number>() {
-        @Override
-        public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-            update();
-        }
-    };
+    private ChangeListener<Number> changeListener = (observableValue, oldValue, newValue) -> update();
 
     /** Erstellt eine Kante */
     public PetriNetArcPresentation() {
@@ -47,12 +41,9 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
     /** Registriert Listener */
     private void registerListeners() {
         // erzwingt dass strokeWidth zwischen Min und Max Werten liegt.
-        strokeWidthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                setStrokeWidth(Utils.ensureRange(newValue.doubleValue(),
-                        MINIMUM_STROKE_WIDTH, MAXIMUM_STROKE_WIDTH));
-            }
+        strokeWidthProperty().addListener((observableValue, oldValue, newValue) -> {
+            setStrokeWidth(Utils.ensureRange(newValue.doubleValue(),
+                    MINIMUM_STROKE_WIDTH, MAXIMUM_STROKE_WIDTH));
         });
     }
 
@@ -67,6 +58,7 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
     /**
      * Setzt Quell- und Zielknoten zurück
      */
+    @SuppressWarnings("unused")
     public void clear() {
         setSource(null);
         setTarget(null);
@@ -153,7 +145,7 @@ public class PetriNetArcPresentation extends Path implements PetriNetElementPres
                 double alpha = Math.toDegrees(Math.atan2(Math.abs(dx), Math.abs(dy)));
                 double leg = target.getSize() / 2.0;
                 double hypotenuse = Math.sqrt( Math.pow(leg, 2.0) + Math.pow(leg, 2.0));
-                double offset = 0.0;
+                double offset;
                 if ( alpha < 45 ) {
                     offset = (hypotenuse * Math.cos(Math.toRadians(45))) / Math.cos(Math.toRadians(alpha));
                 } else {

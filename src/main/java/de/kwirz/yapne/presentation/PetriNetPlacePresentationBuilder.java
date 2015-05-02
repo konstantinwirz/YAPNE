@@ -28,7 +28,7 @@ public class PetriNetPlacePresentationBuilder
         extends PetriNetNodePresentationBuilder<PetriNetPlacePresentationBuilder> {
 
     /** Hält den Wert der <b>marking</b> Eigenschaft */
-    private BuilderValue<Integer> marking_ = new BuilderValue<Integer>();
+    private BuilderValue<Integer> marking_ = new BuilderValue<>();
 
     /** Erstellt und gibt einen <b>PetriNetPlacePresentationBuilder</b> zurück */
     public static PetriNetPlacePresentationBuilder create() {
@@ -36,6 +36,7 @@ public class PetriNetPlacePresentationBuilder
     }
 
     /** Gibt die Markierung zurück */
+    @SuppressWarnings("unused")
     public PetriNetPlacePresentationBuilder marking(int value) {
         marking_.setValue(value);
         return this;

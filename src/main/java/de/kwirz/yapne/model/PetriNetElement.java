@@ -1,5 +1,10 @@
 package de.kwirz.yapne.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.util.logging.Logger;
 
 /**
@@ -57,20 +62,22 @@ public abstract class PetriNetElement implements PNMLable {
 
         PetriNetElement that = (PetriNetElement) o;
 
-        if (!id.equals(that.id)) return false;
-
-        return true;
+        return new EqualsBuilder().append(id, that.id).isEquals();
     }
 
     /** Gibt den Hashcode zurück */
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return new HashCodeBuilder(31, 17)
+                .append(id)
+                .hashCode();
     }
 
     /** Gibt die String Repräsentation zurück */
     @Override
     public String toString() {
-        return String.format("PetriNetElement{id='%s'}", id);
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("id", id)
+                .toString();
     }
 }

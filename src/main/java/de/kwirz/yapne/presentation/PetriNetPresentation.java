@@ -1,23 +1,20 @@
 package de.kwirz.yapne.presentation;
 
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import de.kwirz.yapne.model.*;
 import de.kwirz.yapne.utils.Settings;
 import de.kwirz.yapne.utils.Utils;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.DropShadowBuilder;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 
 /**
@@ -80,7 +77,6 @@ public class PetriNetPresentation extends Pane {
     public void reload() {
         getChildren().clear();
 
-        Settings settings = Settings.getInstance();
         double strokeWidth = getStrokeWidthFromSettings();
         double nodeSize = getNodeSizeFormSettings();
 
@@ -93,19 +89,16 @@ public class PetriNetPresentation extends Pane {
             PetriNetElementPresentation presentation = null;
             if (element instanceof PetriNetPlace) {
                 presentation = PetriNetPlacePresentationBuilder.create()
-                        .model((PetriNetPlace) element)
+                        .model(element)
                         .size(nodeSize)
                         .strokeWidth(strokeWidth)
                         .build();
-                ((PetriNetPlacePresentation) presentation).markingProperty().addListener(new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                        reload();
-                    }
+                ((PetriNetPlacePresentation) presentation).markingProperty().addListener((observableValue, number, t1) -> {
+                    reload();
                 });
             } else if (element instanceof PetriNetTransition) {
                 presentation = PetriNetTransitionPresentationBuilder.create()
-                        .model((PetriNetTransition) element)
+                        .model(element)
                         .size(nodeSize)
                         .strokeWidth(strokeWidth)
                         .build();
@@ -114,12 +107,7 @@ public class PetriNetPresentation extends Pane {
             if (presentation != null) {
                 ((Node) presentation).setId(normalizeId(id));
                 getChildren().add((Node) presentation);
-                ((Node) presentation).addEventHandler(OccurrenceEvent.OCCURRED, new EventHandler<Event>() {
-                    @Override
-                    public void handle(Event event) {
-                        reload();
-                    }
-                });
+                ((Node) presentation).addEventHandler(OccurrenceEvent.OCCURRED, event -> reload());
             }
         }
 
@@ -145,8 +133,8 @@ public class PetriNetPresentation extends Pane {
                     .strokeWidth(strokeWidth)
                     .build();
 
-            ((Node) presentation).setId(normalizeId(id));
-            getChildren().add((Node) presentation);
+            presentation.setId(normalizeId(id));
+            getChildren().add(presentation);
         }
 
         setOnMouseDraggedForEachElement(mouseDraggedEventHandler);
@@ -295,12 +283,9 @@ public class PetriNetPresentation extends Pane {
             return;
         }
 
-        DropShadow shadow = DropShadowBuilder.create()
-                .offsetX(3)
-                .offsetY(3)
-                .radius(5)
-                .color(Color.color(0.4, 0.5, 0.6))
-                .build();
+        DropShadow shadow = new DropShadow(5, Color.color(0.4, 0.5, 0.6));
+        shadow.setOffsetX(3);
+        shadow.setOffsetY(3);
         node.setEffect(shadow);
         selectedElements.add(node.getId());
     }
@@ -349,9 +334,7 @@ public class PetriNetPresentation extends Pane {
      * <p>Element wird aus dem Model entfernt und anschließend neu gezeichnet.
      */
     public void removeSelectedElements() {
-        for (String id : selectedElements) {
-            removeElementById(id);
-        }
+        selectedElements.forEach(this::removeElementById);
 
         selectedElements.clear();
         reload();
@@ -364,8 +347,6 @@ public class PetriNetPresentation extends Pane {
             logger.log(Level.WARNING, "couldn't found node with id " + id);
             return;
         }
-
-        assert node != null;
 
         getModel().removeElementById(((PetriNetElementPresentation) node).getModel().getId());
     }
@@ -415,14 +396,10 @@ public class PetriNetPresentation extends Pane {
      * Gibt die Liste aller zur Zeit ausgewählter Knoten zurück
      */
     private List<PetriNetNodePresentation> getSelectedNodes() {
-        List<PetriNetNodePresentation> nodes = new ArrayList<>();
-
-        for (PetriNetElementPresentation element : getSelectedElements()) {
-            if (element instanceof PetriNetNodePresentation)
-                nodes.add((PetriNetNodePresentation) element);
-        }
-
-        return nodes;
+        return getSelectedElements().stream()
+                .filter(element -> element instanceof PetriNetNodePresentation)
+                .map(element -> (PetriNetNodePresentation) element)
+                .collect(Collectors.toList());
     }
 
 

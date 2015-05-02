@@ -1,20 +1,29 @@
 package de.kwirz.yapne.presentation;
 
-import de.kwirz.yapne.model.*;
+import de.kwirz.yapne.model.PetriNetElement;
+import de.kwirz.yapne.model.PetriNetPlace;
 import de.kwirz.yapne.utils.Utils;
-import javafx.beans.property.*;
-import javafx.beans.value.*;
-import javafx.event.*;
-import javafx.geometry.*;
-import javafx.scene.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.input.*;
-import javafx.scene.layout.*;
-import javafx.scene.shape.*;
-import javafx.scene.text.*;
-import javafx.stage.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -66,41 +75,29 @@ public final class PetriNetPlacePresentation extends PetriNetNodePresentation {
          * Erstellt ein Feld.
          */
         public IntegerField () {
-            // convertiert Ganzzahl in Text
-            value.addListener(new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue<? extends Number> observable,
-                                    Number oldValue, Number newValue) {
-                    setText(newValue.toString());
-                }
+            // konvertiert ganze Zahl in Text
+            value.addListener((observable, oldValue, newValue) -> {
+                setText(newValue.toString());
             });
-            // konvertiert Eingabetext ins Ganzzahl
-            textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observable,
-                                    String oldValue, String newValue) {
-                    if (newValue.isEmpty())
-                        return;
+            // konvertiert Eingabetext in eine ganze Zahl
+            textProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue.isEmpty())
+                    return;
 
-                    setText(newValue.matches("\\d+")?newValue:oldValue.matches("\\d+")?oldValue:"");
+                setText(newValue.matches("\\d+")?newValue:oldValue.matches("\\d+")?oldValue:"");
 
-                    try {
-                        setValue(Integer.valueOf(getText()));
-                    } catch (NumberFormatException e) {
-                        logger.warning("not a number");
-                    }
+                try {
+                    setValue(Integer.valueOf(getText()));
+                } catch (NumberFormatException e) {
+                    logger.warning("not a number");
                 }
             });
 
-            // beim Fokus verlust, wenn Eingabefelt leer ist - auf 0 setzen.
-            focusedProperty().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> observable,
-                                    Boolean oldValue, Boolean newValue) {
-                    if (getText().isEmpty())
-                        setText("0");
+            // beim Fokus Verlust, wenn Eingabefeld leer ist - auf 0 setzen.
+            focusedProperty().addListener((observable, oldValue, newValue) -> {
+                if (getText().isEmpty())
+                    setText("0");
 
-                }
             });
         }
 
@@ -118,6 +115,7 @@ public final class PetriNetPlacePresentation extends PetriNetNodePresentation {
         }
 
         /** Gibt die {@link #value} Eigenschaft zurück */
+        @SuppressWarnings("unused")
         public IntegerProperty valueProperty() {
             return this.value;
         }
@@ -130,54 +128,45 @@ public final class PetriNetPlacePresentation extends PetriNetNodePresentation {
      * öffnen, da in der Mitte sich entweder ein Circle oder Text befinden (abhängig von
      * Markierung) wird dieser Handler auch für diese Elemente gesetzt.
      */
-    private EventHandler<MouseEvent> inputMarkingOnMouseClick = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-            if (event.getClickCount() != 2)
-                return;
+    private EventHandler<MouseEvent> inputMarkingOnMouseClick = event -> {
+        if (event.getClickCount() != 2)
+            return;
 
-            final Node source = (Node) event.getSource();
-            final Scene sourceScene = source.getScene();
-            final Window sourceWindow = sourceScene.getWindow();
+        final Node source = (Node) event.getSource();
+        final Scene sourceScene = source.getScene();
+        final Window sourceWindow = sourceScene.getWindow();
 
-            final Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.initOwner(sourceWindow);
-            dialog.initStyle(StageStyle.UNDECORATED);
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(sourceWindow);
+        dialog.initStyle(StageStyle.UNDECORATED);
 
-            final Point2D coord = source.localToScene(0.0, 0.0);
+        final Point2D coord = source.localToScene(0.0, 0.0);
 
-            dialog.setX(sourceWindow.getX() + coord.getX());
-            dialog.setY(sourceWindow.getY() + coord.getY());
+        dialog.setX(sourceWindow.getX() + coord.getX());
+        dialog.setY(sourceWindow.getY() + coord.getY());
 
-            final IntegerField field = new IntegerField();
-            field.setValue(marking.getValue());
+        final IntegerField field = new IntegerField();
+        field.setValue(marking.getValue());
 
-            field.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    marking.setValue(field.getValue());
-                    dialog.close();
-                }
-            });
+        field.setOnAction(event1 -> {
+            marking.setValue(field.getValue());
+            dialog.close();
+        });
 
-            field.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent keyEvent) {
-                    if (keyEvent.getCode() == KeyCode.ESCAPE)
-                        dialog.close();
-                }
-            });
+        field.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE)
+                dialog.close();
+        });
 
-            VBox box = new VBox();
-            box.setSpacing(10);
-            box.setPadding(new Insets(10, 10, 10, 10));
-            box.getChildren().addAll(TextBuilder.create().text("Marking:").build(), field);
+        VBox box = new VBox();
+        box.setSpacing(10);
+        box.setPadding(new Insets(10, 10, 10, 10));
+        box.getChildren().addAll(new Text("Marking:"), field);
 
-            dialog.setScene(new Scene(box));
+        dialog.setScene(new Scene(box));
 
-            dialog.show();
-        }
+        dialog.show();
     };
 
     /**
@@ -190,14 +179,11 @@ public final class PetriNetPlacePresentation extends PetriNetNodePresentation {
 
     /** Konfiguriert UI */
     private void setupUi() {
-        stack = StackPaneBuilder.create()
-                .build();
-        circle = CircleBuilder.create()
-                .strokeWidth(getStrokeWidth())
-                .fill(DEFAULT_FILL_COLOR)
-                .stroke(DEFAULT_STROKE_COLOR)
-                .radius(getSize() / 2)
-                .build();
+        stack = new StackPane();
+        circle = new Circle(getSize() / 2, DEFAULT_FILL_COLOR);
+        circle.setStroke(DEFAULT_STROKE_COLOR);
+        circle.setStrokeWidth(getStrokeWidth());
+
         stack.getChildren().add(circle);
         setCenter(stack);
         setAlignment(stack, Pos.CENTER);
@@ -208,13 +194,10 @@ public final class PetriNetPlacePresentation extends PetriNetNodePresentation {
     /** Registriert Listener */
     private void registerListeners() {
         // Macht ein Model Update, falls Markierung sich ändert.
-        marking.addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                onMarkingValueChanged(newValue.intValue());
-                if (model != null)
-                    model.setMarking(newValue.intValue());
-            }
+        marking.addListener((observableValue, oldValue, newValue) -> {
+            onMarkingValueChanged(newValue.intValue());
+            if (model != null)
+                model.setMarking(newValue.intValue());
         });
 
         circle.setOnMouseClicked(inputMarkingOnMouseClick);
@@ -273,18 +256,14 @@ public final class PetriNetPlacePresentation extends PetriNetNodePresentation {
         markingCircle = null;
 
         if (newMarking == 1) {
-            markingCircle = CircleBuilder.create()
-                    .radius(getSize() / 10)
-                    .strokeWidth(getStrokeWidth())
-                    .build();
+            markingCircle = new Circle(getSize() / 10);
+            markingCircle.setStrokeWidth(getStrokeWidth());
             stack.getChildren().add(markingCircle);
             markingCircle.setOnMouseClicked(inputMarkingOnMouseClick);
         } else if (newMarking > 1) {
-            markingText = TextBuilder.create()
-                    .text(String.valueOf(newMarking))
-                    .font(FontBuilder.create().size(calculateProperMarkingFontSize()).build())
-                    .strokeWidth(getStrokeWidth())
-                    .build();
+            markingText = new Text(String.valueOf(newMarking));
+            markingText.setStrokeWidth(getStrokeWidth());
+            markingText.setFont(new Font(calculateProperMarkingFontSize()));
             stack.getChildren().add(markingText);
             markingText.setOnMouseClicked(inputMarkingOnMouseClick);
         }

@@ -7,24 +7,17 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextBuilder;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -121,14 +114,12 @@ public abstract class PetriNetNodePresentation
      * Erstellt und konfiguriert UI Elemente
      */
     private void setupUi() {
-        labelText = TextBuilder.create()
-                .text(String.format("Item %d", ++counter))
-                .font(new Font(16.0))
-                .build();
+        labelText = new Text(String.format("Item %d", ++counter));
+        labelText.setFont(new Font(16.0));
 
-        this.setTop(labelText);
-        this.setAlignment(labelText, Pos.TOP_CENTER);
-        this.setMargin(labelText, new Insets(0, 0, 5, 0));
+        setTop(labelText);
+        setAlignment(labelText, Pos.TOP_CENTER);
+        setMargin(labelText, new Insets(0, 0, 5, 0));
     }
 
     /**
@@ -136,109 +127,85 @@ public abstract class PetriNetNodePresentation
      */
     private void registerListeners() {
         // Knotennamen setzen.
-        label.addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                labelText.setText(newValue);
-            }
+        label.addListener((observableValue, oldValue, newValue) -> {
+            labelText.setText(newValue);
         });
 
         // sicherstellen dass die Größe >= MINIMUM_SIZE und <= MAXIMUM_SIZE
-        size.addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                double value = newValue.doubleValue();
-                if (Utils.inRange(value, MINIMUM_SIZE, MAXIMUM_SIZE)) {
-                    onSizeChanged(value);
-                } else {
-                    size.set(Utils.ensureRange(value, MINIMUM_SIZE, MAXIMUM_SIZE));
-                }
+        size.addListener((observableValue, oldValue, newValue) -> {
+            double value = newValue.doubleValue();
+            if (Utils.inRange(value, MINIMUM_SIZE, MAXIMUM_SIZE)) {
+                onSizeChanged(value);
+            } else {
+                size.set(Utils.ensureRange(value, MINIMUM_SIZE, MAXIMUM_SIZE));
             }
         });
 
         // sicherstellen dass Linienstärke >= MINIMUM_STROKE_WIDTH und <= MAXIMUM_STROKE_WIDTH
-        strokeWidth.addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                double value = newValue.doubleValue();
-                if (Utils.inRange(value, MINIMUM_STROKE_WIDTH, MAXIMUM_STROKE_WIDTH)) {
-                    onStrokeWidthChanged(value);
-                } else {
-                    strokeWidth.set(Utils.ensureRange(value, MINIMUM_STROKE_WIDTH, MAXIMUM_STROKE_WIDTH));
-                }
+        strokeWidth.addListener((observableValue, oldValue, newValue) -> {
+            double value = newValue.doubleValue();
+            if (Utils.inRange(value, MINIMUM_STROKE_WIDTH, MAXIMUM_STROKE_WIDTH)) {
+                onStrokeWidthChanged(value);
+            } else {
+                strokeWidth.set(Utils.ensureRange(value, MINIMUM_STROKE_WIDTH, MAXIMUM_STROKE_WIDTH));
             }
         });
 
         // wenn die Eiganschaft geändert wird - führe den Handler aus.
-        centerX.addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                onCenterXChanged(newValue.doubleValue());
-            }
+        centerX.addListener((observableValue, oldValue, newValue) -> {
+            onCenterXChanged(newValue.doubleValue());
         });
 
         // wenn die Eiganschaft geändert wird - führe den Handler aus.
-        centerY.addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                onCenterYChanged(newValue.doubleValue());
-            }
+        centerY.addListener((observableValue, oldValue, newValue) -> {
+            onCenterYChanged(newValue.doubleValue());
         });
 
         // Zeige die Maske zum Editieren von Knotennamen.
-        labelText.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getClickCount() < 2)
-                    return;
+        labelText.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getClickCount() < 2)
+                return;
 
-                final Text source = (Text) mouseEvent.getSource();
-                final Scene sourceScene = source.getScene();
-                final Window sourceWindow = sourceScene.getWindow();
+            final Text source = (Text) mouseEvent.getSource();
+            final Scene sourceScene = source.getScene();
+            final Window sourceWindow = sourceScene.getWindow();
 
-                final Stage dialog = new Stage();
-                dialog.initModality(Modality.APPLICATION_MODAL);
-                dialog.initOwner(sourceWindow);
-                dialog.initStyle(StageStyle.UNDECORATED);
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initOwner(sourceWindow);
+            dialog.initStyle(StageStyle.UNDECORATED);
 
-                final Point2D coord = source.localToScene(0.0, 0.0);
-                dialog.setX(sourceWindow.getX() + coord.getX());
-                dialog.setY(sourceWindow.getY() + coord.getY());
+            final Point2D coord = source.localToScene(0.0, 0.0);
+            dialog.setX(sourceWindow.getX() + coord.getX());
+            dialog.setY(sourceWindow.getY() + coord.getY());
 
 
-                final TextField field = new TextField();
-                field.setText(source.getText());
-                field.selectAll();
-                field.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        if (!field.getText().isEmpty()) {
-                            label.set(field.getText());
-                            PetriNetElement model = getModel();
-                            if (model != null)
-                                ((PetriNetNode) model).setName(field.getText());
-                        }
-                        dialog.close();
-                    }
-                });
+            final TextField field = new TextField();
+            field.setText(source.getText());
+            field.selectAll();
+            field.setOnAction(actionEvent -> {
+                if (!field.getText().isEmpty()) {
+                    label.set(field.getText());
+                    PetriNetElement model = getModel();
+                    if (model != null)
+                        ((PetriNetNode) model).setName(field.getText());
+                }
+                dialog.close();
+            });
 
-                field.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                    @Override
-                    public void handle(KeyEvent keyEvent) {
-                        if (keyEvent.getCode() == KeyCode.ESCAPE)
-                            dialog.close();
-                    }
-                });
+            field.setOnKeyPressed(keyEvent -> {
+                if (keyEvent.getCode() == KeyCode.ESCAPE)
+                    dialog.close();
+            });
 
-                VBox box = new VBox();
-                box.setSpacing(10);
-                box.setPadding(new Insets(10, 10, 10, 10));
-                box.getChildren().addAll(TextBuilder.create().text("Name:").build(), field);
+            VBox box = new VBox();
+            box.setSpacing(10);
+            box.setPadding(new Insets(10, 10, 10, 10));
+            box.getChildren().addAll(new Text("Name:"), field);
 
-                dialog.setScene(new Scene(box));
+            dialog.setScene(new Scene(box));
 
-                dialog.show();
-            }
+            dialog.show();
         });
     }
 
@@ -257,7 +224,7 @@ public abstract class PetriNetNodePresentation
      * @param value Y-Koordinate
      */
     private void onCenterYChanged(double value) {
-        // entferne Knotennamenhöhe und alle Zwischeräume
+        // entferne Knotennamenhöhe und alle Zwischenräume
         double offset = labelText.getBoundsInLocal().getHeight() +
                 getMargin(labelText).getBottom() +
                 getSize() / 2 +
@@ -287,6 +254,7 @@ public abstract class PetriNetNodePresentation
     }
 
     /** Gibt die {@link #label} Eigenschaft zurück */
+    @SuppressWarnings("unused")
     public final StringProperty labelProperty() {
         return label;
     }
@@ -302,6 +270,7 @@ public abstract class PetriNetNodePresentation
     }
 
     /** Gibt die {@link #size} Eigenschaft zurück */
+    @SuppressWarnings("unused")
     public final DoubleProperty sizeProperty() {
         return size;
     }
@@ -322,6 +291,7 @@ public abstract class PetriNetNodePresentation
     }
 
     /** Gibt die {@link #strokeWidth} Eigenschaft zurück */
+    @SuppressWarnings("unused")
     public final DoubleProperty strokeWidthProperty() {
         return this.strokeWidth;
     }
